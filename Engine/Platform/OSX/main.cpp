@@ -172,8 +172,16 @@ void blit_screenBufferToSDL()
 		{
 			int scrofs = (y*SCREEN_WIDTH)+x;
 
+			float r = screenBuffer[ (scrofs*4) + 0];
+			float g = screenBuffer[ (scrofs*4) + 1];
+			float b = screenBuffer[ (scrofs*4) + 2];
+			uint8 br = (uint8)(r*255.0f);
+			uint8 bg = (uint8)(g*255.0f);
+			uint8 bb = (uint8)(b*255.0f);
+			uint32 c = (br<<16) + (bg<<8) + bb;
+			
 			uint16 srcColor = screenBuffer[ scrofs ];
-			uint32 dstColor = Conv16to32( srcColor );
+			uint32 dstColor = c;//Conv16to32( srcColor );
 			
 			for( zy=0; zy<SCREEN_PIXELSIZE; zy++ )
 			{
