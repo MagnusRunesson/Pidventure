@@ -82,6 +82,7 @@ bool init()
 		}
 	}
 	
+	SDL_GL_SetSwapInterval(1);
 	printf( "screen surface=0x%016llx\n", (unsigned long long)screenSurface );
 	printf( "screen surface pixels=0x%016llx\n", (unsigned long long)(screenSurface->pixels) );
 	printf( "screen surface width=%i, height=%i, bpp=%i, bytespp=%i\n", screenSurface->w, screenSurface->h, screenSurface->format->BitsPerPixel, screenSurface->format->BytesPerPixel );
