@@ -8,18 +8,26 @@
 
 #include "Engine/Core/Debug.h"
 #include "Engine/Graphics/Screen.h"
-#include "Pidventure.h"
+#include "Engine/IO/Joypad.h"
+#include "Pidventure/Pidventure.h"
 
 float t;
 
+CPlayer* pPlayer;
+
 void game_setup()
 {
+	pPlayer = new CPlayer();
+
 	t = 0.0f;
 }
 
 void game_loop()
 {
 	float dt = 1.0f / 60.0f;
+	
+	pPlayer->Update();
+	
 	t += dt * 0.5f;
 	if( t > 2.0f )
 		t -= 2.0f;

@@ -30,6 +30,9 @@
 		257AE6DA1D7800E300CACB74 /* AudioSource.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 257AE6D41D7800E300CACB74 /* AudioSource.cpp */; settings = {ASSET_TAGS = (); }; };
 		257AE6DB1D7800E300CACB74 /* AudioStream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 257AE6D61D7800E300CACB74 /* AudioStream.cpp */; settings = {ASSET_TAGS = (); }; };
 		257AE6DF1D78023D00CACB74 /* Pidventure.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 257AE6DD1D78023D00CACB74 /* Pidventure.cpp */; settings = {ASSET_TAGS = (); }; };
+		257D92541D794A03006B6512 /* PlayerAvatar.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 257D92521D794A03006B6512 /* PlayerAvatar.cpp */; settings = {ASSET_TAGS = (); }; };
+		257D92591D794A63006B6512 /* Player.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 257D92551D794A63006B6512 /* Player.cpp */; settings = {ASSET_TAGS = (); }; };
+		257D925A1D794A63006B6512 /* PlayerInventory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 257D92571D794A63006B6512 /* PlayerInventory.cpp */; settings = {ASSET_TAGS = (); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -92,6 +95,12 @@
 		257AE6D71D7800E300CACB74 /* AudioStream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AudioStream.h; path = Engine/Audio/AudioStream.h; sourceTree = "<group>"; };
 		257AE6DD1D78023D00CACB74 /* Pidventure.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Pidventure.cpp; path = Pidventure/Pidventure.cpp; sourceTree = "<group>"; };
 		257AE6DE1D78023D00CACB74 /* Pidventure.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Pidventure.h; path = Pidventure/Pidventure.h; sourceTree = "<group>"; };
+		257D92521D794A03006B6512 /* PlayerAvatar.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = PlayerAvatar.cpp; path = Pidventure/Player/PlayerAvatar.cpp; sourceTree = "<group>"; };
+		257D92531D794A03006B6512 /* PlayerAvatar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PlayerAvatar.h; path = Pidventure/Player/PlayerAvatar.h; sourceTree = "<group>"; };
+		257D92551D794A63006B6512 /* Player.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Player.cpp; path = Pidventure/Player/Player.cpp; sourceTree = "<group>"; };
+		257D92561D794A63006B6512 /* Player.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Player.h; path = Pidventure/Player/Player.h; sourceTree = "<group>"; };
+		257D92571D794A63006B6512 /* PlayerInventory.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = PlayerInventory.cpp; path = Pidventure/Player/PlayerInventory.cpp; sourceTree = "<group>"; };
+		257D92581D794A63006B6512 /* PlayerInventory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PlayerInventory.h; path = Pidventure/Player/PlayerInventory.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -233,10 +242,24 @@
 		257AE6DC1D78022200CACB74 /* Pidventure */ = {
 			isa = PBXGroup;
 			children = (
+				257D92511D7949D1006B6512 /* Player */,
 				257AE6DD1D78023D00CACB74 /* Pidventure.cpp */,
 				257AE6DE1D78023D00CACB74 /* Pidventure.h */,
 			);
 			name = Pidventure;
+			sourceTree = "<group>";
+		};
+		257D92511D7949D1006B6512 /* Player */ = {
+			isa = PBXGroup;
+			children = (
+				257D92551D794A63006B6512 /* Player.cpp */,
+				257D92561D794A63006B6512 /* Player.h */,
+				257D92571D794A63006B6512 /* PlayerInventory.cpp */,
+				257D92581D794A63006B6512 /* PlayerInventory.h */,
+				257D92521D794A03006B6512 /* PlayerAvatar.cpp */,
+				257D92531D794A03006B6512 /* PlayerAvatar.h */,
+			);
+			name = Player;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -296,12 +319,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				257AE6B41D6B548100CACB74 /* BitHelpers.cpp in Sources */,
+				257D92541D794A03006B6512 /* PlayerAvatar.cpp in Sources */,
 				257AE6A01D6B507700CACB74 /* TileMap.cpp in Sources */,
 				257AE6CB1D77FF9400CACB74 /* Joypad.cpp in Sources */,
 				257AE69F1D6B507700CACB74 /* TileBank.cpp in Sources */,
 				257AE6C41D700AFA00CACB74 /* Timer.cpp in Sources */,
 				257AE6AD1D6B507E00CACB74 /* GameObjectTemplate.cpp in Sources */,
 				257AE6AC1D6B507E00CACB74 /* GameObjectManager.cpp in Sources */,
+				257D92591D794A63006B6512 /* Player.cpp in Sources */,
 				257AE6B51D6B548100CACB74 /* Debug.cpp in Sources */,
 				257AE6AB1D6B507E00CACB74 /* GameObject.cpp in Sources */,
 				257AE6C71D77FF4900CACB74 /* main.cpp in Sources */,
@@ -312,6 +337,7 @@
 				257AE69A1D6B507700CACB74 /* Animation.cpp in Sources */,
 				257AE6CF1D7800BF00CACB74 /* AudioHandler.cpp in Sources */,
 				257AE69D1D6B507700CACB74 /* Sprite.cpp in Sources */,
+				257D925A1D794A63006B6512 /* PlayerInventory.cpp in Sources */,
 				257AE6DB1D7800E300CACB74 /* AudioStream.cpp in Sources */,
 				257AE69C1D6B507700CACB74 /* Screen.cpp in Sources */,
 				257AE6DF1D78023D00CACB74 /* Pidventure.cpp in Sources */,

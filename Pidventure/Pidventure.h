@@ -9,5 +9,8 @@
 #ifndef Pidventure_h
 #define Pidventure_h
 
+#include "Pidventure/Player/Player.h"
+#include "Pidventure/Player/PlayerAvatar.h"
+#include "Pidventure/Player/PlayerInventory.h"
 
 #endif /* Pidventure_h */
