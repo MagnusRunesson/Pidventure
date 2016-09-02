@@ -6,6 +6,7 @@
 //  Copyright © 2016 Magnus Runesson. All rights reserved.
 //
 
+#include "Engine/Core/Debug.h"
 #include "Engine/Graphics/Screen.h"
 #include "Pidventure.h"
 
@@ -40,9 +41,14 @@ void game_loop()
 			screenBuffer[wrofs*4 + 2] = fy;
 		}
 	}
+	
+	if(padGetKeys() & PAD_KEYMASK_PRIMARY)
+	{
+		screenBuffer[0] = 1.0f;
+	}
 }
 
 void game_debugTrigger(int _id)
 {
-	
+	debugLog("DebugTrigger %i\n", _id);
 }
