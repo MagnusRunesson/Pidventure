@@ -103,6 +103,7 @@ bool init()
 	gy = 10;
 	
 	timerInit();
+	padInit();
 	
 	dev = NULL;
 	audioInit( 11025 );
@@ -275,6 +276,7 @@ bool update()
 {
 	bool quit = DoSDL();
 
+	padUpdate();
 	game_loop();
 	
 	blit_screenBufferToSDL();
