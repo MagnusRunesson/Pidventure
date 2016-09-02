@@ -15,6 +15,11 @@
 uint32 timerStartMicros;
 uint32 timerStartMillis;
 
+float timeDelta()
+{
+	return 1.0f / 60.0f;	// Pretend we're running at 60 fps
+}
+
 uint32 micros()
 {
 	auto now = std::chrono::high_resolution_clock::now().time_since_epoch();

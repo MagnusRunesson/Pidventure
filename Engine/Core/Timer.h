@@ -13,6 +13,8 @@
 
 void timerInit();
 
+float timeDelta();
+
 uint32 nanos();
 uint32 micros();
 uint32 millis();
