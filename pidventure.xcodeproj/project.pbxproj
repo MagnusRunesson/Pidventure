@@ -34,6 +34,7 @@
 		257D92591D794A63006B6512 /* Player.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 257D92551D794A63006B6512 /* Player.cpp */; settings = {ASSET_TAGS = (); }; };
 		257D925A1D794A63006B6512 /* PlayerInventory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 257D92571D794A63006B6512 /* PlayerInventory.cpp */; settings = {ASSET_TAGS = (); }; };
 		25F9308E1D7E83640026DA4C /* file_osx.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 25F9308C1D7E83640026DA4C /* file_osx.cpp */; settings = {ASSET_TAGS = (); }; };
+		25F930971D7E8A560026DA4C /* Image.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 25F930961D7E8A560026DA4C /* Image.cpp */; settings = {ASSET_TAGS = (); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -110,6 +111,7 @@
 		25F930931D7E88FD0026DA4C /* Scene.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Scene.h; path = Engine/Scene/Scene.h; sourceTree = "<group>"; };
 		25F930941D7E89290026DA4C /* Graphics.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Graphics.h; path = Engine/Graphics/Graphics.h; sourceTree = "<group>"; };
 		25F930951D7E89660026DA4C /* Core.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Core.h; path = Engine/Core/Core.h; sourceTree = "<group>"; };
+		25F930961D7E8A560026DA4C /* Image.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Image.cpp; path = Engine/Graphics/Image.cpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -189,6 +191,7 @@
 				257AE6B71D6B557A00CACB74 /* SpriteRenderer.h */,
 				257AE68A1D6B507700CACB74 /* Animation.cpp */,
 				257AE68B1D6B507700CACB74 /* Animation.h */,
+				25F930961D7E8A560026DA4C /* Image.cpp */,
 				257AE68D1D6B507700CACB74 /* Image.h */,
 				257AE68E1D6B507700CACB74 /* Screen.cpp */,
 				257AE68F1D6B507700CACB74 /* Screen.h */,
@@ -341,6 +344,7 @@
 				257AE6A01D6B507700CACB74 /* TileMap.cpp in Sources */,
 				257AE6CB1D77FF9400CACB74 /* Joypad.cpp in Sources */,
 				257AE69F1D6B507700CACB74 /* TileBank.cpp in Sources */,
+				25F930971D7E8A560026DA4C /* Image.cpp in Sources */,
 				257AE6C41D700AFA00CACB74 /* Timer.cpp in Sources */,
 				257AE6AD1D6B507E00CACB74 /* GameObjectTemplate.cpp in Sources */,
 				257AE6AC1D6B507E00CACB74 /* GameObjectManager.cpp in Sources */,
