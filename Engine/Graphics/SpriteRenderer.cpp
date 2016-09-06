@@ -130,7 +130,7 @@ void SpriteRenderer::debugPrintStats()
 		if( sprite->image != NULL )
 		{
 			numUsed++;
-			debugLog(" - Image: %s", sprite->image->DEBUG_name );
+			//debugLog(" - Image: %s", sprite->image->DEBUG_name );
 		}
 		debugLog("\n");
 	}

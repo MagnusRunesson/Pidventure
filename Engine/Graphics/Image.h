@@ -14,11 +14,12 @@
 class Image
 {
 public:
+	uint32 header;
 	uint16 w;
 	uint16 h;
-	const uint16* pixels;
-	const uint8* alpha;
-	const uint8* DEBUG_name;
+	uint32 flags;
+	uint32 padding;
+	float pixels[];
 };
 
 #endif /* Image_hpp */
