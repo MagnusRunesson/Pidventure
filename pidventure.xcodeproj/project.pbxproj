@@ -33,6 +33,7 @@
 		257D92541D794A03006B6512 /* PlayerAvatar.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 257D92521D794A03006B6512 /* PlayerAvatar.cpp */; settings = {ASSET_TAGS = (); }; };
 		257D92591D794A63006B6512 /* Player.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 257D92551D794A63006B6512 /* Player.cpp */; settings = {ASSET_TAGS = (); }; };
 		257D925A1D794A63006B6512 /* PlayerInventory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 257D92571D794A63006B6512 /* PlayerInventory.cpp */; settings = {ASSET_TAGS = (); }; };
+		25F9308E1D7E83640026DA4C /* file_osx.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 25F9308C1D7E83640026DA4C /* file_osx.cpp */; settings = {ASSET_TAGS = (); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -101,6 +102,14 @@
 		257D92561D794A63006B6512 /* Player.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Player.h; path = Pidventure/Player/Player.h; sourceTree = "<group>"; };
 		257D92571D794A63006B6512 /* PlayerInventory.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = PlayerInventory.cpp; path = Pidventure/Player/PlayerInventory.cpp; sourceTree = "<group>"; };
 		257D92581D794A63006B6512 /* PlayerInventory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PlayerInventory.h; path = Pidventure/Player/PlayerInventory.h; sourceTree = "<group>"; };
+		25F9308C1D7E83640026DA4C /* file_osx.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = file_osx.cpp; path = Engine/Platform/OSX/file_osx.cpp; sourceTree = "<group>"; };
+		25F9308F1D7E87D80026DA4C /* File.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = File.h; path = Engine/IO/File.h; sourceTree = "<group>"; };
+		25F930901D7E88250026DA4C /* Engine.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Engine.h; path = Engine/Engine.h; sourceTree = "<group>"; };
+		25F930911D7E88A40026DA4C /* Audio.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Audio.h; path = Engine/Audio/Audio.h; sourceTree = "<group>"; };
+		25F930921D7E88D80026DA4C /* IO.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = IO.h; path = Engine/IO/IO.h; sourceTree = "<group>"; };
+		25F930931D7E88FD0026DA4C /* Scene.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Scene.h; path = Engine/Scene/Scene.h; sourceTree = "<group>"; };
+		25F930941D7E89290026DA4C /* Graphics.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Graphics.h; path = Engine/Graphics/Graphics.h; sourceTree = "<group>"; };
+		25F930951D7E89660026DA4C /* Core.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Core.h; path = Engine/Core/Core.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -144,6 +153,7 @@
 		257AE6841D6B4FF900CACB74 /* Engine */ = {
 			isa = PBXGroup;
 			children = (
+				25F930901D7E88250026DA4C /* Engine.h */,
 				257AE6CC1D7800B600CACB74 /* Audio */,
 				257AE6C81D77FF8A00CACB74 /* IO */,
 				257AE6C51D77FF3B00CACB74 /* Platform/OSX */,
@@ -157,6 +167,7 @@
 		257AE6851D6B504B00CACB74 /* Core */ = {
 			isa = PBXGroup;
 			children = (
+				25F930951D7E89660026DA4C /* Core.h */,
 				257AE6AF1D6B548100CACB74 /* BitHelpers.cpp */,
 				257AE6B01D6B548100CACB74 /* BitHelpers.h */,
 				257AE6B11D6B548100CACB74 /* Debug.cpp */,
@@ -171,6 +182,7 @@
 		257AE6861D6B505800CACB74 /* Graphics */ = {
 			isa = PBXGroup;
 			children = (
+				25F930941D7E89290026DA4C /* Graphics.h */,
 				257AE6B91D6B55F800CACB74 /* TileRenderer.cpp */,
 				257AE6BA1D6B55F800CACB74 /* TileRenderer.h */,
 				257AE6B61D6B557A00CACB74 /* SpriteRenderer.cpp */,
@@ -193,6 +205,7 @@
 		257AE6871D6B505F00CACB74 /* Scene */ = {
 			isa = PBXGroup;
 			children = (
+				25F930931D7E88FD0026DA4C /* Scene.h */,
 				257AE6A21D6B507E00CACB74 /* Camera.cpp */,
 				257AE6A31D6B507E00CACB74 /* Camera.h */,
 				257AE6A41D6B507E00CACB74 /* GameObject.cpp */,
@@ -209,6 +222,7 @@
 			isa = PBXGroup;
 			children = (
 				257AE6C61D77FF4900CACB74 /* main.cpp */,
+				25F9308C1D7E83640026DA4C /* file_osx.cpp */,
 			);
 			name = Platform/OSX;
 			sourceTree = "<group>";
@@ -216,8 +230,10 @@
 		257AE6C81D77FF8A00CACB74 /* IO */ = {
 			isa = PBXGroup;
 			children = (
+				25F930921D7E88D80026DA4C /* IO.h */,
 				257AE6C91D77FF9400CACB74 /* Joypad.cpp */,
 				257AE6CA1D77FF9400CACB74 /* Joypad.h */,
+				25F9308F1D7E87D80026DA4C /* File.h */,
 			);
 			name = IO;
 			sourceTree = "<group>";
@@ -225,6 +241,7 @@
 		257AE6CC1D7800B600CACB74 /* Audio */ = {
 			isa = PBXGroup;
 			children = (
+				25F930911D7E88A40026DA4C /* Audio.h */,
 				257AE6D01D7800E300CACB74 /* AudioData.cpp */,
 				257AE6D11D7800E300CACB74 /* AudioData.h */,
 				257AE6D21D7800E300CACB74 /* AudioMixer.cpp */,
@@ -320,6 +337,7 @@
 			files = (
 				257AE6B41D6B548100CACB74 /* BitHelpers.cpp in Sources */,
 				257D92541D794A03006B6512 /* PlayerAvatar.cpp in Sources */,
+				25F9308E1D7E83640026DA4C /* file_osx.cpp in Sources */,
 				257AE6A01D6B507700CACB74 /* TileMap.cpp in Sources */,
 				257AE6CB1D77FF9400CACB74 /* Joypad.cpp in Sources */,
 				257AE69F1D6B507700CACB74 /* TileBank.cpp in Sources */,
