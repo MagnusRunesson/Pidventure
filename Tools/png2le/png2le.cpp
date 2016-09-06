@@ -35,21 +35,21 @@ float pixels[] = {
 void writeHeader( FILE* f, SDL_Surface* image )
 {
 	unsigned int header = 'PEI0';
-	fwrite(&header, 1, 4, f);
+	fwrite(&header, 4, 1, f);
 	
 	unsigned short width = image->w;
-	fwrite(&width, 1, 2, f);
+	fwrite(&width, 2, 1, f);
 	
 	unsigned short height = image->h;
-	fwrite(&height, 1, 2, f);
+	fwrite(&height, 2, 1, f);
 	
 	unsigned int flags = 0;
 	if( SDL_ISPIXELFORMAT_ALPHA( image->format->format ))
 		flags |= 1;
-	fwrite(&flags, 1, 4, f);
+	fwrite(&flags, 4, 1, f);
 
 	unsigned int padding = 0;
-	fwrite(&padding, 1, 4, f);
+	fwrite(&padding, 4, 1, f);
 }
 
 void writePixels( FILE* f, SDL_Surface* image )
@@ -58,7 +58,6 @@ void writePixels( FILE* f, SDL_Surface* image )
 	int x, y;
 	for( y=0; y<image->h; y++ )
 	{
-		fprintf( f, "\t" );
 		for( x=0; x<image->w; x++ )
 		{
 			int rofs = ((y*image->w)+x)*4;
@@ -78,11 +77,23 @@ void writePixels( FILE* f, SDL_Surface* image )
 			fa = fmaxf(0.0f, fminf(fa, 1.0f));
 			
 			//printf("x=%02i, y=%02i: r=%.5f, g=%.5f, b=%.5f, a=%.5f\n", x, y, fr, fg, fb, fa);
+			//printf("x=%2i y=%2i: r=%02x, g=%02x, b=%02x, a=%02x\n", x, y, br, bg, bb, ba);
 			
-			fwrite(&fr, 1, 4, f);
-			fwrite(&fg, 1, 4, f);
-			fwrite(&fb, 1, 4, f);
-			fwrite(&fa, 1, 4, f);
+			/*
+			if((x==0) && (y==0)) {
+				unsigned char* pfest = (unsigned char*)&fr;
+				printf("%02x,%02x,%02x,%02x\n", pfest[0], pfest[1], pfest[2], pfest[3]);
+			}
+			 */
+			
+			/*fwrite(&br, 1, 1, f);
+			fwrite(&bg, 1, 1, f);
+			fwrite(&bb, 1, 1, f);
+			fwrite(&ba, 1, 1, f);*/
+			fwrite(&fr, 4, 1, f);
+			fwrite(&fg, 4, 1, f);
+			fwrite(&fb, 4, 1, f);
+			fwrite(&fa, 4, 1, f);
 		}
 	}
 }
@@ -103,7 +114,7 @@ FILE* openOutfileLE( char* _baseOutFileName )
 {
 	char outname_c[ 2048 ];
 	sprintf( outname_c, "%s.pei", _baseOutFileName );
-	FILE* f = fopen( outname_c, "w" );
+	FILE* f = fopen( outname_c, "wb" );
 	
 	return f;
 }
