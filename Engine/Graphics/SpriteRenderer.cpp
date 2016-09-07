@@ -115,6 +115,43 @@ void SpriteRenderer::SortSprites( Sprite** _apSprites )
 	} while( sortAgain );
 }
 
+void SpriteRenderer::Render()
+{
+	int i;
+	for(i=0; i<MAX_SPRITES; i++ )
+	{
+		Sprite* pSprite = m_sortedSprites[ i ];
+		if(pSprite == NULL)
+			break;
+		
+		if( pSprite->flags & SPRITE_FLAG_ENABLED )
+		{
+			int basex = (int)pSprite->x;
+			int basey = (int)pSprite->y;
+			int x, y;
+			const Image* pImage = pSprite->image;
+			const float* pReadPixels = pImage->pixels;
+			for(y=0; y<pImage->h; y++)
+			{
+				for(x=0; x<pImage->w; x++)
+				{
+					//int readofs = ((y*pTestImage->w) + x) * 4;
+					int writeOfs = (((basey+y)*SCREEN_WIDTH) + (basex+x)) * 4;
+					float r = *pReadPixels; pReadPixels++;
+					float g = *pReadPixels; pReadPixels++;
+					float b = *pReadPixels; pReadPixels++;
+					float a = *pReadPixels; pReadPixels++;
+					float ia = 1.0f-a;
+					screenBuffer[ writeOfs+0 ] = (r*a)+(screenBuffer[ writeOfs+0 ]*ia);
+					screenBuffer[ writeOfs+1 ] = (g*a)+(screenBuffer[ writeOfs+1 ]*ia);
+					screenBuffer[ writeOfs+2 ] = (b*a)+(screenBuffer[ writeOfs+2 ]*ia);
+					//screenBuffer[ writeOfs+3 ] = (a;
+				}
+			}
+		}
+	}
+}
+
 extern const char* stringFromBool( bool );
 
 void SpriteRenderer::debugPrintStats()

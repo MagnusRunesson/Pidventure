@@ -39,6 +39,9 @@ public:
 	void AddSpriteToSortList( Sprite* _pSprite );
 	void SortAllSprites();
 	void SortSprites( Sprite** _apSprites );
+	
+	//
+	void Render();
 };
 
 extern SpriteRenderer spriteRenderer;
