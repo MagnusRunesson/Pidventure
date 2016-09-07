@@ -34,10 +34,10 @@ class Sprite
 public:
 	float x;
 	float y;
-	uint8 flags;
+	uint32 flags;
 	uint8 collisionIndex;
-	uint8 rendererIndex;	// A reference back to this sprite via the spriteRenderer (so the game code only have to have an uint8 as a handle to this sprite instead of a 4 byte Sprite pointer)
-	sint8 sort;
+	int rendererIndex;	// A reference back to this sprite via the spriteRenderer (so the game code only have to have an uint8 as a handle to this sprite instead of a 4 byte Sprite pointer)
+	float sort;
 
 	sint16 boundsLeft;
 	sint16 boundsRight;

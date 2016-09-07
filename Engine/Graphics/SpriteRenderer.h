@@ -14,8 +14,8 @@
 
 class Image;
 
-#define MAX_SPRITES (100)
-#define INVALID_SPRITE_RENDERER_INDEX (255)
+#define MAX_SPRITES (1024)
+#define INVALID_SPRITE_RENDERER_INDEX (-1)
 
 class SpriteRenderer
 {

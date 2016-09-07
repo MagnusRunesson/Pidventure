@@ -21,7 +21,7 @@ void Sprite::Reboot()
 {
 	x = 127.0f;
 	y = 127.0f;
-	sort = 0;
+	sort = 0.0f;
 	flags = 0;
 	image = NULL;
 	collisionIndex = 0;
