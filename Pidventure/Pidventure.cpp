@@ -9,6 +9,7 @@
 #include "Engine/Core/Debug.h"
 #include "Engine/Graphics/Screen.h"
 #include "Engine/Graphics/Image.h"
+#include "Engine/Graphics/SpriteRenderer.h"
 #include "Engine/IO/Joypad.h"
 #include "Pidventure/Pidventure.h"
 
@@ -16,14 +17,18 @@ float t;
 
 CPlayer* pPlayer;
 Image* pTestImage;
+Sprite* pPlayerSprite;
 
 void game_setup()
 {
 	pPlayer = new CPlayer();
 
 	pTestImage = imageLoad("herotest.pei");
-	debugLog("pTestImage=0x%016llx\n", pTestImage);
-	debugLog("    pixels=0x%016llx\n", pTestImage->pixels);
+	pPlayerSprite = spriteRenderer.AllocateSprite(pTestImage);
+	
+	pPlayerSprite->x = 40.0f;
+	pPlayerSprite->y = 10.0f;
+	
 	t = 0.0f;
 }
 
@@ -55,30 +60,12 @@ void game_loop()
 		}
 	}
 	
-	int basex = 10;
-	int basey = 10;
-	for(y=0; y<pTestImage->h; y++)
-	{
-		for(x=0; x<pTestImage->w; x++)
-		{
-			int readofs = ((y*pTestImage->w) + x) * 4;
-			int writeOfs = (((basey+y)*SCREEN_WIDTH) + (basex+x)) * 4;
-			float r = pTestImage->pixels[ readofs+0 ];
-			float g = pTestImage->pixels[ readofs+1 ];
-			float b = pTestImage->pixels[ readofs+2 ];
-			float a = pTestImage->pixels[ readofs+3 ];
-			float ia = 1.0f-a;
-			screenBuffer[ writeOfs+0 ] = (r*a)+(screenBuffer[ writeOfs+0 ]*ia);
-			screenBuffer[ writeOfs+1 ] = (g*a)+(screenBuffer[ writeOfs+1 ]*ia);
-			screenBuffer[ writeOfs+2 ] = (b*a)+(screenBuffer[ writeOfs+2 ]*ia);
-			//screenBuffer[ writeOfs+3 ] = (a;
-		}
-	}
-	
 	if(padGetKeys() & PAD_KEYMASK_PRIMARY)
 	{
 		screenBuffer[0] = 1.0f;
 	}
+	
+	spriteRenderer.Render();
 }
 
 void game_debugTrigger(int _id)
