@@ -115,7 +115,7 @@ void GameObjectManager::debugPrintStats()
 		{
 			numUsed++;
 			debugLog(" - Enabled: %s", stringFromBool( gameObject->IsEnabled()));
-			Sprite* sprite = gameObject->GetSprite();
+			//Sprite* sprite = gameObject->GetSprite();
 			//if( sprite != NULL ) debugLog(" - Sprite: %s", sprite->image->DEBUG_name );
 			Animation* animation = gameObject->GetAnimation();
 			if( animation != NULL ) debugLog(" - Animation: YES" );

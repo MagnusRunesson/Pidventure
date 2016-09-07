@@ -19,7 +19,7 @@ public:
 	uint16 h;
 	uint32 flags;
 	uint32 padding;
-	float pixels[];
+	float pixels[];
 };
 
 Image* imageLoad(const char* _pszFileName);
