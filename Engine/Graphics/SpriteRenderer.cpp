@@ -7,6 +7,7 @@
 //
 
 #include <stdio.h>
+#include <math.h>
 #include "Engine/Graphics/SpriteRenderer.h"
 #include "Engine/Graphics/Screen.h"
 #include "Engine/Graphics/Image.h"
@@ -126,8 +127,8 @@ void SpriteRenderer::Render()
 		
 		if( pSprite->flags & SPRITE_FLAG_ENABLED )
 		{
-			int basex = (int)pSprite->x;
-			int basey = (int)pSprite->y;
+			int basex = (int)roundf( pSprite->x );
+			int basey = (int)roundf( pSprite->y );
 			int x, y;
 			const Image* pImage = pSprite->image;
 			const float* pReadPixels = pImage->pixels;
