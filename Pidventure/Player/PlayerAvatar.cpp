@@ -10,11 +10,11 @@
 #include "Engine/Scene/GameObjectManager.h"
 #include "Pidventure/Player/PlayerAvatar.h"
 
-CPlayerAvatar::CPlayerAvatar()
+CPlayerAvatar::CPlayerAvatar( float _worldX, float _worldY )
 {
 	m_pImage = imageLoad("herotest");
 	m_pGameObject = gameObjectManager.CreateGameObject( m_pImage );
-	m_pGameObject->SetWorldPosition( 30.0f, 10.0f );
+	m_pGameObject->SetWorldPosition( _worldX, _worldY );
 }
 
 CPlayerAvatar::~CPlayerAvatar()

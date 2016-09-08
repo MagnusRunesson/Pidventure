@@ -23,6 +23,10 @@ public:
 	
 	CPlayerAvatar* m_pAvatar;
 	CPlayerInventory* m_pInventory;
+	
+private:
+	float m_worldX;
+	float m_worldY;
 };
 
 #endif /* Player_h */

@@ -15,7 +15,7 @@ class Image;
 class CPlayerAvatar
 {
 public:
-	CPlayerAvatar();
+	CPlayerAvatar( float _worldX, float _worldY );
 	~CPlayerAvatar();
 
 	Image* m_pImage;

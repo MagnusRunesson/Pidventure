@@ -7,13 +7,17 @@
 //
 
 #include "Engine/Scene/GameObject.h"
+#include "Engine/IO/Joypad.h"
 #include "Pidventure/Player/Player.h"
 #include "Pidventure/Player/PlayerAvatar.h"
 #include "Pidventure/Player/PlayerInventory.h"
 
 CPlayer::CPlayer()
 {
-	m_pAvatar = new CPlayerAvatar();
+	m_worldX = 40.0f;
+	m_worldY = 20.0f;
+
+	m_pAvatar = new CPlayerAvatar( m_worldX, m_worldY );
 	m_pInventory = new CPlayerInventory();
 }
 
@@ -25,10 +29,14 @@ CPlayer::~CPlayer()
 
 void CPlayer::SetWorldPosition( float _x, float _y )
 {
+	m_worldX = _x;
+	m_worldY = _y;
 	m_pAvatar->m_pGameObject->SetWorldPosition( _x, _y );
 }
 
 void CPlayer::Update()
 {
-	
+	m_worldX += padGetX();
+	m_worldY += padGetY();
+	m_pAvatar->m_pGameObject->SetWorldPosition( m_worldX, m_worldY );
 }
