@@ -27,6 +27,7 @@ public:
 private:
 	float m_worldX;
 	float m_worldY;
+	float m_movementSpeed;
 };
 
 #endif /* Player_h */
