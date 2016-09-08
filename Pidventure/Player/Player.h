@@ -19,6 +19,7 @@ public:
 	~CPlayer();
 	
 	void Update();
+	void SetWorldPosition( float _x, float _y );
 	
 	CPlayerAvatar* m_pAvatar;
 	CPlayerInventory* m_pInventory;

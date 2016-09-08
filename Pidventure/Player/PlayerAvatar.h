@@ -9,11 +9,17 @@
 #ifndef PlayerAvatar_h
 #define PlayerAvatar_h
 
+class GameObject;
+class Image;
+
 class CPlayerAvatar
 {
 public:
 	CPlayerAvatar();
 	~CPlayerAvatar();
+
+	Image* m_pImage;
+	GameObject* m_pGameObject;
 };
 
 #endif /* PlayerAvatar_h */

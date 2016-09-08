@@ -10,25 +10,23 @@
 #include "Engine/Graphics/Screen.h"
 #include "Engine/Graphics/Image.h"
 #include "Engine/Graphics/SpriteRenderer.h"
+#include "Engine/Scene/GameObjectManager.h"
+#include "Engine/Scene/Camera.h"
 #include "Engine/IO/Joypad.h"
 #include "Pidventure/Pidventure.h"
 
 float t;
 
 CPlayer* pPlayer;
-Image* pTestImage;
-Sprite* pPlayerSprite;
+Camera camera;
 
 void game_setup()
 {
-	pPlayer = new CPlayer();
+	Camera::main = &camera;
 
-	pTestImage = imageLoad("herotest.pei");
-	pPlayerSprite = spriteRenderer.AllocateSprite(pTestImage);
-	
-	pPlayerSprite->x = 40.0f;
-	pPlayerSprite->y = 10.0f;
-	
+	pPlayer = new CPlayer();
+	pPlayer->SetWorldPosition( 40.0f, 20.0f );
+
 	t = 0.0f;
 }
 
@@ -64,7 +62,9 @@ void game_loop()
 	{
 		screenBuffer[0] = 1.0f;
 	}
-	
+
+	gameObjectManager.Render();
+	spriteRenderer.SortAllSprites();
 	spriteRenderer.Render();
 }
 
