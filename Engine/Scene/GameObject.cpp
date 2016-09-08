@@ -54,9 +54,9 @@ void GameObject::Create( const AnimationSequenceDefinition* _animation )
 
 void GameObject::Destroy()
 {
+	SetEnabled( false );
 	spriteRenderer.FreeSprite( m_sprite );
 	m_sprite = NULL;
-	SetEnabled( false );
 }
 
 void GameObject::SetEnabled( bool _enabled )
