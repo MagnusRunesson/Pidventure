@@ -29,7 +29,7 @@ void padUpdate()
 	gkeys |= gKeyBuff;
 }
 
-uint8 padGet( sint8* _x, sint8* _y )
+uint8 padGet( float* _x, float* _y )
 {
 	*_x = padGetX();
 	*_y = padGetY();
@@ -42,20 +42,20 @@ uint8 padGetKeys()
 	return gkeys;
 }
 
-sint8 padGetX()
+float padGetX()
 {
-	sint8 ret = 0;
-	if( HasBit( gKeyDPadBuff, PAD_KEYMASK_DPAD_LEFT ))	ret -= 1;
-	if( HasBit( gKeyDPadBuff, PAD_KEYMASK_DPAD_RIGHT ))	ret += 1;
+	float ret = 0;
+	if( HasBit( gKeyDPadBuff, PAD_KEYMASK_DPAD_LEFT ))	ret -= 1.0f;
+	if( HasBit( gKeyDPadBuff, PAD_KEYMASK_DPAD_RIGHT ))	ret += 1.0f;
 	
 	return ret;
 }
 
-sint8 padGetY()
+float padGetY()
 {
-	sint8 ret = 0;
-	if( HasBit( gKeyDPadBuff, PAD_KEYMASK_DPAD_UP ))	ret -= 1;
-	if( HasBit( gKeyDPadBuff, PAD_KEYMASK_DPAD_DOWN ))	ret += 1;
+	float ret = 0;
+	if( HasBit( gKeyDPadBuff, PAD_KEYMASK_DPAD_UP ))	ret -= 1.0f;
+	if( HasBit( gKeyDPadBuff, PAD_KEYMASK_DPAD_DOWN ))	ret += 1.0f;
 	
 	return ret;
 }
