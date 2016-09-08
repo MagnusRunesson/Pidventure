@@ -7,14 +7,18 @@
 //
 
 #include <stdlib.h>
+#include <stdio.h>
 #include "Engine/Graphics/Image.h"
 #include "Engine/IO/File.h"
 
-Image* imageLoad(const char* _pszFile)
+char g_pszImageFullFileName[ 1024 ];
+
+Image* imageLoad(const char* _pszFileName)
 {
+	snprintf( g_pszImageFullFileName, 1024, "%s.pei", _pszFileName );
 	void* pData;
 	int readBytes;
-	if(fileLoad(_pszFile, &pData, &readBytes) == false)
+	if( fileLoad( g_pszImageFullFileName, &pData, &readBytes ) == false)
 		return NULL;
 	
 	return (Image*)pData;
