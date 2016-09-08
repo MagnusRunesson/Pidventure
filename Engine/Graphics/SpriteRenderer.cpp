@@ -132,16 +132,42 @@ void SpriteRenderer::Render()
 			int x, y;
 			const Image* pImage = pSprite->image;
 			const float* pReadPixels = pImage->pixels;
-			for(y=0; y<pImage->h; y++)
+			int wry = basey;
+			int wrx = basex;
+			int rdx = 0;
+			int rdw = pImage->w;
+			int rdy = 0;
+			int rdh = pImage->h;
+			
+			if( wrx < 0 )
 			{
-				for(x=0; x<pImage->w; x++)
+				rdx -= wrx;
+				wrx = 0;
+			}
+			
+			if( wrx+rdw >= SCREEN_WIDTH ) rdw = SCREEN_WIDTH-wrx;
+			if(rdw <= 0) continue;
+			
+			if( wry < 0 )
+			{
+				rdy -= wry;
+				wry = 0;
+			}
+			
+			if( wry+rdh >= SCREEN_HEIGHT ) rdh = SCREEN_HEIGHT-wry;
+			if(rdh <= 0) continue;
+			
+			
+			for(y=rdy; y<rdh; y++)
+			{
+				for(x=rdx; x<rdw; x++)
 				{
-					//int readofs = ((y*pTestImage->w) + x) * 4;
+					int readofs = ((y*pImage->w) + x) * 4;
 					int writeOfs = (((basey+y)*SCREEN_WIDTH) + (basex+x)) * 4;
-					float r = *pReadPixels; pReadPixels++;
-					float g = *pReadPixels; pReadPixels++;
-					float b = *pReadPixels; pReadPixels++;
-					float a = *pReadPixels; pReadPixels++;
+					float r = pReadPixels[ readofs+0 ];
+					float g = pReadPixels[ readofs+1 ];
+					float b = pReadPixels[ readofs+2 ];
+					float a = pReadPixels[ readofs+3 ];
 					float ia = 1.0f-a;
 					screenBuffer[ writeOfs+0 ] = (r*a)+(screenBuffer[ writeOfs+0 ]*ia);
 					screenBuffer[ writeOfs+1 ] = (g*a)+(screenBuffer[ writeOfs+1 ]*ia);
