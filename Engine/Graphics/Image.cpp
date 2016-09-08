@@ -23,3 +23,8 @@ Image* imageLoad(const char* _pszFileName)
 	
 	return (Image*)pData;
 }
+
+void imageUnload( Image* _pszImage )
+{
+	delete _pszImage;
+}

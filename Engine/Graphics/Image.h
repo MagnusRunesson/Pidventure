@@ -22,6 +22,7 @@ public:
 	float pixels[];
 };
 
-Image* imageLoad(const char* _pszFileName);
+Image* imageLoad( const char* _pszFileName );
+void imageUnload( Image* _pImage );
 
 #endif /* Image_hpp */
