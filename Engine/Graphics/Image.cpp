@@ -10,6 +10,7 @@
 #include <stdio.h>
 #include "Engine/Graphics/Image.h"
 #include "Engine/IO/File.h"
+#include "Engine/Core/Debug.h"
 
 char g_pszImageFullFileName[ 1024 ];
 
@@ -19,7 +20,10 @@ Image* imageLoad(const char* _pszFileName)
 	void* pData;
 	int readBytes;
 	if( fileLoad( g_pszImageFullFileName, &pData, &readBytes ) == false)
+	{
+		debugLog("Failed to load image '%s.pei'\n", _pszFileName);
 		return NULL;
+	}
 	
 	return (Image*)pData;
 }
