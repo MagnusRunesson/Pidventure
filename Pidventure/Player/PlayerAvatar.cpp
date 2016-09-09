@@ -12,7 +12,7 @@
 
 CPlayerAvatar::CPlayerAvatar( float _worldX, float _worldY )
 {
-	m_pImage = imageLoad("herotest");
+	m_pImage = imageLoad("sprite_herotest");
 	m_pGameObject = gameObjectManager.CreateGameObject( m_pImage );
 	m_pGameObject->SetWorldPosition( _worldX, _worldY );
 }
