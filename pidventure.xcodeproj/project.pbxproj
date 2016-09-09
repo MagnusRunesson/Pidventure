@@ -35,6 +35,7 @@
 		257D925A1D794A63006B6512 /* PlayerInventory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 257D92571D794A63006B6512 /* PlayerInventory.cpp */; settings = {ASSET_TAGS = (); }; };
 		25F9308E1D7E83640026DA4C /* file_osx.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 25F9308C1D7E83640026DA4C /* file_osx.cpp */; settings = {ASSET_TAGS = (); }; };
 		25F930971D7E8A560026DA4C /* Image.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 25F930961D7E8A560026DA4C /* Image.cpp */; settings = {ASSET_TAGS = (); }; };
+		25F9309A1D81BBD70026DA4C /* background.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 25F930981D81BBD70026DA4C /* background.cpp */; settings = {ASSET_TAGS = (); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -112,6 +113,8 @@
 		25F930941D7E89290026DA4C /* Graphics.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Graphics.h; path = Engine/Graphics/Graphics.h; sourceTree = "<group>"; };
 		25F930951D7E89660026DA4C /* Core.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Core.h; path = Engine/Core/Core.h; sourceTree = "<group>"; };
 		25F930961D7E8A560026DA4C /* Image.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Image.cpp; path = Engine/Graphics/Image.cpp; sourceTree = "<group>"; };
+		25F930981D81BBD70026DA4C /* background.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = background.cpp; path = Pidventure/background.cpp; sourceTree = "<group>"; };
+		25F930991D81BBD70026DA4C /* background.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = background.h; path = Pidventure/background.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -265,6 +268,8 @@
 				257D92511D7949D1006B6512 /* Player */,
 				257AE6DD1D78023D00CACB74 /* Pidventure.cpp */,
 				257AE6DE1D78023D00CACB74 /* Pidventure.h */,
+				25F930981D81BBD70026DA4C /* background.cpp */,
+				25F930991D81BBD70026DA4C /* background.h */,
 			);
 			name = Pidventure;
 			sourceTree = "<group>";
@@ -357,6 +362,7 @@
 				257AE6D81D7800E300CACB74 /* AudioData.cpp in Sources */,
 				257AE6AA1D6B507E00CACB74 /* Camera.cpp in Sources */,
 				257AE69A1D6B507700CACB74 /* Animation.cpp in Sources */,
+				25F9309A1D81BBD70026DA4C /* background.cpp in Sources */,
 				257AE6CF1D7800BF00CACB74 /* AudioHandler.cpp in Sources */,
 				257AE69D1D6B507700CACB74 /* Sprite.cpp in Sources */,
 				257D925A1D794A63006B6512 /* PlayerInventory.cpp in Sources */,
