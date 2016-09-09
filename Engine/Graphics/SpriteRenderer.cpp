@@ -147,7 +147,10 @@ void SpriteRenderer::Render()
 			
 			if( wrx+rdw >= SCREEN_WIDTH ) rdw = SCREEN_WIDTH-wrx;
 			if(rdw <= 0) continue;
-			
+
+			if(rdx+rdw > pImage->w) rdw = pImage->w - rdx;
+			if(rdw <= 0) continue;
+
 			if( wry < 0 )
 			{
 				rdy -= wry;
@@ -157,13 +160,16 @@ void SpriteRenderer::Render()
 			if( wry+rdh >= SCREEN_HEIGHT ) rdh = SCREEN_HEIGHT-wry;
 			if(rdh <= 0) continue;
 			
+			if(rdy+rdh > pImage->h) rdh = pImage->h - rdy;
+			if(rdh <= 0) continue;
 			
-			for(y=rdy; y<rdh; y++)
+			
+			for(y=0; y<rdh; y++)
 			{
-				for(x=rdx; x<rdw; x++)
+				for(x=0; x<rdw; x++)
 				{
-					int readofs = ((y*pImage->w) + x) * 4;
-					int writeOfs = (((basey+y)*SCREEN_WIDTH) + (basex+x)) * 4;
+					int readofs = (((rdy+y)*pImage->w) + (rdx+x)) * 4;
+					int writeOfs = (((wry+y)*SCREEN_WIDTH) + (wrx+x)) * 4;
 					float r = pReadPixels[ readofs+0 ];
 					float g = pReadPixels[ readofs+1 ];
 					float b = pReadPixels[ readofs+2 ];
