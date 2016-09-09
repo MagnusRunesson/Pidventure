@@ -54,7 +54,7 @@ public:
 	void SetRotation( int _rotation );
 	void SetFlippedX( bool _flipped );
 	void SetFlippedY( bool _flipped );
-	void SetSort( sint8 _newSort );
+	void SetSort( float _newSort );
 
 	//
 	inline void SetFlags( int _flags ) { flags |= _flags; };

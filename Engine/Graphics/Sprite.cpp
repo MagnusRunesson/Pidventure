@@ -50,7 +50,7 @@ void Sprite::SetFlippedY( bool _flipped )
 		ClrFlags( SPRITE_FLAG_FLIP_Y );
 }
 
-void Sprite::SetSort( sint8 _newSort )
+void Sprite::SetSort( float _newSort )
 {
 	sort = _newSort;
 	spriteRenderer.SortAllSprites();
