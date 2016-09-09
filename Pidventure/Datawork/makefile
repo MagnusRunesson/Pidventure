@@ -1,5 +1,5 @@
 CONV_MAP=tmx2c
-CONV_SPRITE=png2be
+CONV_SPRITE=png2le
 CONV_BANK=png2tilefest
 CONV_SFX=bin2c
 
