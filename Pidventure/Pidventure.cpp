@@ -15,6 +15,7 @@
 #include "Engine/IO/Joypad.h"
 #include "Pidventure/Pidventure.h"
 #include "Pidventure/background.h"
+#include "Pidventure/Scene.h"
 
 float t;
 
@@ -29,6 +30,7 @@ void game_setup()
 	pPlayer->SetWorldPosition( 40.0f, 20.0f );
 
 	bgInit();
+	sceneLoad( "testfest" );
 	
 	t = 0.0f;
 }

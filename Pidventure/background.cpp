@@ -17,12 +17,12 @@
 Image* bgImage[7];
 Sprite* bgSprite[7];
 float heights[7] = {
-	18.0f,
-	18.0f,
-	15.0f,
-	15.0f,
-	12.0f,
-	12.0f,
+	28.0f,
+	28.0f,
+	25.0f,
+	25.0f,
+	22.0f,
+	22.0f,
 	0.0f
 };
 
