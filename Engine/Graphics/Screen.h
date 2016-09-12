@@ -12,7 +12,7 @@
 #include "Engine/Core/Types.h"
 
 const int SCREEN_WIDTH = 96;
-const int SCREEN_HEIGHT = 64;
+const int SCREEN_HEIGHT = 72;
 
 const int COLORSHIFT_16_R = 11;
 const int COLORSHIFT_16_G = 5;
