@@ -48,8 +48,6 @@ void game_loop()
 	{
 		for(x=0; x<SCREEN_WIDTH; x++)
 		{
-			float fx = ((float)x) / ((float)SCREEN_WIDTH);
-			float fy = ((float)y) / ((float)SCREEN_HEIGHT);
 			int wrofs = (y*SCREEN_WIDTH)+x;
 			screenBuffer[wrofs*4 + 0] = 1.0f;
 			screenBuffer[wrofs*4 + 1] = 1.0f;
