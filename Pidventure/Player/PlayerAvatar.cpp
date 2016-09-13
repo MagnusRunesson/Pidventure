@@ -64,7 +64,8 @@ void CPlayerAvatar::Update()
 	
 	if( m_jumpTimer > 0.0f )
 	{
-		m_worldY -= (m_jumpTimer * m_jumpTimer * m_jumpTimer);
+		float apa = m_jumpTimer*2.0f;
+		m_worldY -= (apa*apa);
 	}
 	else
 	{
@@ -77,7 +78,7 @@ void CPlayerAvatar::Update()
 void CPlayerAvatar::Jump()
 {
 	if(m_jumpTimer <= 0.0f)
-		m_jumpTimer = 0.9f;
+		m_jumpTimer = 0.5f;
 }
 
 void CPlayerAvatar::MoveHorizontal( float _delta )
@@ -111,7 +112,7 @@ void CPlayerAvatar::MoveVertical()
 	
 	newY -= 1.0f;
 	
-	m_worldY = newY;
+	m_worldY = (int)newY;
 }
 
 void CPlayerAvatar::RefreshGameObject()
