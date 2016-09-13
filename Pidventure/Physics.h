@@ -11,5 +11,6 @@
 
 void physInit();
 bool physIsCollision(int _x, int _y);
+bool physIsWall(int _x, int _y);
 
 #endif /* Physics_h */

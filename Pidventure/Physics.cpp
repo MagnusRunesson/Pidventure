@@ -33,3 +33,14 @@ bool physIsCollision(int _x, int _y)
 	float r = physCollisionMap->pixels[ rdofs*4 + 0 ];	// Red channel is collision
 	return r > 0.5f;
 }
+
+bool physIsWall(int _x, int _y)
+{
+	if(_x < 0) return false;
+	if(_x >= physCollisionMap->w) return false;
+	if(_y < 0) return false;
+	if(_y >= physCollisionMap->h) return false;
+	int rdofs = (_y*physCollisionMap->w)+_x;
+	float g = physCollisionMap->pixels[ rdofs*4 + 1 ];	// Green channel is wall
+	return g > 0.5f;
+}
