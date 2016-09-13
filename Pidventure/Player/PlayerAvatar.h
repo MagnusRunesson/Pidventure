@@ -27,6 +27,8 @@ public:
 	void Update();
 	void SetWorldPosition( float _worldX, float _worldY );
 	void MoveHorizontal( float _delta );
+	void MoveVertical();
+	void RefreshGameObject();
 };
 
 #endif /* PlayerAvatar_h */

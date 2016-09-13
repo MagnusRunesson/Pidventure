@@ -37,4 +37,5 @@ void CPlayer::Update()
 	float dt = timeDelta();
 	
 	m_pAvatar->MoveHorizontal( padGetX() * m_movementSpeed * dt );
+	m_pAvatar->MoveVertical();
 }
