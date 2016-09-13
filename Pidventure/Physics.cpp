@@ -23,14 +23,14 @@ void physInit()
 	 */
 }
 
-bool physIsCollision(int _x, int _y)
+bool physIsGround(int _x, int _y)
 {
 	if(_x < 0) return false;
 	if(_x >= physCollisionMap->w) return false;
 	if(_y < 0) return false;
 	if(_y >= physCollisionMap->h) return false;
 	int rdofs = (_y*physCollisionMap->w)+_x;
-	float r = physCollisionMap->pixels[ rdofs*4 + 0 ];	// Red channel is collision
+	float r = physCollisionMap->pixels[ rdofs*4 + 0 ];	// Red channel is ground
 	return r > 0.5f;
 }
 

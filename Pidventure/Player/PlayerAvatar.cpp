@@ -63,7 +63,7 @@ void CPlayerAvatar::MoveVertical()
 	int i;
 	for( i=0; i<=numSteps; i++ )
 	{
-		if( physIsCollision( x, (int)newY ))
+		if( physIsGround( x, (int)newY ))
 		{
 			break;
 		}
