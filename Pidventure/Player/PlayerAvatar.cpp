@@ -9,11 +9,16 @@
 #include <math.h>
 #include "Engine/Graphics/Image.h"
 #include "Engine/Scene/GameObjectManager.h"
+#include "Engine/IO/Joypad.h"
+#include "Engine/Core/Timer.h"
+#include "Engine/Core/Debug.h"
 #include "Pidventure/Player/PlayerAvatar.h"
 #include "Pidventure/Physics.h"
 
 CPlayerAvatar::CPlayerAvatar( float _worldX, float _worldY )
 {
+	m_movementSpeed = 15.0f;
+
 	m_worldX = _worldX;
 	m_worldY = _worldY;
 	
@@ -39,7 +44,40 @@ void CPlayerAvatar::SetWorldPosition( float _worldX, float _worldY )
 
 void CPlayerAvatar::Update()
 {
+	float dt = timeDelta();
+
+	if( m_jumpTimer <= 0.0f )
+	{
+		if( padGetPressed() & PAD_KEYMASK_SECONDARY )
+		{
+			Jump();
+		}
+	}
+	else
+	{
+		m_jumpTimer -= dt;
+		if( m_jumpTimer < 0.0f )
+			m_jumpTimer = 0.0f;
+	}
 	
+	MoveHorizontal( padGetX() * m_movementSpeed * dt );
+	
+	if( m_jumpTimer > 0.0f )
+	{
+		m_worldY -= (m_jumpTimer * m_jumpTimer * m_jumpTimer);
+	}
+	else
+	{
+		MoveVertical();
+	}
+	
+	RefreshGameObject();
+}
+
+void CPlayerAvatar::Jump()
+{
+	if(m_jumpTimer <= 0.0f)
+		m_jumpTimer = 0.9f;
 }
 
 void CPlayerAvatar::MoveHorizontal( float _delta )
@@ -74,7 +112,6 @@ void CPlayerAvatar::MoveVertical()
 	newY -= 1.0f;
 	
 	m_worldY = newY;
-	m_pGameObject->SetWorldPosition( m_worldX, m_worldY );
 }
 
 void CPlayerAvatar::RefreshGameObject()

@@ -15,8 +15,6 @@
 
 CPlayer::CPlayer()
 {
-	m_movementSpeed = 15.0f;
-	
 	m_pAvatar = new CPlayerAvatar( m_worldX, m_worldY );
 	m_pInventory = new CPlayerInventory();
 }
@@ -34,8 +32,5 @@ void CPlayer::SetWorldPosition( float _x, float _y )
 
 void CPlayer::Update()
 {
-	float dt = timeDelta();
-	
-	m_pAvatar->MoveHorizontal( padGetX() * m_movementSpeed * dt );
-	m_pAvatar->MoveVertical();
+	m_pAvatar->Update();
 }

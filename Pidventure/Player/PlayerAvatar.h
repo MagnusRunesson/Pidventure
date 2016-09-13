@@ -17,6 +17,8 @@ class CPlayerAvatar
 public:
 	float m_worldX;
 	float m_worldY;
+	float m_jumpTimer;
+	float m_movementSpeed;
 	
 	CPlayerAvatar( float _worldX, float _worldY );
 	~CPlayerAvatar();
@@ -26,6 +28,7 @@ public:
 	
 	void Update();
 	void SetWorldPosition( float _worldX, float _worldY );
+	void Jump();
 	void MoveHorizontal( float _delta );
 	void MoveVertical();
 	void RefreshGameObject();
