@@ -27,7 +27,7 @@ void game_setup()
 	Camera::main = &camera;
 
 	pPlayer = new CPlayer();
-	pPlayer->SetWorldPosition( 40.0f, 20.0f );
+	pPlayer->SetWorldPosition( 40.0f, 59.0f );
 
 	bgInit();
 	sceneLoad( "testfest" );

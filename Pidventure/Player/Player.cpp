@@ -15,8 +15,6 @@
 
 CPlayer::CPlayer()
 {
-	m_worldX = 40.0f;
-	m_worldY = 20.0f;
 	m_movementSpeed = 15.0f;
 	
 	m_pAvatar = new CPlayerAvatar( m_worldX, m_worldY );
@@ -31,17 +29,12 @@ CPlayer::~CPlayer()
 
 void CPlayer::SetWorldPosition( float _x, float _y )
 {
-	m_worldX = _x;
-	m_worldY = _y;
-	m_pAvatar->m_pGameObject->SetWorldPosition( _x, _y );
+	m_pAvatar->SetWorldPosition( _x, _y );
 }
 
 void CPlayer::Update()
 {
 	float dt = timeDelta();
 	
-	m_worldX += padGetX() * m_movementSpeed * dt;
-	m_worldY += padGetY() * m_movementSpeed * dt;
-	
-	m_pAvatar->m_pGameObject->SetWorldPosition( m_worldX, m_worldY );
+	m_pAvatar->MoveHorizontal( padGetX() * m_movementSpeed * dt );
 }

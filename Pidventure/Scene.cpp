@@ -10,6 +10,7 @@
 #include "Engine/Graphics/SpriteRenderer.h"
 #include "Engine/Graphics/Image.h"
 #include "Pidventure/Scene.h"
+#include "Pidventure/Physics.h"
 
 const char* SCENE_GRAPHICSFILE_NAMES[] = {
 	"sprite_highlands_bg4",
@@ -56,6 +57,7 @@ const int SCENE_MAX_SPRITES								= 20;
 
 Sprite* sceneSprite[ SCENE_MAX_SPRITES ];
 Image* sceneImage[ SCENE_MAX_SPRITES ];
+
 void sceneLoad( const char* _pszName )
 {
 	int i;
@@ -74,4 +76,6 @@ void sceneLoad( const char* _pszName )
 		pSprite->y = SCENE_SPRITE_POSITIONS[ (i*2)+1 ];
 		pSprite->SetSort( SCENE_SPRITE_SORT[ i ]);
 	}
+	
+	physInit();
 }

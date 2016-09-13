@@ -15,11 +15,18 @@ class Image;
 class CPlayerAvatar
 {
 public:
+	float m_worldX;
+	float m_worldY;
+	
 	CPlayerAvatar( float _worldX, float _worldY );
 	~CPlayerAvatar();
 
 	Image* m_pImage;
 	GameObject* m_pGameObject;
+	
+	void Update();
+	void SetWorldPosition( float _worldX, float _worldY );
+	void MoveHorizontal( float _delta );
 };
 
 #endif /* PlayerAvatar_h */

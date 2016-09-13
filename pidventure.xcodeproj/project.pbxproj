@@ -37,6 +37,7 @@
 		25F930971D7E8A560026DA4C /* Image.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 25F930961D7E8A560026DA4C /* Image.cpp */; settings = {ASSET_TAGS = (); }; };
 		25F9309A1D81BBD70026DA4C /* background.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 25F930981D81BBD70026DA4C /* background.cpp */; settings = {ASSET_TAGS = (); }; };
 		25F9309D1D86667E0026DA4C /* Scene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 25F9309B1D86667E0026DA4C /* Scene.cpp */; settings = {ASSET_TAGS = (); }; };
+		25F930A01D87B8670026DA4C /* Physics.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 25F9309E1D87B8660026DA4C /* Physics.cpp */; settings = {ASSET_TAGS = (); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -118,6 +119,8 @@
 		25F930991D81BBD70026DA4C /* background.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = background.h; path = Pidventure/background.h; sourceTree = "<group>"; };
 		25F9309B1D86667E0026DA4C /* Scene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Scene.cpp; path = Pidventure/Scene.cpp; sourceTree = "<group>"; };
 		25F9309C1D86667E0026DA4C /* Scene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Scene.h; path = Pidventure/Scene.h; sourceTree = "<group>"; };
+		25F9309E1D87B8660026DA4C /* Physics.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Physics.cpp; path = Pidventure/Physics.cpp; sourceTree = "<group>"; };
+		25F9309F1D87B8660026DA4C /* Physics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Physics.h; path = Pidventure/Physics.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -275,6 +278,8 @@
 				25F930991D81BBD70026DA4C /* background.h */,
 				25F9309B1D86667E0026DA4C /* Scene.cpp */,
 				25F9309C1D86667E0026DA4C /* Scene.h */,
+				25F9309E1D87B8660026DA4C /* Physics.cpp */,
+				25F9309F1D87B8660026DA4C /* Physics.h */,
 			);
 			name = Pidventure;
 			sourceTree = "<group>";
@@ -375,6 +380,7 @@
 				257AE6DB1D7800E300CACB74 /* AudioStream.cpp in Sources */,
 				257AE69C1D6B507700CACB74 /* Screen.cpp in Sources */,
 				257AE6DF1D78023D00CACB74 /* Pidventure.cpp in Sources */,
+				25F930A01D87B8670026DA4C /* Physics.cpp in Sources */,
 				257AE6BB1D6B55F800CACB74 /* TileRenderer.cpp in Sources */,
 				257AE6B81D6B557A00CACB74 /* SpriteRenderer.cpp in Sources */,
 			);
