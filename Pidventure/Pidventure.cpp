@@ -60,9 +60,15 @@ void game_loop()
 		screenBuffer[0] = 1.0f;
 	}
 
-	bgSetCameraPosition( t*60.0f, 0.0f );
+	const float CAMERA_BOUNDS = 30.0f;
+	int camPlayerDiff = pPlayer->m_pAvatar->m_worldX - camera.GetWorldX();
+	if( camPlayerDiff < CAMERA_BOUNDS )
+		camera.SetWorldPosition(camera.GetWorldX()-1.0f, camera.GetWorldY());
+	if( camPlayerDiff > SCREEN_WIDTH - CAMERA_BOUNDS )
+		camera.SetWorldPosition(camera.GetWorldX()+1.0f, camera.GetWorldY());
+	
+	bgSetCameraPosition( camera.GetWorldX(), 0.0f );
 	gameObjectManager.Render();
-	spriteRenderer.SortAllSprites();
 	spriteRenderer.Render();
 }
 

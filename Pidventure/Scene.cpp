@@ -7,8 +7,9 @@
 //
 
 #include <stdlib.h>
-#include "Engine/Graphics/SpriteRenderer.h"
+#include "Engine/Scene/GameObjectManager.h"
 #include "Engine/Graphics/Image.h"
+#include "Engine/Graphics/Sprite.h"
 #include "Pidventure/Scene.h"
 #include "Pidventure/Physics.h"
 
@@ -55,7 +56,7 @@ const float SCENE_SPRITE_SORT[] = {
 
 const int SCENE_MAX_SPRITES								= 20;
 
-Sprite* sceneSprite[ SCENE_MAX_SPRITES ];
+GameObject* sceneObjects[ SCENE_MAX_SPRITES ];
 Image* sceneImage[ SCENE_MAX_SPRITES ];
 
 void sceneLoad( const char* _pszName )
@@ -63,18 +64,20 @@ void sceneLoad( const char* _pszName )
 	int i;
 	
 	for( i=0; i<SCENE_MAX_SPRITES; i++ )
-		sceneSprite[ i ] = NULL;
+		sceneObjects[ i ] = NULL;
 
 	for( i=0; i<SCENE_NUM_GRAPHICFILES; i++ )
 	{
 		Image* pImage = imageLoad( SCENE_GRAPHICSFILE_NAMES[ i ]);
-		sceneImage[ i ] = pImage;
+		GameObject* pGO = gameObjectManager.CreateGameObject( pImage );
 		
-		Sprite* pSprite = spriteRenderer.AllocateSprite( pImage );
-		sceneSprite[ i ] = pSprite;
-		pSprite->x = SCENE_SPRITE_POSITIONS[ (i*2)+0 ];
-		pSprite->y = SCENE_SPRITE_POSITIONS[ (i*2)+1 ];
+		sceneImage[ i ] = pImage;
+		sceneObjects[ i ] = pGO;
+		
+		Sprite* pSprite = pGO->GetSprite();
+		pGO->SetWorldPosition( SCENE_SPRITE_POSITIONS[ (i*2)+0 ], SCENE_SPRITE_POSITIONS[ (i*2)+1 ]);
 		pSprite->SetSort( SCENE_SPRITE_SORT[ i ]);
+		
 	}
 	
 	physInit();
