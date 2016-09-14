@@ -38,6 +38,7 @@
 		25F9309A1D81BBD70026DA4C /* background.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 25F930981D81BBD70026DA4C /* background.cpp */; settings = {ASSET_TAGS = (); }; };
 		25F9309D1D86667E0026DA4C /* Scene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 25F9309B1D86667E0026DA4C /* Scene.cpp */; settings = {ASSET_TAGS = (); }; };
 		25F930A01D87B8670026DA4C /* Physics.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 25F9309E1D87B8660026DA4C /* Physics.cpp */; settings = {ASSET_TAGS = (); }; };
+		25F930A31D890D250026DA4C /* CameraController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 25F930A11D890D250026DA4C /* CameraController.cpp */; settings = {ASSET_TAGS = (); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -121,6 +122,8 @@
 		25F9309C1D86667E0026DA4C /* Scene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Scene.h; path = Pidventure/Scene.h; sourceTree = "<group>"; };
 		25F9309E1D87B8660026DA4C /* Physics.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Physics.cpp; path = Pidventure/Physics.cpp; sourceTree = "<group>"; };
 		25F9309F1D87B8660026DA4C /* Physics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Physics.h; path = Pidventure/Physics.h; sourceTree = "<group>"; };
+		25F930A11D890D250026DA4C /* CameraController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CameraController.cpp; path = Pidventure/CameraController.cpp; sourceTree = "<group>"; };
+		25F930A21D890D250026DA4C /* CameraController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CameraController.h; path = Pidventure/CameraController.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -280,6 +283,8 @@
 				25F9309C1D86667E0026DA4C /* Scene.h */,
 				25F9309E1D87B8660026DA4C /* Physics.cpp */,
 				25F9309F1D87B8660026DA4C /* Physics.h */,
+				25F930A11D890D250026DA4C /* CameraController.cpp */,
+				25F930A21D890D250026DA4C /* CameraController.h */,
 			);
 			name = Pidventure;
 			sourceTree = "<group>";
@@ -358,6 +363,7 @@
 				25F9308E1D7E83640026DA4C /* file_osx.cpp in Sources */,
 				257AE6A01D6B507700CACB74 /* TileMap.cpp in Sources */,
 				257AE6CB1D77FF9400CACB74 /* Joypad.cpp in Sources */,
+				25F930A31D890D250026DA4C /* CameraController.cpp in Sources */,
 				257AE69F1D6B507700CACB74 /* TileBank.cpp in Sources */,
 				25F930971D7E8A560026DA4C /* Image.cpp in Sources */,
 				257AE6C41D700AFA00CACB74 /* Timer.cpp in Sources */,
