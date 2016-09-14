@@ -6,12 +6,14 @@
 //  Copyright © 2016 Magnus Runesson. All rights reserved.
 //
 
+#include <stdlib.h>
 #include "Engine/Core/Debug.h"
 #include "Engine/Graphics/Screen.h"
 #include "Engine/Graphics/Image.h"
 #include "Engine/Graphics/SpriteRenderer.h"
 #include "Engine/Scene/GameObjectManager.h"
 #include "Engine/IO/Joypad.h"
+#include "Engine/Graphics/Animation.h"
 #include "Pidventure/Pidventure.h"
 #include "Pidventure/background.h"
 #include "Pidventure/Scene.h"
@@ -19,7 +21,43 @@
 
 float t;
 
+AnimationFrameDefinition frames[] = {
+	{
+		"sprite_prop_flower_red_af00",
+		NULL,
+		4,
+		0,
+		1.0f, 4.0f,
+	},
+	{
+		"sprite_prop_flower_red_af01",
+		NULL,
+		4,
+		0,
+		2.0f, 4.0f,
+	},
+	{
+		"sprite_prop_flower_red_af02",
+		NULL,
+		4,
+		0,
+		2.0f, 3.0f,
+	},
+	{
+		"sprite_prop_flower_red_af03",
+		NULL,
+		4,
+		0,
+		1.0f, 3.0f,
+	},
+};
+
+AnimationSequenceDefinition anim = {
+	sizeof(frames) / sizeof(AnimationFrameDefinition), 0, true, frames,
+};
+
 CPlayer* pPlayer;
+GameObject* pAnimatedFlowers;
 
 void game_setup()
 {
@@ -30,6 +68,12 @@ void game_setup()
 	cameraInit( pPlayer->m_pAvatar );
 	bgInit();
 	sceneLoad( "testfest" );
+
+	anim.LoadImages();
+
+	pAnimatedFlowers = gameObjectManager.CreateGameObject( &anim );
+	pAnimatedFlowers->SetWorldPosition(30.0f, 30.0f);
+	pAnimatedFlowers->GetAnimation()->Play();
 	
 	t = 0.0f;
 }
@@ -59,6 +103,7 @@ void game_loop()
 		screenBuffer[0] = 1.0f;
 	}
 
+	gameObjectManager.Update();
 	cameraUpdate();
 	bgSetCameraPosition( cameraWorldX(), 0.0f );
 	gameObjectManager.Render();

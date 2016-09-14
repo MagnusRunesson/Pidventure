@@ -17,11 +17,12 @@ class Image;
 class AnimationFrameDefinition
 {
 public:
+	char pszFileName[ 128 ];
 	const Image* sourceImage;
 	int Duration;
 	uint8 Flags;
-	sint8 HotspotX;
-	sint8 HotspotY;
+	float HotspotX;
+	float HotspotY;
 };
 
 class AnimationSequenceDefinition
@@ -30,8 +31,10 @@ public:
 	int NumFrames;
 	int NumLoops;
 	bool Loop;
-	const AnimationFrameDefinition* Frames;
-	const char* DEBUG_name;
+	AnimationFrameDefinition* Frames;
+	//const char* DEBUG_name;
+	
+	void LoadImages();
 };
 
 class Animation

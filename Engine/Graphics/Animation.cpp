@@ -10,6 +10,19 @@
 #include "Engine/Scene/GameObject.h"
 #include "Engine/Graphics/Sprite.h"
 #include "Engine/Graphics/Animation.h"
+#include "Engine/Graphics/Image.h"
+#include "Engine/Core/Debug.h"
+
+void AnimationSequenceDefinition::LoadImages()
+{
+	int i;
+	for( i=0; i<NumFrames; i++ )
+	{
+		AnimationFrameDefinition* pFrame = &Frames[ i ];
+		debugLog("Loading image %s\n", pFrame->pszFileName );
+		pFrame->sourceImage = imageLoad( pFrame->pszFileName );
+	}
+}
 
 void Animation::Create( const AnimationSequenceDefinition* _pSequence, GameObject* _pTarget )
 {
