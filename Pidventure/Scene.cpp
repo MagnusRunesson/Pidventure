@@ -29,9 +29,9 @@ const char* SCENE_GRAPHICSFILE_NAMES[] = {
 const int SCENE_NUM_GRAPHICFILES						= sizeof(SCENE_GRAPHICSFILE_NAMES) / sizeof(const char*);
 
 const int SCENE_SPRITE_POSITIONS[] = {
-	0, 48,
+	0, 42,
 	0, 60,
-	61, 60,
+	61, 48,
 	48, 66,
 	35, 51,
 	32, 56,
