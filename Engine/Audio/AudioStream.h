@@ -9,7 +9,7 @@
 #ifndef AudioStream_h
 #define AudioStream_h
 
-#include "Engine/Core/types.h"
+#include "Engine/Core/Types.h"
 
 #define STREAM_BUFFER_SIZE (2048)
 

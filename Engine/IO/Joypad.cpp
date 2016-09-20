@@ -10,7 +10,7 @@
 #include "Engine/IO/Joypad.h"
 #include "Engine/Core/BitHelpers.h"
 
-#ifdef ENGINE_TARGET_MACOSX
+#ifndef ENGINE_TARGET_TINYARCADE
 
 extern int gKeyDPadBuff;
 

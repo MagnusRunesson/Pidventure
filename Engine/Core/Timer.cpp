@@ -6,11 +6,11 @@
 //  Copyright © 2016 Magnus Runesson. All rights reserved.
 //
 
-#include "SDL2/SDL.h"
+//#include "SDL2/SDL.h"
 #include <chrono>
 
-#include "Timer.h"
-#include "types.h"
+#include "Engine/Core/Timer.h"
+#include "Engine/Core/Types.h"
 
 uint32 timerStartMicros;
 uint32 timerStartMillis;
@@ -41,6 +41,7 @@ uint32 nanos()
 	return ret;
 }
 
+/*
 void delay( uint32 milliseconds )
 {
 	SDL_Delay( milliseconds );
@@ -50,6 +51,7 @@ void delayMicroseconds( uint32 microseconds )
 {
 	delay( microseconds / 1000 );
 }
+ */
 
 void timerInit()
 {

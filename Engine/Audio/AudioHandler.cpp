@@ -26,6 +26,12 @@ void Audio_Handler_SDL( void *udata, uint8 *stream, int len )
 	}
 }
 
+#elif ENGINE_TARGET_RPI
+
+void Audio_Handler (void)
+{
+}
+
 #else
 
 #ifdef __cplusplus

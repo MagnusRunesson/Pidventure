@@ -11,7 +11,7 @@
 #include "Engine/Graphics/Sprite.h"
 #include "Engine/Graphics/SpriteRenderer.h"
 #include "Engine/Graphics/Screen.h"
-#include "Engine/Core/debug.h"
+#include "Engine/Core/Debug.h"
 #include "Pidventure/background.h"
 
 Image* bgImage[7];

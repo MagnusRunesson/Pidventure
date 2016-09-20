@@ -124,15 +124,15 @@ void AudioMixer::Update()
 	}
 }
 
-#ifdef ENGINE_TARGET_MACOSX
-
-extern void audioInit( int _frequency );
-
-#else
+#ifdef ENGINE_TARGET_TINYARCADE
 
 void tcConfigure( uint32 sampleRate );
 void tcStart();
 void tcStop();
+
+#else
+
+extern void audioInit( int _frequency );
 
 #endif
 
@@ -140,12 +140,12 @@ void AudioMixer::SetFrequency( int _frequency )
 {
 	outputBufferSize = _frequency >> 5;
 	
-#ifdef ENGINE_TARGET_MACOSX
-	audioInit( _frequency );
-#else
+#ifdef ENGINE_TARGET_TINYARCADE
 	tcStop();
 	tcConfigure( _frequency );
 	tcStart();
+#else
+	audioInit( _frequency );
 #endif
 }
 

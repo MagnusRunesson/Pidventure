@@ -8,7 +8,7 @@
 
 #include "Engine/Audio/AudioStream.h"
 
-#ifndef ENGINE_TARGET_MACOSX
+#ifdef ENGINE_TARGET_TINYARCADE
 
 #include <SdFat.h>
 
@@ -49,6 +49,8 @@ void AudioStream::OpenStream( const char *_pszFileName )
 	Reset();
 	
 #ifdef ENGINE_TARGET_MACOSX
+
+#elif ENGINE_TARGET_RPI
 	
 #else
 	// Initialize SD lib
@@ -87,6 +89,8 @@ void AudioStream::CloseStream()
 	Pause();
 #ifdef ENGINE_TARGET_MACOSX
 	
+#elif ENGINE_TARGET_RPI
+	
 #else
 	file.close();
 #endif
@@ -105,6 +109,8 @@ void AudioStream::Pause()
 void AudioStream::Update()
 {
 #ifdef ENGINE_TARGET_MACOSX
+	
+#elif ENGINE_TARGET_RPI
 	
 #else
 	// Wait until we started streaming from the last page we read
