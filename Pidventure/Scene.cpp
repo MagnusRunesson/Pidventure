@@ -24,6 +24,7 @@ const char* SCENE_GRAPHICSFILE_NAMES[] = {
 	"sprite_prop_flower_red_af00",
 	"sprite_prop_house_highlands",
 	"sprite_prop_bridge",
+	"sprite_highlands_wall_edge_right",
 };
 
 const int SCENE_NUM_GRAPHICFILES						= sizeof(SCENE_GRAPHICSFILE_NAMES) / sizeof(const char*);
@@ -33,12 +34,13 @@ const int SCENE_SPRITE_POSITIONS[] = {
 	0, 60,
 	61, 48,
 	48, 66,
-	35, 51,
+	70, 51,
 	32, 55,
 	38, 55,
 	26, 55,
-	2, 42,
+	10, 42,
 	44, 50,
+	0, 31,
 };
 
 const float SCENE_SPRITE_SORT[] = {
@@ -52,6 +54,7 @@ const float SCENE_SPRITE_SORT[] = {
 	2.0f,
 	-3.0f,
 	1.0f,
+	-1.0f,
 };
 
 const int SCENE_MAX_SPRITES								= 20;

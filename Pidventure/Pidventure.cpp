@@ -21,32 +21,33 @@
 
 float t;
 
+const int FRAME_DURATION = 8;
 AnimationFrameDefinition frames[] = {
 	{
 		"sprite_prop_flower_red_af00",
 		NULL,
-		4,
+		FRAME_DURATION,
 		0,
 		1.0f, 4.0f,
 	},
 	{
 		"sprite_prop_flower_red_af01",
 		NULL,
-		4,
+		FRAME_DURATION,
 		0,
 		2.0f, 4.0f,
 	},
 	{
 		"sprite_prop_flower_red_af02",
 		NULL,
-		4,
+		FRAME_DURATION,
 		0,
 		2.0f, 3.0f,
 	},
 	{
 		"sprite_prop_flower_red_af03",
 		NULL,
-		4,
+		FRAME_DURATION,
 		0,
 		1.0f, 3.0f,
 	},
