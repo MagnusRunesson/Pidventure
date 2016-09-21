@@ -46,6 +46,16 @@ public:
 	int hotspot_y;
 };
 
+class CSpriteInstance
+{
+public:
+	CSpriteDefinition* pSpriteDefinition;
+	int x;
+	int y;
+	float sort;
+	
+};
+
 class CTileMap
 {
 public:
@@ -71,7 +81,15 @@ public:
 	list<CTileBank*> TileBanks;
 	list<CTileMap*> TileMaps;
 	list<CSpriteDefinition*> SpriteDefinitions;
+	vector<CSpriteInstance*> Sprites;
 	int NumGameObjects;
+	
+	float currentSortValue;
+	
+	CScene()
+	{
+		currentSortValue = 0.0f;
+	}
 	
 	CTileBank* GetTileBankForTile( int _tile_id )
 	{
@@ -140,28 +158,26 @@ CTileBank* ParseTilebankElement( const XMLElement* _pTileBankRootElement, const 
 	return pRet;
 }
 
-void ParseSpriteDefinitionProperties( CSpriteDefinition* _pRet, const XMLElement* _pProperties )
+int GetIntProperty( const char* _pszPropertyName, const XMLElement* _pProperties, int _defaultValue = 0 )
 {
 	//
 	const XMLElement* pPropertyElement = _pProperties->FirstChildElement();
 	while(pPropertyElement != NULL)
 	{
 		const char* pszPropName = pPropertyElement->Attribute( "name" );
-		if( !strcmp( pszPropName, "hotspot_x" ))
-		{
-			// Hotspot X
-			_pRet->hotspot_x = pPropertyElement->IntAttribute( "value" );
-			//printf("hotspot x: %i\n", _pRet->hotspot_x );
-			
-		} else if( !strcmp( pszPropName, "hotspot_y" ))
-		{
-			// Hotspot Y
-			_pRet->hotspot_y = pPropertyElement->IntAttribute( "value" );
-			//printf("hotspot y: %i\n", _pRet->hotspot_y );
-		}
+		if( !strcmp( pszPropName, _pszPropertyName ))
+			return pPropertyElement->IntAttribute( "value" );
 		
 		pPropertyElement = pPropertyElement->NextSiblingElement();
 	}
+	
+	return _defaultValue;
+}
+
+void ParseSpriteDefinitionProperties( CSpriteDefinition* _pRet, const XMLElement* _pProperties )
+{
+	_pRet->hotspot_x = GetIntProperty( "hotspot_x", _pProperties, 0 );
+	_pRet->hotspot_y = GetIntProperty( "hotspot_y", _pProperties, 0 );
 }
 
 CSpriteDefinition* ParseSpriteDefinitionElement( const XMLElement* _pTileBankRootElement, const XMLElement* _pImageElement )
@@ -189,7 +205,7 @@ CSpriteDefinition* ParseSpriteDefinitionElement( const XMLElement* _pTileBankRoo
 		pChildElement = pChildElement->NextSiblingElement();
 	}
 
-	//printf("name='%s', first id=%i, tile id=%i (that makes its global id %i)\n", pRet->pszName, first_gid, tile_id, first_gid+tile_id );
+	//printf("name='%s', first id=%i, tile id=%i (that makes its global id %i) hotspot x=%i y=%i\n", pRet->pszName, first_gid, tile_id, first_gid+tile_id, pRet->hotspot_x, pRet->hotspot_y );
 	
 	return pRet;
 }
@@ -279,10 +295,10 @@ CTileMap* ParseLayerElement( CScene* _pRetScene, const XMLElement* _pElement )
 {
 	CTileMap* ret = new CTileMap();
 
-	printf("element=%s\n", _pElement->Value());
+	//printf("element=%s\n", _pElement->Value());
 	ret->Width = _pElement->IntAttribute( "width" );
 	ret->Height = _pElement->IntAttribute( "height" );
-	printf( "Map width=%i, height=%i\n", ret->Width, ret->Height );
+	//printf( "Map width=%i, height=%i\n", ret->Width, ret->Height );
 	
 	const XMLElement* dataElement = _pElement->FirstChildElement();
 	ret->Tiles = ParseLayerCSV( _pRetScene, &ret->pTileBank, dataElement->GetText());
@@ -290,15 +306,31 @@ CTileMap* ParseLayerElement( CScene* _pRetScene, const XMLElement* _pElement )
 	return ret;
 }
 
+void ParseObjectGroupProperties( CScene* _pRet, const XMLElement* _pProperties )
+{
+	_pRet->currentSortValue = GetIntProperty( "sort", _pProperties, 0 );
+}
+
+
 void ParseObjectGroup( CScene* _pRet, const XMLElement* _pObjectgroupElement )
 {
+	
 	const XMLElement* child = _pObjectgroupElement->FirstChildElement();
 	while( child != NULL )
 	{
-		if(!strcmp("object", child->Name()))
+		if( !strcmp( "object", child->Name()))
 		{
-			CSpriteDefinition* pSpriteDef = _pRet->GetSpriteDefinitionForTile( child->IntAttribute( "gid" ));
-			printf("Sprite def name: %s\n", pSpriteDef->pszName );
+			CSpriteInstance* pSpriteInstance = new CSpriteInstance();
+			pSpriteInstance->pSpriteDefinition = _pRet->GetSpriteDefinitionForTile( child->IntAttribute( "gid" ));
+			pSpriteInstance->x = child->IntAttribute( "x" );
+			pSpriteInstance->y = child->IntAttribute( "y" );
+			pSpriteInstance->sort = _pRet->currentSortValue;
+			_pRet->currentSortValue += 0.01f;
+			_pRet->Sprites.push_back( pSpriteInstance );
+			//printf( "Sprite x=%i, y=%i, sort=%.2f, definition=%s\n", pSpriteInstance->x, pSpriteInstance->y, pSpriteInstance->sort, pSpriteInstance->pSpriteDefinition->pszName );
+		} else if( !strcmp( "properties", child->Name()))
+		{
+			ParseObjectGroupProperties( _pRet, child );
 		}
 		child = child->NextSiblingElement();
 	}
