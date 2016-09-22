@@ -531,6 +531,10 @@ void ExportSceneObjects( CScene* _pOutputScene, const char* _pszOutFileName )
 		pOutputObject->y = pInputObject->y;
 		pOutputObject->sort = pInputObject->sort;
 		strcpy( pOutputObject->pszDefinitionName, pInputObject->pSpriteDefinition->pszName );
+		pOutputObject->pszDefinitionName[ strlen( pOutputObject->pszDefinitionName )-1 ] = 0;
+		pOutputObject->pszDefinitionName[ strlen( pOutputObject->pszDefinitionName )-1 ] = 0;
+		pOutputObject->pszDefinitionName[ strlen( pOutputObject->pszDefinitionName )-1 ] = 0;
+		pOutputObject->pszDefinitionName[ strlen( pOutputObject->pszDefinitionName )-1 ] = 0;
 		fwrite( pOutputObject, sizeof(COutputSceneObject), 1, f );
 	}
 	
