@@ -502,7 +502,7 @@ void WriteHFile( FILE* _pFile, const char* _pszInFileName, const char* _pszSymbo
 void ExportMaps( CScene* _pInputScene, const char* _pszOutputFileName )
 {
 	char pszFinalName[ 1024 ];
-	sprintf( pszFinalName, "%s.petm", _pszOutputFileName );
+	sprintf( pszFinalName, "%s.pest", _pszOutputFileName );
 
 	
 	FILE* f = fopen(pszFinalName, "wb" );
