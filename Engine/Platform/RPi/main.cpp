@@ -16,8 +16,6 @@
 #include "Engine/Core/Timer.h"
 #include "Engine/Audio/AudioHandler.h"
 
-
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -40,7 +38,8 @@
 #ifndef M_PI
    #define M_PI 3.141592654
 #endif
-	
+
+unsigned char screenBufferUnsignedChar[ IMAGE_SIZE*IMAGE_SIZE*4 ];
 
 typedef struct
 {
@@ -169,7 +168,7 @@ static void init_ogl(CUBE_STATE_T *state)
    assert(EGL_FALSE != result);
 
    // Set background color and clear buffers
-   glClearColor(0.15f, 0.25f, 0.35f, 1.0f);
+   glClearColor(0.f, 0.f, 0.f, 1.0f);
 
    // Enable back face culling.
    glEnable(GL_CULL_FACE);
@@ -229,13 +228,13 @@ static void reset_model(CUBE_STATE_T *state)
    // reset model position
    glMatrixMode(GL_MODELVIEW);
    glLoadIdentity();
-   glTranslatef(0.f, 0.f, -50.f);
+   glTranslatef(0.f, 0.f, -20.f);
 
    // reset model rotation
    state->rot_angle_x = 45.f; state->rot_angle_y = 30.f; state->rot_angle_z = 0.f;
    state->rot_angle_x_inc = 0.5f; state->rot_angle_y_inc = 0.5f; state->rot_angle_z_inc = 0.f;
    //state->rot_angle_x_inc = 0.f; state->rot_angle_y_inc = 0.f; state->rot_angle_z_inc = 0.f;
-   state->distance = 40.f;
+   state->distance = 20.f;
 }
 
 /***********************************************************
@@ -262,10 +261,10 @@ static void update_model(CUBE_STATE_T *state)
    glTranslatef(0.f, 0.f, -state->distance);
 
    // Rotate model to new position
-   glRotatef(state->rot_angle_y, 0.f, 1.f, 0.f );
-   glRotatef(state->rot_angle_x, 1.f, 0.f, 0.f);
+   //glRotatef(state->rot_angle_y, 0.f, 1.f, 0.f );
+   //glRotatef(state->rot_angle_x, 1.f, 0.f, 0.f);
    //glRotatef(state->rot_angle_y, 0.f, 1.f, 0.f);
-   glRotatef(state->rot_angle_z, 0.f, 0.f, 1.f);
+   //glRotatef(state->rot_angle_z, 0.f, 0.f, 1.f);
 }
 
 /***********************************************************
@@ -332,14 +331,37 @@ static GLfloat inc_and_clip_distance(GLfloat distance, GLfloat distance_inc)
  ***********************************************************/
 static void redraw_scene(CUBE_STATE_T *state)
 {
-   glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, IMAGE_SIZE, IMAGE_SIZE, 0, GL_RGBA, GL_FLOAT, screenBuffer);
-
    // Start with a clear screen
    glClear( GL_COLOR_BUFFER_BIT );
 
    // Draw first (front) face:
    // Bind texture surface to current vertices
    glBindTexture(GL_TEXTURE_2D, state->tex[0]);
+   //glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, IMAGE_SIZE, IMAGE_SIZE, 0, GL_RGBA, GL_FLOAT, screenBuffer);
+
+   int x,y;
+   for(y=0; y<74; y++ )
+   {
+   		for(x=0; x<96; x++ )
+   		{
+   			int rdofs = ((y*SCREEN_WIDTH)+x)*4;
+   			float sr = screenBuffer[ rdofs+0 ];
+   			float sg = screenBuffer[ rdofs+1 ];
+   			float sb = screenBuffer[ rdofs+2 ];
+   			unsigned char r = (unsigned char)(sr*255.0f);
+   			unsigned char g = (unsigned char)(sg*255.0f);
+   			unsigned char b = (unsigned char)(sb*255.0f);
+   			unsigned char a = 255;
+
+   			int wrofs = ((y*IMAGE_SIZE)+x)*4;
+   			screenBufferUnsignedChar[ wrofs+0 ] = r;
+   			screenBufferUnsignedChar[ wrofs+1 ] = g;
+   			screenBufferUnsignedChar[ wrofs+2 ] = b;
+   			screenBufferUnsignedChar[ wrofs+3 ] = a;
+   		}
+   }
+
+   glTexImage2D( GL_TEXTURE_2D, 0, GL_RGBA, IMAGE_SIZE, IMAGE_SIZE, 0, GL_RGBA, GL_UNSIGNED_BYTE, screenBufferUnsignedChar );
 
    // Need to rotate textures - do this by rotating each cube face
    glRotatef(270.f, 0.f, 0.f, 1.f ); // front face normal along z axis
@@ -435,8 +457,29 @@ static void init_textures(CUBE_STATE_T *state)
    */
 
    glGenTextures(1, &state->tex[0]);
+   printf("gen textures - error: 0x%08x\n", glGetError());
    glBindTexture(GL_TEXTURE_2D, state->tex[0]);
-   glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, IMAGE_SIZE, IMAGE_SIZE, 0, GL_RGBA, GL_FLOAT, screenBuffer);
+   printf("bind texture - error: 0x%08x\n", glGetError());
+   int x,y;
+   for(y=0; y<74; y++ )
+   {
+   		for(x=0; x<96; x++ )
+   		{
+   			unsigned char r = (y*3);
+   			unsigned char g = (x*3);
+   			unsigned char b = r ^ g;
+   			unsigned char a = 255;
+
+   			int ofs = ((y*IMAGE_SIZE)+x)*4;
+   			screenBufferUnsignedChar[ ofs+0 ] = r;
+   			screenBufferUnsignedChar[ ofs+1 ] = g;
+   			screenBufferUnsignedChar[ ofs+2 ] = b;
+   			screenBufferUnsignedChar[ ofs+3 ] = a;
+   		}
+   }
+
+   glTexImage2D( GL_TEXTURE_2D, 0, GL_RGBA, IMAGE_SIZE, IMAGE_SIZE, 0, GL_RGBA, GL_UNSIGNED_BYTE, screenBufferUnsignedChar );
+   printf("tex image - error: 0x%08x\n", glGetError());
    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, (GLfloat)GL_NEAREST);
    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, (GLfloat)GL_NEAREST);
 
