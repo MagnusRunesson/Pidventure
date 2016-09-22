@@ -17,6 +17,52 @@
 using namespace tinyxml2;
 using namespace std;
 
+/************************************************************************************************************************************************************************
+
+ 
+ Output data format
+ 
+ 
+ */
+
+class COutputSceneObject
+{
+public:
+	char pszDefinitionName[ 64 ];
+	signed int x;
+	signed int y;
+	float sort;
+	unsigned int flags;
+	
+	COutputSceneObject()
+	{
+		memset( pszDefinitionName, 0, sizeof(pszDefinitionName));
+		x = 0;
+		y = 0;
+		sort = 0.0f;
+		flags = 0;
+	};
+};
+
+class COutputScene
+{
+public:
+	unsigned int NumObjects;
+	COutputSceneObject Object[];
+};
+
+
+
+
+
+/************************************************************************************************************************************************************************
+ 
+ 
+ Input data format
+ 
+ 
+ */
+
 class CTileBank
 {
 public:
@@ -453,12 +499,51 @@ void WriteHFile( FILE* _pFile, const char* _pszInFileName, const char* _pszSymbo
 }
 
 
+void ExportMaps( CScene* _pInputScene, const char* _pszOutputFileName )
+{
+	char pszFinalName[ 1024 ];
+	sprintf( pszFinalName, "%s.petm", _pszOutputFileName );
+
+	
+	FILE* f = fopen(pszFinalName, "wb" );
+	
+	fclose(f);
+}
+
+void ExportSceneObjects( CScene* _pOutputScene, const char* _pszOutFileName )
+{
+	char pszFinalName[ 1024 ];
+	sprintf( pszFinalName, "%s.peso", _pszOutFileName );
+	
+	FILE* f = fopen(pszFinalName, "wb" );
+	
+	unsigned int numObjects = (unsigned int)_pOutputScene->Sprites.size();
+	//fwrite( &numObjects, 1, 4, f );
+	
+	COutputSceneObject OutputSceneObject;
+	int i;
+	for( i=0; i<numObjects; i++ )
+	{
+		COutputSceneObject* pOutputObject = &OutputSceneObject;
+		CSpriteInstance* pInputObject = _pOutputScene->Sprites[ i ];
+		
+		pOutputObject->x = pInputObject->x;
+		pOutputObject->y = pInputObject->y;
+		pOutputObject->sort = pInputObject->sort;
+		strcpy( pOutputObject->pszDefinitionName, pInputObject->pSpriteDefinition->pszName );
+		fwrite( pOutputObject, sizeof(COutputSceneObject), 1, f );
+	}
+	
+	fclose(f);
+}
+
+
 int main( int _numArgs, const char * _apszArg[])
 {
 	if( _numArgs != 3 )
 	{
 		printf("ERROR:\n");
-		printf("  tmx2c <infile.tmx> <outfile_name>\n");
+		printf("  tmx2c <infile.tmx> <base_outfile_name>\n");
 		return -1;
 	}
 	
@@ -497,9 +582,9 @@ int main( int _numArgs, const char * _apszArg[])
 		return -1;
 	}
 	
-	FILE* f;
+	//FILE* f;
 
-	int totalOutputSize = 0;
+	//int totalOutputSize = 0;
 	
 	//
 	// Write C file
@@ -517,6 +602,9 @@ int main( int _numArgs, const char * _apszArg[])
 	//WriteHFile( f, pszInFileName, pszOutSymbolName );
 	//fclose( f );
 
-	printf( "Total output size: %i\n", totalOutputSize );
+	ExportSceneObjects( scene, pszOutFileNameBase );
+	ExportMaps( scene, pszOutFileNameBase );
+	
+	//printf( "Total output size: %i\n", totalOutputSize );
 	return 0;
 }
