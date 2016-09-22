@@ -466,39 +466,6 @@ void WriteTileMap( FILE* _pFile, CTileMap* _pTileMap, const char* _pszSymbolBase
 	fprintf( _pFile, "\n" );
 }
 
-FILE* OpenCFile( const char* _pszOutNameBase )
-{
-	char name[ 2048 ];
-	sprintf( name, "%s.cpp", _pszOutNameBase );
-	FILE* ret = fopen( name, "w" );
-	return ret;
-}
-
-FILE* OpenHFile( const char* _pszOutNameBase )
-{
-	char name[ 2048 ];
-	sprintf( name, "%s.h", _pszOutNameBase );
-	FILE* ret = fopen( name, "w" );
-	return ret;
-}
-
-void WriteHFile( FILE* _pFile, const char* _pszInFileName, const char* _pszSymbolBase )
-{
-	fprintf( _pFile, "//\n" );
-	fprintf( _pFile, "// Data file generated from %s\n", _pszInFileName );
-	fprintf( _pFile, "//\n" );
-	fprintf( _pFile, "#ifndef %s_header_\n", _pszSymbolBase );
-	fprintf( _pFile, "#define %s_header_\n", _pszSymbolBase );
-	fprintf( _pFile, "\n" );
-	fprintf( _pFile, "#include \"Engine/Types.h\"\n" );
-	fprintf( _pFile, "#include \"Engine/Graphics/TileMap.h\"\n" );
-	fprintf( _pFile, "\n" );
-	fprintf( _pFile, "extern \"C\" const CTileMap %s;\n", GetTileMapSymbol( _pszSymbolBase ));
-	fprintf( _pFile, "\n" );
-	fprintf( _pFile, "#endif // %s_header_\n", _pszSymbolBase );
-}
-
-
 void ExportMaps( CScene* _pInputScene, const char* _pszOutputFileName )
 {
 	char pszFinalName[ 1024 ];
