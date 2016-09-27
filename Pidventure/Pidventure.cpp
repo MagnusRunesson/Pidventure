@@ -35,9 +35,9 @@ void game_setup()
 	bgInit();
 	sceneLoad( "scene_highlands" );
 
-	data_animPropFlowerRed.LoadImages();
+	//data_animPropFlowerRed.LoadImages();
 
-	pAnimatedFlowers = gameObjectManager.CreateGameObject( &data_animPropFlowerRed );
+	pAnimatedFlowers = gameObjectManager.CreateGameObject( dataGetAnimationSequenceDefinition( "prop_flower_red" ));
 	pAnimatedFlowers->SetWorldPosition(30.0f, 960.0f);
 	pAnimatedFlowers->GetAnimation()->Play();
 	

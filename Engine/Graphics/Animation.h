@@ -60,18 +60,19 @@ public:
 };
 
 #define DEFINE_ANIMATION( _name, _looping ) \
-const AnimationSequenceDefinition animation_##_name = \
+AnimationSequenceDefinition animation_##_name = \
 { \
+	#_name, \
 	sizeof( animation_##_name##_frames ) / sizeof( AnimationFrameDefinition ), \
 	-1, \
 	_looping, \
 	animation_##_name##_frames, \
-	#_name \
 }
 
 #define DEFINE_ANIMATION_LOOPFRAMES( _name, _looping, _numLoopFrames ) \
 const AnimationSequenceDefinition animation_##_name = \
 { \
+	#_name, \
 	sizeof( animation_##_name##_frames ) / sizeof( AnimationFrameDefinition ), \
 	_numLoopFrames, \
 	_looping, \

@@ -11,7 +11,7 @@
 
 class AnimationSequenceDefinition;
 
-extern AnimationSequenceDefinition data_animPropFlowerRed;
+//extern AnimationSequenceDefinition animation_prop_flower_red;
 
 extern AnimationSequenceDefinition* data_animAll[];
 extern int data_numAnimations;

@@ -9,7 +9,7 @@
   </tile>
   <tile id="1">
    <properties>
-    <property name="animation" value="animPropFlowerRed"/>
+    <property name="animation" value="prop_flower_red"/>
     <property name="hotspot_x" value="1"/>
     <property name="hotspot_y" value="4"/>
    </properties>
