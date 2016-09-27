@@ -18,62 +18,27 @@
 #include "Pidventure/background.h"
 #include "Pidventure/Scene.h"
 #include "Pidventure/CameraController.h"
+#include "Pidventure/DataManual/Data.h"
 
 float t;
-
-const int FRAME_DURATION = 8;
-AnimationFrameDefinition frames[] = {
-	{
-		"sprite_prop_flower_red_af00",
-		NULL,
-		FRAME_DURATION,
-		0,
-		1.0f, 4.0f,
-	},
-	{
-		"sprite_prop_flower_red_af01",
-		NULL,
-		FRAME_DURATION,
-		0,
-		2.0f, 4.0f,
-	},
-	{
-		"sprite_prop_flower_red_af02",
-		NULL,
-		FRAME_DURATION,
-		0,
-		2.0f, 3.0f,
-	},
-	{
-		"sprite_prop_flower_red_af03",
-		NULL,
-		FRAME_DURATION,
-		0,
-		1.0f, 3.0f,
-	},
-};
-
-AnimationSequenceDefinition anim = {
-	sizeof(frames) / sizeof(AnimationFrameDefinition), 0, true, frames,
-};
 
 CPlayer* pPlayer;
 GameObject* pAnimatedFlowers;
 
 void game_setup()
 {
-
 	pPlayer = new CPlayer();
-	pPlayer->SetWorldPosition( 40.0f, 59.0f );
+	pPlayer->SetWorldPosition( 40.0f, 969.0f );
 
+	dataInit();
 	cameraInit( pPlayer->m_pAvatar );
 	bgInit();
-	sceneLoad( "testfest" );
+	sceneLoad( "scene_highlands" );
 
-	anim.LoadImages();
+	data_animPropFlowerRed.LoadImages();
 
-	pAnimatedFlowers = gameObjectManager.CreateGameObject( &anim );
-	pAnimatedFlowers->SetWorldPosition(30.0f, 30.0f);
+	pAnimatedFlowers = gameObjectManager.CreateGameObject( &data_animPropFlowerRed );
+	pAnimatedFlowers->SetWorldPosition(30.0f, 960.0f);
 	pAnimatedFlowers->GetAnimation()->Play();
 	
 	t = 0.0f;

@@ -39,6 +39,8 @@
 		25F9309D1D86667E0026DA4C /* Scene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 25F9309B1D86667E0026DA4C /* Scene.cpp */; settings = {ASSET_TAGS = (); }; };
 		25F930A01D87B8670026DA4C /* Physics.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 25F9309E1D87B8660026DA4C /* Physics.cpp */; settings = {ASSET_TAGS = (); }; };
 		25F930A31D890D250026DA4C /* CameraController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 25F930A11D890D250026DA4C /* CameraController.cpp */; settings = {ASSET_TAGS = (); }; };
+		25F930BF1D942CAA0026DA4C /* Animations.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 25F930BD1D942CAA0026DA4C /* Animations.cpp */; settings = {ASSET_TAGS = (); }; };
+		25F930C21D942CCD0026DA4C /* Data.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 25F930C01D942CCD0026DA4C /* Data.cpp */; settings = {ASSET_TAGS = (); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -124,6 +126,10 @@
 		25F9309F1D87B8660026DA4C /* Physics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Physics.h; path = Pidventure/Physics.h; sourceTree = "<group>"; };
 		25F930A11D890D250026DA4C /* CameraController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CameraController.cpp; path = Pidventure/CameraController.cpp; sourceTree = "<group>"; };
 		25F930A21D890D250026DA4C /* CameraController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CameraController.h; path = Pidventure/CameraController.h; sourceTree = "<group>"; };
+		25F930BD1D942CAA0026DA4C /* Animations.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Animations.cpp; path = Pidventure/DataManual/Animations.cpp; sourceTree = "<group>"; };
+		25F930BE1D942CAA0026DA4C /* Animations.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Animations.h; path = Pidventure/DataManual/Animations.h; sourceTree = "<group>"; };
+		25F930C01D942CCD0026DA4C /* Data.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Data.cpp; path = Pidventure/DataManual/Data.cpp; sourceTree = "<group>"; };
+		25F930C11D942CCD0026DA4C /* Data.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Data.h; path = Pidventure/DataManual/Data.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -274,6 +280,7 @@
 		257AE6DC1D78022200CACB74 /* Pidventure */ = {
 			isa = PBXGroup;
 			children = (
+				25F930BC1D942C770026DA4C /* DataManual */,
 				257D92511D7949D1006B6512 /* Player */,
 				257AE6DD1D78023D00CACB74 /* Pidventure.cpp */,
 				257AE6DE1D78023D00CACB74 /* Pidventure.h */,
@@ -300,6 +307,17 @@
 				257D92531D794A03006B6512 /* PlayerAvatar.h */,
 			);
 			name = Player;
+			sourceTree = "<group>";
+		};
+		25F930BC1D942C770026DA4C /* DataManual */ = {
+			isa = PBXGroup;
+			children = (
+				25F930BD1D942CAA0026DA4C /* Animations.cpp */,
+				25F930BE1D942CAA0026DA4C /* Animations.h */,
+				25F930C01D942CCD0026DA4C /* Data.cpp */,
+				25F930C11D942CCD0026DA4C /* Data.h */,
+			);
+			name = DataManual;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -376,6 +394,7 @@
 				257AE6D91D7800E300CACB74 /* AudioMixer.cpp in Sources */,
 				257AE6DA1D7800E300CACB74 /* AudioSource.cpp in Sources */,
 				257AE6D81D7800E300CACB74 /* AudioData.cpp in Sources */,
+				25F930BF1D942CAA0026DA4C /* Animations.cpp in Sources */,
 				25F9309D1D86667E0026DA4C /* Scene.cpp in Sources */,
 				257AE6AA1D6B507E00CACB74 /* Camera.cpp in Sources */,
 				257AE69A1D6B507700CACB74 /* Animation.cpp in Sources */,
@@ -387,6 +406,7 @@
 				257AE69C1D6B507700CACB74 /* Screen.cpp in Sources */,
 				257AE6DF1D78023D00CACB74 /* Pidventure.cpp in Sources */,
 				25F930A01D87B8670026DA4C /* Physics.cpp in Sources */,
+				25F930C21D942CCD0026DA4C /* Data.cpp in Sources */,
 				257AE6BB1D6B55F800CACB74 /* TileRenderer.cpp in Sources */,
 				257AE6B81D6B557A00CACB74 /* SpriteRenderer.cpp in Sources */,
 			);

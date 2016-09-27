@@ -28,11 +28,11 @@ public:
 class AnimationSequenceDefinition
 {
 public:
+	const char* name;
 	int NumFrames;
 	int NumLoops;
 	bool Loop;
 	AnimationFrameDefinition* Frames;
-	//const char* DEBUG_name;
 	
 	void LoadImages();
 };

@@ -25,6 +25,8 @@ using namespace std;
  
  */
 
+#define OSO_FLAG_ANIMATED			(1<<0)
+
 class COutputSceneObject
 {
 public:
@@ -88,6 +90,7 @@ class CSpriteDefinition
 public:
 	int tile_id;
 	const char* pszName;
+	const char* pszAnimationName;
 	int hotspot_x;
 	int hotspot_y;
 };
@@ -220,10 +223,30 @@ int GetIntProperty( const char* _pszPropertyName, const XMLElement* _pProperties
 	return _defaultValue;
 }
 
+const char* GetStringProperty( const char* _pszPropertyName, const XMLElement* _pProperties, const char* _defaultValue = NULL )
+{
+	//
+	const XMLElement* pPropertyElement = _pProperties->FirstChildElement();
+	while(pPropertyElement != NULL)
+	{
+		const char* pszPropName = pPropertyElement->Attribute( "name" );
+		if( !strcmp( pszPropName, _pszPropertyName ))
+			return pPropertyElement->Attribute( "value" );
+		
+		pPropertyElement = pPropertyElement->NextSiblingElement();
+	}
+	
+	return _defaultValue;
+}
+
+
+
 void ParseSpriteDefinitionProperties( CSpriteDefinition* _pRet, const XMLElement* _pProperties )
 {
 	_pRet->hotspot_x = GetIntProperty( "hotspot_x", _pProperties, 0 );
 	_pRet->hotspot_y = GetIntProperty( "hotspot_y", _pProperties, 0 );
+	_pRet->pszAnimationName = GetStringProperty( "animation", _pProperties, NULL );
+	printf("Animation: %s\n", _pRet->pszAnimationName);
 }
 
 CSpriteDefinition* ParseSpriteDefinitionElement( const XMLElement* _pTileBankRootElement, const XMLElement* _pImageElement )
@@ -494,14 +517,29 @@ void ExportSceneObjects( CScene* _pOutputScene, const char* _pszOutFileName )
 		COutputSceneObject* pOutputObject = &OutputSceneObject;
 		CSpriteInstance* pInputObject = _pOutputScene->Sprites[ i ];
 		
-		pOutputObject->x = pInputObject->x;
-		pOutputObject->y = pInputObject->y;
+		pOutputObject->flags = 0;
+		pOutputObject->x = pInputObject->x + pInputObject->pSpriteDefinition->hotspot_x;
+		pOutputObject->y = pInputObject->y + pInputObject->pSpriteDefinition->hotspot_y;
 		pOutputObject->sort = pInputObject->sort;
-		strcpy( pOutputObject->pszDefinitionName, pInputObject->pSpriteDefinition->pszName );
-		pOutputObject->pszDefinitionName[ strlen( pOutputObject->pszDefinitionName )-1 ] = 0;
-		pOutputObject->pszDefinitionName[ strlen( pOutputObject->pszDefinitionName )-1 ] = 0;
-		pOutputObject->pszDefinitionName[ strlen( pOutputObject->pszDefinitionName )-1 ] = 0;
-		pOutputObject->pszDefinitionName[ strlen( pOutputObject->pszDefinitionName )-1 ] = 0;
+		
+		if( pInputObject->pSpriteDefinition->pszAnimationName != NULL )
+		{
+			//
+			// Object should be animated
+			//
+			strcpy( pOutputObject->pszDefinitionName, pInputObject->pSpriteDefinition->pszAnimationName	);
+			pOutputObject->flags |= OSO_FLAG_ANIMATED;
+		} else
+		{
+			//
+			// Object should be static
+			//
+			strcpy( pOutputObject->pszDefinitionName, pInputObject->pSpriteDefinition->pszName );
+			pOutputObject->pszDefinitionName[ strlen( pOutputObject->pszDefinitionName )-1 ] = 0;
+			pOutputObject->pszDefinitionName[ strlen( pOutputObject->pszDefinitionName )-1 ] = 0;
+			pOutputObject->pszDefinitionName[ strlen( pOutputObject->pszDefinitionName )-1 ] = 0;
+			pOutputObject->pszDefinitionName[ strlen( pOutputObject->pszDefinitionName )-1 ] = 0;
+		}
 		fwrite( pOutputObject, sizeof(COutputSceneObject), 1, f );
 	}
 	
