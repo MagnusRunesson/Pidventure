@@ -8,6 +8,7 @@
 
 #include "Engine/Scene/Camera.h"
 #include "Engine/Graphics/Screen.h"
+#include "Engine/Core/Debug.h"
 #include "Pidventure/CameraController.h"
 #include "Pidventure/Player/PlayerAvatar.h"
 
@@ -19,6 +20,10 @@ void cameraInit( CPlayerAvatar* _pPlayerAvatar )
 	Camera::main = &camera;
 	
 	g_pPlayerAvatar = _pPlayerAvatar;
+	float wx = g_pPlayerAvatar->m_worldX-40.0;
+	float wy = g_pPlayerAvatar->m_worldY-50.0f;
+	debugLog("Camera x=%.2f, y=%.2f\n", wx, wy);
+	camera.SetWorldPosition( wx, wy );
 }
 
 void cameraUpdate()
