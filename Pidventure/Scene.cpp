@@ -16,7 +16,7 @@
 #include "Engine/Core/Debug.h"
 #include "Pidventure/Scene.h"
 #include "Pidventure/Physics.h"
-#include "Pidventure/DataManual/data.h"
+#include "Pidventure/DataManual/Data.h"
 
 #define SO_FLAG_ANIMATED		(1<<0)
 
