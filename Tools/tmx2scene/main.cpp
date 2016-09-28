@@ -91,6 +91,8 @@ public:
 	int tile_id;
 	const char* pszName;
 	const char* pszAnimationName;
+	int w;
+	int h;
 	int hotspot_x;
 	int hotspot_y;
 };
@@ -268,6 +270,8 @@ CSpriteDefinition* ParseSpriteDefinitionElement( const XMLElement* _pTileBankRoo
 		} else if( strcmp( "image", pChildElement->Name()) == 0 )
 		{
 			pRet->pszName = pChildElement->Attribute( "source" );
+			pRet->w = pChildElement->IntAttribute( "width" );
+			pRet->h = pChildElement->IntAttribute( "height" );
 		}
 		
 		
@@ -519,7 +523,7 @@ void ExportSceneObjects( CScene* _pOutputScene, const char* _pszOutFileName )
 		
 		pOutputObject->flags = 0;
 		pOutputObject->x = pInputObject->x + pInputObject->pSpriteDefinition->hotspot_x;
-		pOutputObject->y = pInputObject->y + pInputObject->pSpriteDefinition->hotspot_y;
+		pOutputObject->y = pInputObject->y + pInputObject->pSpriteDefinition->hotspot_y - pInputObject->pSpriteDefinition->h;
 		pOutputObject->sort = pInputObject->sort;
 		
 		if( pInputObject->pSpriteDefinition->pszAnimationName != NULL )
@@ -529,6 +533,13 @@ void ExportSceneObjects( CScene* _pOutputScene, const char* _pszOutFileName )
 			//
 			strcpy( pOutputObject->pszDefinitionName, pInputObject->pSpriteDefinition->pszAnimationName	);
 			pOutputObject->flags |= OSO_FLAG_ANIMATED;
+			/*
+			printf("Animated item '%s' was at %i,%i with hotspot %i,%i, so end position become %i,%i\n",
+				   pInputObject->pSpriteDefinition->pszAnimationName,
+				   pInputObject->x, pInputObject->y,
+				   pInputObject->pSpriteDefinition->hotspot_x, pInputObject->pSpriteDefinition->hotspot_y,
+				   pOutputObject->x, pOutputObject->y );
+			 */
 		} else
 		{
 			//
