@@ -27,7 +27,7 @@ CPlayer* pPlayer;
 void game_setup()
 {
 	pPlayer = new CPlayer();
-	pPlayer->SetWorldPosition( 40.0f, 969.0f );
+	pPlayer->SetWorldPosition( 40.0f, 943.0f );
 
 	dataInit();
 	cameraInit( pPlayer->m_pAvatar );
