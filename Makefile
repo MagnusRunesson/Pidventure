@@ -10,7 +10,7 @@ CXXFLAGS+=-DSTANDALONE -D__STDC_CONSTANT_MACROS -D__STDC_LIMIT_MACROS -DTARGET_P
 LDFLAGS=
 LDFLAGS+=-L$(SDKSTAGE)/opt/vc/lib/ -lGLESv2 -lEGL -lopenmaxil -lbcm_host -lvcos -lvchiq_arm -lpthread -lrt -lm -L../libs/ilclient -L../libs/vgfont
 
-LIBS=-L/opt/vc/lib -L/usr/local/lib -lEGL -lGLESv2
+LIBS=-L/opt/vc/lib -L/usr/local/lib -lEGL -lGLESv2 -lwiringPi
 #  -lbcm_host -lpng -lz
 
 # Music

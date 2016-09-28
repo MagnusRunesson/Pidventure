@@ -12,13 +12,13 @@ if [ ! -z "$1" ]; then
 
 	if [ $1 -eq "0" ]; then
 		ssh pi@$HOST << END
-		killall runme
+		sudo killall runme
 		cd $TARGET_FOLDER && make 2>&1
 END
 	elif [ $1 -eq "1" ]; then
 		ssh pi@$HOST << END
-		killall runme
-		cd $TARGET_FOLDER && make 2>&1 && ./runme
+		sudo killall runme
+		cd $TARGET_FOLDER && make 2>&1 && sudo ./runme
 END
 	fi
 fi

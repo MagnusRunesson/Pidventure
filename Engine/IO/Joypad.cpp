@@ -6,9 +6,14 @@
 //  Copyright © 2015 Magnus Runesson. All rights reserved.
 //
 
+#ifdef ENGINE_TARGET_RPI
+#include <wiringPi.h>
+#endif
+
 #include "Engine/Core/Types.h"
 #include "Engine/IO/Joypad.h"
 #include "Engine/Core/BitHelpers.h"
+#include "Engine/Core/Debug.h"
 
 #ifndef ENGINE_TARGET_TINYARCADE
 
@@ -20,11 +25,30 @@ int gKeyBuff;
 
 void padInit()
 {
-	
+#ifdef ENGINE_TARGET_RPI
+	wiringPiSetupGpio();
+	pullUpDnControl( 4, PUD_UP );
+	pullUpDnControl( 11, PUD_UP );
+#endif
 }
 
 void padUpdate()
 {
+#ifdef ENGINE_TARGET_RPI
+	if( !digitalRead( 4 ))
+	{
+		gKeyDPadBuff |= PAD_KEYMASK_DPAD_RIGHT;
+	} else {
+		gKeyDPadBuff &= ~PAD_KEYMASK_DPAD_RIGHT;
+	}
+
+	if( !digitalRead( 11 ))
+	{
+		gKeyDPadBuff |= PAD_KEYMASK_DPAD_LEFT;
+	} else {
+		gKeyDPadBuff &= ~PAD_KEYMASK_DPAD_LEFT;
+	}
+#endif
 	gkeys <<= 4;
 	gkeys |= gKeyBuff;
 }
