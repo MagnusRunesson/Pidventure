@@ -30,10 +30,10 @@ public:
 	uint32 flags;
 };
 
-class CScene
+class CSceneDefinition
 {
 public:
-	CScene()
+	CSceneDefinition()
 	{
 		NumObjects = 0;
 		aObjects = NULL;
@@ -61,7 +61,7 @@ void sceneLoad( const char* _pszName )
 		return;
 	}
 	
-	CScene* pScene = new CScene();
+	CSceneDefinition* pScene = new CSceneDefinition();
 	pScene->NumObjects = readBytes / sizeof( CSceneObject );
 	pScene->aObjects = pSceneObjects;
 
