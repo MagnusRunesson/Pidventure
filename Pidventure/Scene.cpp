@@ -43,50 +43,6 @@ public:
 	CSceneObject* aObjects;
 };
 
-const char* SCENE_GRAPHICSFILE_NAMES[] = {
-	"sprite_highlands_bg4",
-	"sprite_highlands_ground_edge_right",
-	"sprite_highlands_ground_edge_left",
-	"sprite_highlands_water_double",
-	"sprite_prop_signpost",
-	"sprite_prop_flower_red_af00",
-	"sprite_prop_flower_red_af00",
-	"sprite_prop_flower_red_af00",
-	"sprite_prop_house_highlands",
-	"sprite_prop_bridge",
-	"sprite_highlands_wall_edge_right",
-};
-
-const int SCENE_NUM_GRAPHICFILES						= sizeof(SCENE_GRAPHICSFILE_NAMES) / sizeof(const char*);
-
-const int SCENE_SPRITE_POSITIONS[] = {
-	0, 42,
-	0, 60,
-	61, 48,
-	48, 66,
-	70, 51,
-	32, 55,
-	38, 55,
-	26, 55,
-	10, 42,
-	44, 50,
-	0, 31,
-};
-
-const float SCENE_SPRITE_SORT[] = {
-	-4.0f,
-	-1.0f,
-	-1.0f,
-	-2.0f,
-	-2.0f,
-	2.0f,
-	-2.0f,
-	2.0f,
-	-3.0f,
-	1.0f,
-	-1.0f,
-};
-
 const int SCENE_MAX_SPRITES								= 20;
 
 GameObject* sceneObjects[ SCENE_MAX_SPRITES ];
