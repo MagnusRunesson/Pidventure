@@ -51,7 +51,9 @@ SRCS=\
 	Pidventure/Player/Player.cpp \
 	Pidventure/Player/PlayerAvatar.cpp \
 	Pidventure/Player/PlayerInventory.cpp \
-	Pidventure/Scene.cpp
+	Pidventure/Scene.cpp \
+	Pidventure/DataManual/Data.cpp \
+	Pidventure/DataManual/Animations.cpp
 
 OBJS:=$(addprefix build/,$(SRCS:.cpp=.o))
 # SRCS:=$(addprefix src/,$(SRCS))
@@ -61,7 +63,7 @@ OUT=runme
 all: $(OUT)
 
 $(OUT): $(OBJS)
-	g++ -o $(OUT) $(CXXFLAGS) $(LDFLAGS) $(LIBS) $(OBJS)
+	@g++ -o $(OUT) $(CXXFLAGS) $(LDFLAGS) $(LIBS) $(OBJS)
 
 build/%.o: %.cpp
 	@mkdir -p build
