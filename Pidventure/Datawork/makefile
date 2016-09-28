@@ -3,12 +3,12 @@ CONV_SPRITE=png2le
 CONV_BANK=png2tilefest
 CONV_SFX=bin2c
 
-MAP_FILES=$(wildcard tilemap_*.tmx)
+MAP_FILES=$(wildcard scene_*.tmx)
 SPRITE_FILES=$(wildcard sprite_*.png)
 BANK_FILES=$(wildcard tilebank_*.png)
 SFX_FILES=$(wildcard audiosamples_*.raw)
 
-CONVERTED_MAP_FILES=$(MAP_FILES:.tmx=.cpp)
+CONVERTED_MAP_FILES=$(MAP_FILES:.tmx=.petm)
 CONVERTED_SPRITE_FILES=$(SPRITE_FILES:.png=.pei)
 CONVERTED_BANK_FILES=$(BANK_FILES:.png=.cpp)
 CONVERTED_SFX_FILES=$(SFX_FILES:.raw=.cpp)
@@ -17,8 +17,8 @@ ALL_CONVERTED_FILES=$(CONVERTED_MAP_FILES) $(CONVERTED_BANK_FILES) $(CONVERTED_S
 
 build: $(ALL_CONVERTED_FILES)
 
-%.cpp: %.tmx
-	@echo Converting tilemap $^
+%.petm: %.tmx
+	@echo Converting scene $^
 	@$(CONV_MAP) $^ ../data/$(subst .tmx,,$^) $(subst .tmx,,$^) > /dev/null
 
 sprite_%.pei: sprite_%.png
