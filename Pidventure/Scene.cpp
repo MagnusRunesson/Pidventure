@@ -33,6 +33,12 @@ public:
 class CScene
 {
 public:
+	CScene()
+	{
+		NumObjects = 0;
+		aObjects = NULL;
+	}
+	
 	uint32 NumObjects;
 	CSceneObject* aObjects;
 };
