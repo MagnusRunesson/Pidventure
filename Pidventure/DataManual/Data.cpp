@@ -23,19 +23,19 @@ void dataInit()
 
 AnimationSequenceDefinition* dataGetAnimationSequenceDefinition( const char* _pszSpriteName )
 {
-	debugLog("Looking for animation definition %s\n", _pszSpriteName );
+	//debugLog("Looking for animation definition %s\n", _pszSpriteName );
 	int i;
 	for( i=0; i<data_numAnimations; i++ )
 	{
 		AnimationSequenceDefinition* pAnim = data_animAll[ i ];
-		debugLog("pAnim->name=%s\n", pAnim->name);
+		//debugLog("pAnim->name=%s\n", pAnim->name);
 		if(!strcmp( pAnim->name, _pszSpriteName ))
 		{
-			debugLog("Found, yay!");
+			//debugLog("Found, yay!\n");
 			return pAnim;
 		}
 	}
 	
-	debugLog("No found:(");
+	//debugLog("No found:(\n");
 	return NULL;
 }
