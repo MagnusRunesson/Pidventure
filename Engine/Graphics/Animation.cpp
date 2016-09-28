@@ -30,6 +30,7 @@ void Animation::Create( const AnimationSequenceDefinition* _pSequence, GameObjec
 	pSequence = _pSequence;
 	FrameIndex = 0;
 	FrameTime = 0;
+	LoopCount = 0;
 	IsPlaying = false;
 	pfnDoneCallback = NULL;
 }
