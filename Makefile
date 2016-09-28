@@ -67,7 +67,7 @@ $(OUT): $(OBJS)
 
 build/%.o: %.cpp
 	@mkdir -p build
-	g++ -c -o $@ $(CXXFLAGS) $<
+	@g++ -c -o $@ $(CXXFLAGS) $<
 
 clean:
 	rm -f $(OBJS) $(OUT)
