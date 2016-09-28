@@ -43,7 +43,7 @@ public:
 	CSceneObject* aObjects;
 };
 
-const int SCENE_MAX_SPRITES								= 20;
+const int SCENE_MAX_SPRITES								= 2048;
 
 GameObject* sceneObjects[ SCENE_MAX_SPRITES ];
 Image* sceneImage[ SCENE_MAX_SPRITES ];
