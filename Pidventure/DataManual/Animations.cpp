@@ -57,7 +57,7 @@ AnimationFrameDefinition animation_prop_house_highlands_frames[] = {
 		NULL,
 		1,
 		0,
-		1.0f, 4.0f,
+		16.0f, 17.0f,
 	},
 };
 

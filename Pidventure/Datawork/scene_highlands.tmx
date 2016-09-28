@@ -17,8 +17,9 @@
   </tile>
   <tile id="2">
    <properties>
-    <property name="hotspot_x" value="2"/>
-    <property name="hotspot_y" value="13"/>
+    <property name="animation" value="prop_house_highlands"/>
+    <property name="hotspot_x" value="16"/>
+    <property name="hotspot_y" value="17"/>
    </properties>
    <image width="31" height="18" source="sprite_prop_house_highlands.png"/>
   </tile>
