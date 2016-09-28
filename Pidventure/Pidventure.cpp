@@ -23,7 +23,6 @@
 float t;
 
 CPlayer* pPlayer;
-GameObject* pAnimatedFlowers;
 
 void game_setup()
 {
@@ -34,12 +33,6 @@ void game_setup()
 	cameraInit( pPlayer->m_pAvatar );
 	bgInit();
 	sceneLoad( "scene_highlands" );
-
-	//data_animPropFlowerRed.LoadImages();
-
-	pAnimatedFlowers = gameObjectManager.CreateGameObject( dataGetAnimationSequenceDefinition( "prop_flower_red" ));
-	pAnimatedFlowers->SetWorldPosition(30.0f, 960.0f);
-	pAnimatedFlowers->GetAnimation()->Play();
 	
 	t = 0.0f;
 }
