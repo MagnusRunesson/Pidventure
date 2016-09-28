@@ -46,7 +46,6 @@ public:
 const int SCENE_MAX_SPRITES								= 2048;
 
 GameObject* sceneObjects[ SCENE_MAX_SPRITES ];
-Image* sceneImage[ SCENE_MAX_SPRITES ];
 
 void sceneLoad( const char* _pszName )
 {
@@ -91,7 +90,6 @@ void sceneLoad( const char* _pszName )
 		} else {
 			Image* pImage = imageLoad( pObj->pszDefinitionName );
 			pGO = gameObjectManager.CreateGameObject( pImage );
-			sceneImage[ i ] = pImage;
 		}
 		
 		sceneObjects[ i ] = pGO;
