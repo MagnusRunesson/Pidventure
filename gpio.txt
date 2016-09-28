@@ -1,0 +1,2 @@
+gpio -g mode 4 up
+gpio -g read 4
