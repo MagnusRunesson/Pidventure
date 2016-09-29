@@ -7,3 +7,10 @@ Tools/tmx2scene/tmx2scene.xcodeproj/xcuserdata
 Tools/tmx2scene/tmx2scene.xcodeproj/project.xcworkspace/xcuserdata
 Tools/png2petb/png2petb.xcodeproj/xcuserdata
 Tools/png2petb/png2petb.xcodeproj/project.xcworkspace/xcuserdata
+Tools/png2petb/png2petb
+Tools/png2petb/png2petb.o
+Tools/png2le/png2le
+Tools/png2le/png2le.o
+Tools/tmx2scene/main.o
+Tools/tmx2scene/tinyxml2.o
+Tools/tmx2scene/tmx2scene
