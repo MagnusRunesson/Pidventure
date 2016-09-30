@@ -447,7 +447,6 @@ void WriteScene( FILE* _pFile, CScene* _pScene, const char* _pszSymbolBase )
 	fprintf( _pFile, "CScene %s = \n" );
 	fprintf( _pFile, "{\n" );
 }
-*/
 
 void WriteCHeader( FILE* _pFile, const char* _pszInFileName, const char* _pszSymbolBase )
 {
@@ -492,6 +491,7 @@ void WriteTileMap( FILE* _pFile, CTileMap* _pTileMap, const char* _pszSymbolBase
 	fprintf( _pFile, "};\n" );
 	fprintf( _pFile, "\n" );
 }
+*/
 
 void ExportMaps( CScene* _pInputScene, const char* _pszOutputFileName )
 {
@@ -500,6 +500,14 @@ void ExportMaps( CScene* _pInputScene, const char* _pszOutputFileName )
 
 	
 	FILE* f = fopen(pszFinalName, "wb" );
+	
+	CTileMap* pTileMap = _pInputScene->TileMaps.front();
+	
+	unsigned short mapWidth = pTileMap->Width;
+	unsigned short mapHeight = pTileMap->Height;
+	fwrite( &mapWidth, 2, 1, f );
+	fwrite( &mapHeight, 2, 1, f );
+	fwrite( pTileMap->Tiles, 2, mapWidth*mapHeight, f );
 	
 	fclose(f);
 }
