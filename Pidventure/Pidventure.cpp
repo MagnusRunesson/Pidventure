@@ -14,6 +14,9 @@
 #include "Engine/Scene/GameObjectManager.h"
 #include "Engine/IO/Joypad.h"
 #include "Engine/Graphics/Animation.h"
+#include "Engine/Graphics/TileBank.h"
+#include "Engine/Graphics/TileMap.h"
+#include "Engine/Graphics/TileRenderer.h"
 #include "Pidventure/Pidventure.h"
 #include "Pidventure/background.h"
 #include "Pidventure/Scene.h"
@@ -23,6 +26,9 @@
 float t;
 
 CPlayer* pPlayer;
+CTileBank* pTileBank;
+CTileMap* pTileMap;
+TileRenderer* pTileRenderer;
 
 void game_setup()
 {
@@ -33,6 +39,9 @@ void game_setup()
 	cameraInit( pPlayer->m_pAvatar );
 	bgInit();
 	sceneLoad( "scene_highlands" );
+	pTileBank = tilebankLoad( "tilebank_highlands" );
+	pTileMap = tilemapLoad( "scene_highlands" );
+	pTileRenderer = new TileRenderer( pTileMap, pTileBank );
 	
 	t = 0.0f;
 }
@@ -65,8 +74,10 @@ void game_loop()
 	gameObjectManager.Update();
 	cameraUpdate();
 	bgSetCameraPosition( cameraWorldX(), 0.0f );
+	pTileRenderer->SetPosition( (int)cameraWorldX(), (int)cameraWorldY());
 	gameObjectManager.Render();
 	spriteRenderer.Render();
+	pTileRenderer->Render();
 }
 
 void game_debugTrigger(int _id)
