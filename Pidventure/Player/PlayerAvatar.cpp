@@ -69,7 +69,7 @@ void CPlayerAvatar::Update()
 	}
 	else
 	{
-		//MoveVertical();
+		MoveVertical();
 	}
 	
 	RefreshGameObject();
