@@ -74,9 +74,9 @@ void game_loop()
 	gameObjectManager.Update();
 	cameraUpdate();
 	bgSetCameraPosition( cameraWorldX(), 0.0f );
-	pTileRenderer->SetPosition( (int)cameraWorldX(), (int)cameraWorldY());
 	gameObjectManager.Render();
 	spriteRenderer.Render();
+	pTileRenderer->SetPosition( (int)cameraWorldX(), (int)cameraWorldY());
 	pTileRenderer->Render();
 }
 
