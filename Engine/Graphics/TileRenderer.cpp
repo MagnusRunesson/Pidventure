@@ -13,7 +13,7 @@
 #include "Engine/Graphics/Screen.h"
 #include "Engine/Core/Debug.h"
 
-TileRenderer::TileRenderer( const CTileMap* _pTileMap, const CTileBank* _tileBank )
+TileRenderer::TileRenderer( CTileMap* _pTileMap, CTileBank* _tileBank )
 {
 	m_pTileBank = _tileBank;
 	m_pTileMap = _pTileMap;
@@ -33,6 +33,61 @@ void TileRenderer::GetPosition( int* _x, int* _y )
 {
 	*_x = m_x;
 	*_y = m_y;
+}
+
+void TileRenderer::Render()
+{
+	int x, y;
+	for( y=0; y<SCREEN_HEIGHT; y++ )
+	{
+		for( x=0; x<SCREEN_WIDTH; x++ )
+		{
+			int worldX = m_x + x;
+			int worldY = m_y + y;
+			int tilemapX = worldX >> 2;
+			int tilemapY = worldY >> 2;
+			if( tilemapX < 0 ) continue;
+			if( tilemapX >= m_pTileMap->Width ) continue;
+			if( tilemapY < 0 ) continue;
+			if( tilemapY >= m_pTileMap->Height ) continue;
+			
+			int pixelReadX = worldX & 3;
+			int pixelReadY = worldY & 3;
+			int tilemapIndex = (tilemapY*m_pTileMap->Width) + tilemapX;
+			int tileID = m_pTileMap->Tiles[ tilemapIndex ];
+			if( tileID == 0 )
+				continue;
+			
+			tileID -= 1;
+			//debugLog("Screen x=%i, y=%i, tilemap index=%i, tile id=%i\n", x, y, tilemapIndex, tileID );
+			int pixelReadOfs = ((tileID*4*4) + ((pixelReadY*m_pTileBank->TileWidth)+pixelReadX))*4;
+			int pixelWriteOfs = ((y*SCREEN_WIDTH)+x) * 4;
+
+			float* pRead = &m_pTileBank->Pixels[ pixelReadOfs ];
+			float* pWrite = &screenBuffer[ pixelWriteOfs ];
+			
+			float r = pRead[ 0 ];
+			float g = pRead[ 1 ];
+			float b = pRead[ 2 ];
+			float a = pRead[ 3 ];
+			float ia = 1.0f-a;
+			pWrite[ 0 ] = (r*a)+(pWrite[ 0 ]*ia);
+			pWrite[ 1 ] = (g*a)+(pWrite[ 1 ]*ia);
+			pWrite[ 2 ] = (b*a)+(pWrite[ 2 ]*ia);
+		}
+	}
+
+	/*
+	FrameStart();
+	int y;
+	float* targetBuffer = screenBuffer;
+	
+	for( y=0; y<SCREEN_HEIGHT; y++ )
+	{
+		RenderScanline( targetBuffer );
+		NextScanline();
+		targetBuffer += (SCREEN_WIDTH*4);
+	}*/
 }
 
 //
@@ -101,13 +156,14 @@ uint8 startOfs[ 8 ] = {
 
 void TileRenderer::PrepareScanlineRenderTiles( bool _debug )
 {
-	uint16* pTileData = &m_pTileMap->Tiles[ m_scanlineTileMapIndex ];
+	const uint16* pTileData = &m_pTileMap->Tiles[ m_scanlineTileMapIndex ];
 
 	int i;
 	for( i=0; i<25; i++ )
 	{
 		// Read tile from tile map
 		uint16 tile = *pTileData;
+		//tile--;
 		pTileData++;
 
 		// Fetch the render tile
@@ -149,9 +205,10 @@ void TileRenderer::PrepareScanlineRenderTiles( bool _debug )
 		if( _debug )
 			debugLog( " - Tile color pointer: 0x%08x", pTile->pTileColor );
 		
+		/*
 		pTile->pTileAlpha = NULL;
 		if( m_pTileBank->Alpha != NULL )
-			pTile->pTileAlpha = &m_pTileBank->Alpha[ tileoffset ];
+			pTile->pTileAlpha = &m_pTileBank->Alpha[ tileoffset ];*/
 		
 		if( _debug )
 			debugLog( "\n" );
@@ -185,7 +242,7 @@ void TileRenderer::NextScanline( bool _debugPrint )
 	}
 }
 
-void TileRenderer::RenderScanline( uint16* _targetBuffer, uint8* _collisionBuffer )
+void TileRenderer::RenderScanline( float* _targetBuffer )
 {
 	int writeX=0;
 	int tx;
@@ -202,16 +259,28 @@ void TileRenderer::RenderScanline( uint16* _targetBuffer, uint8* _collisionBuffe
 	{
 		for( tx=0; tx<4; tx++ )
 		{
-			uint16 rgb = pTile->pTileColor[ pTile->TixelOffset ];
-			uint8 alpha = 255;
+			float r = pTile->pTileColor[ (pTile->TixelOffset*4)+0 ];
+			float g = pTile->pTileColor[ (pTile->TixelOffset*4)+1 ];
+			float b = pTile->pTileColor[ (pTile->TixelOffset*4)+2 ];
+			float a = pTile->pTileColor[ (pTile->TixelOffset*4)+3 ];
+			float ia = 1.0f-a;
+//			uint16 rgb = pTile->pTileColor[ pTile->TixelOffset ];
+/*			uint8 alpha = 255;
 			if( pTile->pTileAlpha )
 				alpha = pTile->pTileAlpha[ pTile->TixelOffset ];
+ */
 
 			pTile->TixelOffset += pTile->TixelIncrementX;
 			
 			if(	tx < m_scanlineTixelX )
 				continue;
 		
+			int writeOfs = writeX*4;
+			_targetBuffer[ writeOfs+0 ] = (r*a)+(_targetBuffer[ writeOfs+0 ]*ia);
+			_targetBuffer[ writeOfs+1 ] = (g*a)+(_targetBuffer[ writeOfs+1 ]*ia);
+			_targetBuffer[ writeOfs+2 ] = (b*a)+(_targetBuffer[ writeOfs+2 ]*ia);
+			
+			/*
 			if( alpha == 255 )
 			{
 				// Full opacity, no blend
@@ -220,6 +289,7 @@ void TileRenderer::RenderScanline( uint16* _targetBuffer, uint8* _collisionBuffe
 					_collisionBuffer[ writeX ] = 1;
 				
 			}
+			 */
 
 			writeX++;
 		}
@@ -228,7 +298,7 @@ void TileRenderer::RenderScanline( uint16* _targetBuffer, uint8* _collisionBuffe
 	//
 	//
 	//
-	if( _collisionBuffer == NULL )
+	//if( _collisionBuffer == NULL )
 	{
 		//
 		// This is the rendering path where we do NOT have a collision buffer. Never write to the collision buffer in this path.
@@ -245,13 +315,14 @@ void TileRenderer::RenderScanline( uint16* _targetBuffer, uint8* _collisionBuffe
 			}
 
 			//
-			if( pTile->pTileAlpha )
+			//if( pTile->pTileAlpha )
 			{
 				//
 				// This tile have an alpha channel. This is the alpha rendering path.
 				//
 				for( tx=0; tx<4; tx++ )
 				{
+					/*
 					uint8 alpha = pTile->pTileAlpha[ pTile->TixelOffset ];
 					if( alpha == 255 )
 					{
@@ -259,12 +330,23 @@ void TileRenderer::RenderScanline( uint16* _targetBuffer, uint8* _collisionBuffe
 						uint16 rgb = pTile->pTileColor[ pTile->TixelOffset ];
 						_targetBuffer[ writeX ] = rgb;
 					}
+					 */
+					float r = pTile->pTileColor[ (pTile->TixelOffset*4)+0 ];
+					float g = pTile->pTileColor[ (pTile->TixelOffset*4)+1 ];
+					float b = pTile->pTileColor[ (pTile->TixelOffset*4)+2 ];
+					float a = pTile->pTileColor[ (pTile->TixelOffset*4)+3 ];
+					float ia = 1.0f-a;
+
+					int writeOfs = writeX*4;
+					_targetBuffer[ writeOfs+0 ] = (r*a)+(_targetBuffer[ writeOfs+0 ]*ia);
+					_targetBuffer[ writeOfs+1 ] = (g*a)+(_targetBuffer[ writeOfs+1 ]*ia);
+					_targetBuffer[ writeOfs+2 ] = (b*a)+(_targetBuffer[ writeOfs+2 ]*ia);
 
 					pTile->TixelOffset += pTile->TixelIncrementX;
 					writeX++;
 				}
 			}
-			else
+			/*else
 			{
 				//
 				// This tile does not have an alpha channel. This is the rendering that is fully opaque.
@@ -278,8 +360,10 @@ void TileRenderer::RenderScanline( uint16* _targetBuffer, uint8* _collisionBuffe
 					writeX++;
 				}
 			}
+			 */
 		}
 	}
+	/*
 	else
 	{
 		//
@@ -335,6 +419,7 @@ void TileRenderer::RenderScanline( uint16* _targetBuffer, uint8* _collisionBuffe
 			}
 		}
 	}
+	 */
 
 	//
 	// We've already filled the scan line. No need to render the last tile.
@@ -357,6 +442,7 @@ void TileRenderer::RenderScanline( uint16* _targetBuffer, uint8* _collisionBuffe
 	//
 	for( tx=0; tx<4; tx++ )
 	{
+		/*
 		uint16 rgb = pTile->pTileColor[ pTile->TixelOffset ];
 		uint8 alpha = 255;
 		if( pTile->pTileAlpha )
@@ -370,6 +456,17 @@ void TileRenderer::RenderScanline( uint16* _targetBuffer, uint8* _collisionBuffe
 				_collisionBuffer[ writeX ] = 1;
 			
 		}
+		 */
+		float r = pTile->pTileColor[ (pTile->TixelOffset*4)+0 ];
+		float g = pTile->pTileColor[ (pTile->TixelOffset*4)+1 ];
+		float b = pTile->pTileColor[ (pTile->TixelOffset*4)+2 ];
+		float a = pTile->pTileColor[ (pTile->TixelOffset*4)+3 ];
+		float ia = 1.0f-a;
+		
+		int writeOfs = writeX*4;
+		_targetBuffer[ writeOfs+0 ] = (r*a)+(_targetBuffer[ writeOfs+0 ]*ia);
+		_targetBuffer[ writeOfs+1 ] = (g*a)+(_targetBuffer[ writeOfs+1 ]*ia);
+		_targetBuffer[ writeOfs+2 ] = (b*a)+(_targetBuffer[ writeOfs+2 ]*ia);
 		
 		pTile->TixelOffset += pTile->TixelIncrementX;
 		writeX++;

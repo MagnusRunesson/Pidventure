@@ -16,8 +16,7 @@ class CTileMap;
 
 struct RenderTile
 {
-	const uint16* pTileColor;	// Pointer to the color data for this tile.
-	const uint8* pTileAlpha;	// Pointer to the alpha data for this tile. Can be NULL.
+	const float* pTileColor;	// Pointer to the color data for this tile.
 	uint8 TixelOffset;		// Which tixel to read from
 	uint8 StartTixelOffset;	// Which tixel to read from
 	sint8 TixelIncrementX;	// For each X we move forward, how should we advance the reading offset. For regularly rendered tiles this should be 1, for flipped this should be -1, for rotated this can be .. well .. anything really :)
@@ -31,8 +30,8 @@ class TileRenderer
 	
 	int m_x;
 	int m_y;
-	const CTileBank* m_pTileBank;
-	const CTileMap* m_pTileMap;
+	CTileBank* m_pTileBank;
+	CTileMap* m_pTileMap;
 
 	// Rendering variables
 	int m_scanlineTileMapIndex;		// For each scanline this is the index in the tile map on the far left of the screen
@@ -41,22 +40,23 @@ class TileRenderer
 	int m_tilePixelReadOfs;
 	
 public:
-	TileRenderer( const CTileMap* _tileMap, const CTileBank* _tileBank );
+	TileRenderer( CTileMap* _tileMap, CTileBank* _tileBank );
 	
 	//
 	void SetPosition( int _x, int _y );
 	void GetPosition( int* _x, int* _y );
 
+	void Render();
+	
 	//
 	// Rendering
 	//
-	void FrameStart();
-
 	void PrepareScanlineRenderTiles( bool _debug = false );
 	void AdvanceScanlineRenderTiles( int _newTixelY );
 
+	void FrameStart();
 	void NextScanline( bool _debugPrint = false );
-	void RenderScanline( uint16* _targetBuffer, uint8* _collisionBuffer );
+	void RenderScanline( float* _targetBuffer );
 };
 
 #endif /* TileRenderer_hpp */
