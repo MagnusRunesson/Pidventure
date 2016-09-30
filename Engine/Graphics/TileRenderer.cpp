@@ -35,6 +35,43 @@ void TileRenderer::GetPosition( int* _x, int* _y )
 	*_y = m_y;
 }
 
+bool TileRenderer::Sample( int _x, int _y, float* _pOutRGBA )
+{
+	int worldX = m_x + _x;
+	int worldY = m_y + _y;
+	int tilemapX = worldX >> 2;
+	int tilemapY = worldY >> 2;
+	if( tilemapX < 0 ) return false;
+	if( tilemapX >= m_pTileMap->Width ) return false;
+	if( tilemapY < 0 ) return false;
+	if( tilemapY >= m_pTileMap->Height ) return false;
+	
+	int pixelReadX = worldX & 3;
+	int pixelReadY = worldY & 3;
+	int tilemapIndex = (tilemapY*m_pTileMap->Width) + tilemapX;
+	int tileID = m_pTileMap->Tiles[ tilemapIndex ];
+	if( tileID == 0 )
+	{
+		_pOutRGBA[ 0 ] = 0.0f;
+		_pOutRGBA[ 1 ] = 0.0f;
+		_pOutRGBA[ 2 ] = 0.0f;
+		_pOutRGBA[ 3 ] = 0.0f;
+		return true;
+	}
+	
+	tileID -= 1;
+	//debugLog("Screen x=%i, y=%i, tilemap index=%i, tile id=%i\n", x, y, tilemapIndex, tileID );
+	int pixelReadOfs = ((tileID*4*4) + ((pixelReadY*m_pTileBank->TileWidth)+pixelReadX))*4;
+	
+	float* pRead = &m_pTileBank->Pixels[ pixelReadOfs ];
+	
+	_pOutRGBA[ 0 ] = pRead[ 0 ];
+	_pOutRGBA[ 1 ] = pRead[ 1 ];
+	_pOutRGBA[ 2 ] = pRead[ 2 ];
+	_pOutRGBA[ 3 ] = pRead[ 3 ];
+	return true;
+}
+
 void TileRenderer::Render()
 {
 	int x, y;

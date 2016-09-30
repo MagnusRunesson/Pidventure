@@ -46,6 +46,7 @@ public:
 	void SetPosition( int _x, int _y );
 	void GetPosition( int* _x, int* _y );
 
+	bool Sample( int _x, int _y, float* _pOutRGBA );
 	void Render();
 	
 	//
