@@ -8,13 +8,24 @@
 
 #include "Engine/Graphics/Image.h"
 #include "Engine/Graphics/SpriteRenderer.h"
+#include "Engine/Graphics/TileBank.h"
+#include "Engine/Graphics/TileMap.h"
+#include "Engine/Graphics/TileRenderer.h"
 #include "Pidventure/Physics.h"
 
 Image* physCollisionMap;
 Sprite* physCollisionDebugSprite;
+static CTileBank* pTileBank;
+static CTileMap* pTileMap;
+static TileRenderer* pTileRenderer;
+float physSample[ 4 ];
+
 void physInit()
 {
-	physCollisionMap = imageLoad( "sprite_collisiontest" );
+	//physCollisionMap = imageLoad( "sprite_collisiontest" );
+	pTileBank = tilebankLoad( "tilebank_highlands_collision" );
+	pTileMap = tilemapLoad( "scene_highlands" );
+	pTileRenderer = new TileRenderer( pTileMap, pTileBank );
 	/*
 	physCollisionDebugSprite = spriteRenderer.AllocateSprite( physCollisionMap );
 	physCollisionDebugSprite->x = 0.0f;
@@ -25,22 +36,17 @@ void physInit()
 
 bool physIsGround(int _x, int _y)
 {
-	if(_x < 0) return false;
-	if(_x >= physCollisionMap->w) return false;
-	if(_y < 0) return false;
-	if(_y >= physCollisionMap->h) return false;
-	int rdofs = (_y*physCollisionMap->w)+_x;
-	float r = physCollisionMap->pixels[ rdofs*4 + 0 ];	// Red channel is ground
-	return r > 0.5f;
+	if( !physTakeSample( _x, _y)) return false;
+	return physSample[ 0 ] > 0.5f;	// Red channel is ground
 }
 
 bool physIsWall(int _x, int _y)
 {
-	if(_x < 0) return false;
-	if(_x >= physCollisionMap->w) return false;
-	if(_y < 0) return false;
-	if(_y >= physCollisionMap->h) return false;
-	int rdofs = (_y*physCollisionMap->w)+_x;
-	float g = physCollisionMap->pixels[ rdofs*4 + 1 ];	// Green channel is wall
-	return g > 0.5f;
+	if( !physTakeSample( _x, _y)) return false;
+	return physSample[ 1 ] > 0.5f;	// Green channel is wall
+}
+
+bool physTakeSample( int _x, int _y )
+{
+	return pTileRenderer->Sample( _x, _y, physSample );
 }

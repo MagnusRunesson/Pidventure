@@ -26,9 +26,9 @@
 float t;
 
 CPlayer* pPlayer;
-CTileBank* pTileBank;
-CTileMap* pTileMap;
-TileRenderer* pTileRenderer;
+static CTileBank* pTileBank;
+static CTileMap* pTileMap;
+static TileRenderer* pTileRenderer;
 
 void game_setup()
 {

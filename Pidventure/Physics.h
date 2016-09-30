@@ -10,7 +10,8 @@
 #define Physics_h
 
 void physInit();
-bool physIsGround(int _x, int _y);
-bool physIsWall(int _x, int _y);
+bool physIsGround( int _x, int _y );
+bool physIsWall( int _x, int _y );
+bool physTakeSample( int _x, int _y );
 
 #endif /* Physics_h */
