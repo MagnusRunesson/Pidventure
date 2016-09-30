@@ -14,5 +14,6 @@ class CPlayerAvatar;
 void cameraInit( CPlayerAvatar* _pPlayerAvatar );
 void cameraUpdate();
 float cameraWorldX();
+float cameraWorldY();
 
 #endif /* CameraController_h */

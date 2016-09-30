@@ -40,3 +40,8 @@ float cameraWorldX()
 {
 	return camera.GetWorldX();
 }
+
+float cameraWorldY()
+{
+	return camera.GetWorldY();
+}
