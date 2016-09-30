@@ -14,14 +14,13 @@
 class CTileBank
 {
 public:
+	uint16 NumTiles;
 	uint8 TileWidth;
 	uint8 TileHeight;
-	uint16 NumTiles;
-	
-	uint16* Pixels;
-	uint8* Alpha;
-	
-	uint8* DEBUG_Name;
+	float Pixels[];
 };
+
+CTileBank* tilebankLoad(const char* _pszFileName);
+void tilebankUnload( CTileBank* _pszImage );
 
 #endif /* TileBank_hpp */
