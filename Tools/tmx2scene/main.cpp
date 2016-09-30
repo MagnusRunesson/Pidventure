@@ -496,7 +496,7 @@ void WriteTileMap( FILE* _pFile, CTileMap* _pTileMap, const char* _pszSymbolBase
 void ExportMaps( CScene* _pInputScene, const char* _pszOutputFileName )
 {
 	char pszFinalName[ 1024 ];
-	sprintf( pszFinalName, "%s.pest", _pszOutputFileName );
+	sprintf( pszFinalName, "%s.petm", _pszOutputFileName );
 
 	
 	FILE* f = fopen(pszFinalName, "wb" );

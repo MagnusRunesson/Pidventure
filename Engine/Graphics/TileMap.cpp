@@ -15,12 +15,12 @@ static char g_pszImageFullFileName[ 1024 ];
 
 CTileMap* tilemapLoad( const char* _pszFileName )
 {
-	snprintf( g_pszImageFullFileName, 1024, "%s.pest", _pszFileName );
+	snprintf( g_pszImageFullFileName, 1024, "%s.petm", _pszFileName );
 	void* pData;
 	int readBytes;
 	if( fileLoad( g_pszImageFullFileName, &pData, &readBytes ) == false)
 	{
-		debugLog("Failed to load tilebank '%s.petb'\n", _pszFileName);
+		debugLog("Failed to load tilebank '%s.petm'\n", _pszFileName);
 		return NULL;
 	}
 	

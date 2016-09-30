@@ -8,7 +8,7 @@ SPRITE_FILES=$(wildcard sprite_*.png)
 BANK_FILES=$(wildcard tilebank_*.png)
 SFX_FILES=$(wildcard audiosamples_*.raw)
 
-CONVERTED_MAP_FILES=$(MAP_FILES:.tmx=.pest)
+CONVERTED_MAP_FILES=$(MAP_FILES:.tmx=.petm)
 CONVERTED_SPRITE_FILES=$(SPRITE_FILES:.png=.pei)
 CONVERTED_BANK_FILES=$(BANK_FILES:.png=.petb)
 CONVERTED_SFX_FILES=$(SFX_FILES:.raw=.cpp)
@@ -17,7 +17,7 @@ ALL_CONVERTED_FILES=$(CONVERTED_MAP_FILES) $(CONVERTED_BANK_FILES) $(CONVERTED_S
 
 build: $(ALL_CONVERTED_FILES)
 
-%.pest: %.tmx
+%.petm: %.tmx
 	@echo Converting scene $^
 	@$(CONV_MAP) $^ ../data/$(subst .tmx,,$^) > /dev/null
 
