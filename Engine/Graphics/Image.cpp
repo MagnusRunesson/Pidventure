@@ -12,7 +12,7 @@
 #include "Engine/IO/File.h"
 #include "Engine/Core/Debug.h"
 
-char g_pszImageFullFileName[ 1024 ];
+static char g_pszImageFullFileName[ 1024 ];
 
 Image* imageLoad(const char* _pszFileName)
 {
