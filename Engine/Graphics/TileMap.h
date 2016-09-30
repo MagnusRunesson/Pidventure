@@ -14,10 +14,12 @@
 class CTileMap
 {
 public:
-	uint8 Width;
-	uint8 Height;
-	uint16 Padda; // Padding for alignment. Not that it matters because it will be aligned automatically, but at least I remember that this is where to put additional data
-	uint16* Tiles;
+	uint16 Width;
+	uint16 Height;
+	uint16 Tiles[];
 };
+
+CTileMap* tilemapLoad( const char* _pszFileName );
+void tilemapUnload( CTileMap* _pszImage );
 
 #endif /* TileMap_hpp */
