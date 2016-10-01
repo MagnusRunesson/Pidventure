@@ -171,7 +171,7 @@ void SpriteRenderer::Render()
 					int readofs = (((rdy+y)*pImage->w) + (rdx+x)) * 4;
 					int writeOfs = (((wry+y)*SCREEN_WIDTH) + (wrx+x)) * 4;
 					
-					if( pSprite->sort < screenBuffer[ 3 ])
+					if( pSprite->sort < screenBuffer[ writeOfs+3 ])
 						continue;
 					
 					float r = pReadPixels[ readofs+0 ];
