@@ -71,10 +71,10 @@ void game_loop()
 	gameObjectManager.Update();
 	cameraUpdate();
 	bgSetCameraPosition( cameraWorldX(), 0.0f );
-	gameObjectManager.Render();
-	spriteRenderer.Render();
 	pTileRenderer->SetPosition( (int)cameraWorldX(), (int)cameraWorldY());
 	pTileRenderer->Render();
+	gameObjectManager.Render();
+	spriteRenderer.Render();
 }
 
 void game_debugTrigger(int _id)
