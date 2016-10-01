@@ -30,6 +30,7 @@ class TileRenderer
 	
 	int m_x;
 	int m_y;
+	float m_depth;
 	CTileBank* m_pTileBank;
 	CTileMap* m_pTileMap;
 
@@ -45,6 +46,8 @@ public:
 	//
 	void SetPosition( int _x, int _y );
 	void GetPosition( int* _x, int* _y );
+	
+	void SetDepth( float _depth );
 
 	bool Sample( int _x, int _y, float* _pOutRGBA );
 	void Render();

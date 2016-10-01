@@ -42,6 +42,7 @@ void game_setup()
 	pTileBank = tilebankLoad( "tilebank_highlands" );
 	pTileMap = tilemapLoad( "scene_highlands" );
 	pTileRenderer = new TileRenderer( pTileMap, pTileBank );
+	pTileRenderer->SetDepth( -1.0f );
 	
 	t = 0.0f;
 }
@@ -63,6 +64,7 @@ void game_loop()
 			screenBuffer[wrofs*4 + 0] = 1.0f;
 			screenBuffer[wrofs*4 + 1] = 1.0f;
 			screenBuffer[wrofs*4 + 2] = 1.0f;
+			screenBuffer[wrofs*4 + 3] = -1000.0f;
 		}
 	}
 	

@@ -19,6 +19,7 @@ TileRenderer::TileRenderer( CTileMap* _pTileMap, CTileBank* _tileBank )
 	m_pTileMap = _pTileMap;
 	m_x = 0;
 	m_y = 0;
+	m_depth = 0.0f;
 }
 
 //
@@ -33,6 +34,11 @@ void TileRenderer::GetPosition( int* _x, int* _y )
 {
 	*_x = m_x;
 	*_y = m_y;
+}
+
+void TileRenderer::SetDepth( float _depth )
+{
+	m_depth = _depth;
 }
 
 bool TileRenderer::Sample( int _x, int _y, float* _pOutRGBA )
@@ -103,14 +109,22 @@ void TileRenderer::Render()
 			float* pRead = &m_pTileBank->Pixels[ pixelReadOfs ];
 			float* pWrite = &screenBuffer[ pixelWriteOfs ];
 			
+			// Depth test
+			if( m_depth < pWrite[ 3 ])
+				continue;
+			
 			float r = pRead[ 0 ];
 			float g = pRead[ 1 ];
 			float b = pRead[ 2 ];
 			float a = pRead[ 3 ];
-			float ia = 1.0f-a;
-			pWrite[ 0 ] = (r*a)+(pWrite[ 0 ]*ia);
-			pWrite[ 1 ] = (g*a)+(pWrite[ 1 ]*ia);
-			pWrite[ 2 ] = (b*a)+(pWrite[ 2 ]*ia);
+			if( a > 0.0f )
+			{
+				float ia = 1.0f-a;
+				pWrite[ 0 ] = (r*a)+(pWrite[ 0 ]*ia);
+				pWrite[ 1 ] = (g*a)+(pWrite[ 1 ]*ia);
+				pWrite[ 2 ] = (b*a)+(pWrite[ 2 ]*ia);
+				pWrite[ 3 ] = m_depth;
+			}
 		}
 	}
 

@@ -170,15 +170,22 @@ void SpriteRenderer::Render()
 				{
 					int readofs = (((rdy+y)*pImage->w) + (rdx+x)) * 4;
 					int writeOfs = (((wry+y)*SCREEN_WIDTH) + (wrx+x)) * 4;
+					
+					if( pSprite->sort < screenBuffer[ 3 ])
+						continue;
+					
 					float r = pReadPixels[ readofs+0 ];
 					float g = pReadPixels[ readofs+1 ];
 					float b = pReadPixels[ readofs+2 ];
 					float a = pReadPixels[ readofs+3 ];
-					float ia = 1.0f-a;
-					screenBuffer[ writeOfs+0 ] = (r*a)+(screenBuffer[ writeOfs+0 ]*ia);
-					screenBuffer[ writeOfs+1 ] = (g*a)+(screenBuffer[ writeOfs+1 ]*ia);
-					screenBuffer[ writeOfs+2 ] = (b*a)+(screenBuffer[ writeOfs+2 ]*ia);
-					//screenBuffer[ writeOfs+3 ] = (a;
+					if( a > 0.0f )
+					{
+						float ia = 1.0f-a;
+						screenBuffer[ writeOfs+0 ] = (r*a)+(screenBuffer[ writeOfs+0 ]*ia);
+						screenBuffer[ writeOfs+1 ] = (g*a)+(screenBuffer[ writeOfs+1 ]*ia);
+						screenBuffer[ writeOfs+2 ] = (b*a)+(screenBuffer[ writeOfs+2 ]*ia);
+						screenBuffer[ writeOfs+3 ] = pSprite->sort;
+					}
 				}
 			}
 		}
