@@ -67,11 +67,6 @@ void game_loop()
 			screenBuffer[wrofs*4 + 3] = -1000.0f;
 		}
 	}
-	
-	if(padGetKeys() & PAD_KEYMASK_PRIMARY)
-	{
-		screenBuffer[0] = 1.0f;
-	}
 
 	gameObjectManager.Update();
 	cameraUpdate();
