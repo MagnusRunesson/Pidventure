@@ -158,6 +158,61 @@ Uint32 Conv16to32( Uint16 src )
 	return ret;
 }
 
+void blit_depthBufferToSDL()
+{
+	static float alphaLow = 0.0f;
+	static float alphaHigh = 1.0f;
+	
+	uint32* pixels = (uint32*)screenSurface->pixels;
+	
+	int scw = SCREEN_WIDTH*SCREEN_PIXELSIZE;
+	//int sch = SCREEN_HEIGHT*SCREEN_PIXELSIZE;
+	
+	float newAlphaLow = 1000.0f;
+	float newAlphaHigh = -1000.0f;
+	
+	int x, y;
+	int zx, zy;
+	for( y=0; y<SCREEN_HEIGHT; y++ )
+	{
+		for( x=0; x<SCREEN_WIDTH; x++ )
+		{
+			int scrofs = (y*SCREEN_WIDTH)+x;
+			
+			float a = screenBuffer[ (scrofs*4) + 3];
+			
+			if( a < newAlphaLow ) newAlphaLow = a;
+			if( a > newAlphaHigh ) newAlphaHigh = a;
+			float ac = ((a-alphaLow) / (alphaHigh-alphaLow));
+			if( ac < 0.0f ) ac = 0.0f;
+			if( ac > 1.0f ) ac = 1.0f;
+			
+			uint8 br = (uint8)(ac*255.0f);
+			uint8 bg = (uint8)(ac*255.0f);
+			uint8 bb = (uint8)(ac*255.0f);
+			uint32 c = (br<<16) + (bg<<8) + bb;
+			
+			for( zy=0; zy<SCREEN_PIXELSIZE; zy++ )
+			{
+				for( zx=0; zx<SCREEN_PIXELSIZE; zx++ )
+				{
+					int wrx = (x*SCREEN_PIXELSIZE) + zx;
+					int wry = (y*SCREEN_PIXELSIZE) + zy;
+					int wrofs = (wry*scw) + wrx;
+					
+					pixels[ wrofs ] = c;
+				}
+			}
+		}
+	}
+	
+	alphaLow = newAlphaLow;
+	alphaHigh = newAlphaHigh;
+	
+	SDL_UpdateWindowSurface( window );
+	//SDL_Delay( 15 );
+}
+
 void blit_screenBufferToSDL()
 {
 	uint32* pixels = (uint32*)screenSurface->pixels;
