@@ -93,26 +93,30 @@ void CPlayerAvatar::MoveHorizontal( float _delta )
 void CPlayerAvatar::MoveVertical()
 {
 	int stepUp = 2;
-	int stepDown = 1;
+	int stepDown = 2;
 	int numSteps = stepUp + stepDown;
 	
 	float newY = m_worldY - ((float)stepUp);
 	int x = (int)m_worldX;
-	
+
+	bool foundGround = false;
 	int i;
 	for( i=0; i<=numSteps; i++ )
 	{
 		if( physIsGround( x, (int)newY ))
 		{
+			foundGround = true;
 			break;
 		}
 		
 		newY += 1.0f;
 	}
 	
-	newY -= 1.0f;
-	
-	m_worldY = (int)newY;
+	if( foundGround )
+	{
+		newY -= 1.0f;
+		m_worldY = (int)newY;
+	}
 }
 
 void CPlayerAvatar::RefreshGameObject()
