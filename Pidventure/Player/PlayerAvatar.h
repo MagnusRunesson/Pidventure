@@ -27,6 +27,7 @@ public:
 	float m_worldY;
 	float m_jumpTimer;
 	float m_fallTimer;
+	bool m_wasGrounded;
 	
 	CPlayerAvatar( float _worldX, float _worldY );
 	~CPlayerAvatar();

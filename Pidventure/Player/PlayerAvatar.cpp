@@ -27,6 +27,7 @@ CPlayerAvatar::CPlayerAvatar( float _worldX, float _worldY )
 	m_worldY = _worldY;
 	m_jumpTimer = 0.0f;
 	m_fallTimer = 0.0f;
+	m_wasGrounded = true;
 	
 	m_pImage = imageLoad("sprite_herotest");
 	m_pGameObject = gameObjectManager.CreateGameObject( m_pImage );
@@ -54,7 +55,7 @@ void CPlayerAvatar::Update()
 
 	if( m_jumpTimer <= 0.0f )
 	{
-		if( padGetPressed() & PAD_KEYMASK_SECONDARY )
+		if( m_wasGrounded && (padGetPressed() & PAD_KEYMASK_SECONDARY))
 		{
 			Jump();
 		}
@@ -153,6 +154,9 @@ void CPlayerAvatar::MoveVertical()
 			m_worldY = newWorld;
 		}
 	}
+	
+	// Remember for next frame
+	m_wasGrounded = foundGround;
 }
 
 void CPlayerAvatar::RefreshGameObject()
