@@ -7,9 +7,11 @@
 //
 
 #include "PlayerInventory.h"
+#include "Engine/Core/Debug.h"
 
 CPlayerInventory::CPlayerInventory()
 {
+	debugLog("Player inventory, yay\n");
 }
 
 CPlayerInventory::~CPlayerInventory()

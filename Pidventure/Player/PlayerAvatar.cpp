@@ -17,6 +17,7 @@
 
 CPlayerAvatar::CPlayerAvatar( float _worldX, float _worldY )
 {
+	debugLog("pa 0\n");
 	m_movementSpeed = 30.0f;
 	m_jumpDuration = 0.6f;
 	m_jumpForce = 1.9f;
@@ -29,10 +30,14 @@ CPlayerAvatar::CPlayerAvatar( float _worldX, float _worldY )
 	m_fallTimer = 0.0f;
 	m_wasGrounded = true;
 	
+	debugLog("pa 1\n");
 	m_pImage = imageLoad("sprite_herotest");
+	debugLog("pa 2\n");
 	m_pGameObject = gameObjectManager.CreateGameObject( m_pImage );
+	debugLog("pa 3\n");
 	m_pGameObject->SetHotspot( 2.0f, 14.0f );
 	m_pGameObject->SetWorldPosition( _worldX, _worldY );
+	debugLog("pa 4\n");
 }
 
 CPlayerAvatar::~CPlayerAvatar()

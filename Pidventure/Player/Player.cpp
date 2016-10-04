@@ -9,14 +9,18 @@
 #include "Engine/Scene/GameObject.h"
 #include "Engine/IO/Joypad.h"
 #include "Engine/Core/Timer.h"
+#include "Engine/Core/Debug.h"
 #include "Pidventure/Player/Player.h"
 #include "Pidventure/Player/PlayerAvatar.h"
 #include "Pidventure/Player/PlayerInventory.h"
 
 CPlayer::CPlayer()
 {
+	debugLog("Player a\n");
 	m_pAvatar = new CPlayerAvatar( m_worldX, m_worldY );
+	debugLog("Player b\n");
 	m_pInventory = new CPlayerInventory();
+	debugLog("Player c\n");
 }
 
 CPlayer::~CPlayer()

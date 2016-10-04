@@ -32,19 +32,32 @@ static TileRenderer* pTileRenderer;
 
 void game_setup()
 {
+	debugLog("Gamesetup start - banankontakt\n");	// This was printed
+	char* papa = (char*)malloc(10);
+	debugLog("Gamesetup start - kossa\n");			// And this was printed
 	pPlayer = new CPlayer();
+	debugLog("Gamesetup start - apa\n");			// But this was never printed. Added a bunch of prints in between, that should help find out what is going on.
 	pPlayer->SetWorldPosition( 40.0f, 943.0f );
 
+	debugLog("Gamesetup start 2\n");
 	dataInit();
+	debugLog("Gamesetup start 3\n");
 	cameraInit( pPlayer->m_pAvatar );
+	debugLog("Gamesetup start 4\n");
 	bgInit();
+	debugLog("Gamesetup start 5\n");
 	sceneLoad( "scene_highlands" );
+	debugLog("Gamesetup start 6\n");
 	pTileBank = tilebankLoad( "tilebank_highlands" );
+	debugLog("Gamesetup start 7\n");
 	pTileMap = tilemapLoad( "scene_highlands" );
+	debugLog("Gamesetup start 8\n");
 	pTileRenderer = new TileRenderer( pTileMap, pTileBank );
+	debugLog("Gamesetup start 9\n");
 	pTileRenderer->SetDepth( -1.0f );
 	
 	t = 0.0f;
+	debugLog("Gamesetup end\n");
 }
 
 void game_loop()
