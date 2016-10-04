@@ -17,10 +17,16 @@
 
 CPlayerAvatar::CPlayerAvatar( float _worldX, float _worldY )
 {
-	m_movementSpeed = 15.0f;
+	m_movementSpeed = 30.0f;
+	m_jumpDuration = 0.6f;
+	m_jumpForce = 1.9f;
+	m_fallDuration = m_jumpDuration;
+	m_fallForce = m_jumpForce * 1.2f;
 
 	m_worldX = _worldX;
 	m_worldY = _worldY;
+	m_jumpTimer = 0.0f;
+	m_fallTimer = 0.0f;
 	
 	m_pImage = imageLoad("sprite_herotest");
 	m_pGameObject = gameObjectManager.CreateGameObject( m_pImage );
@@ -64,7 +70,7 @@ void CPlayerAvatar::Update()
 	
 	if( m_jumpTimer > 0.0f )
 	{
-		float apa = m_jumpTimer*2.0f;
+		float apa = m_jumpTimer*m_jumpForce;
 		m_worldY -= (apa*apa);
 	}
 	else
@@ -78,7 +84,7 @@ void CPlayerAvatar::Update()
 void CPlayerAvatar::Jump()
 {
 	if(m_jumpTimer <= 0.0f)
-		m_jumpTimer = 0.5f;
+		m_jumpTimer = m_jumpDuration;
 }
 
 void CPlayerAvatar::MoveHorizontal( float _delta )
@@ -116,6 +122,36 @@ void CPlayerAvatar::MoveVertical()
 	{
 		newY -= 1.0f;
 		m_worldY = (int)newY;
+		m_fallTimer = 0.0f;
+	} else {
+		if( m_fallTimer < m_fallDuration )
+		{
+			m_fallTimer += timeDelta();
+			if( m_fallTimer > m_fallDuration )
+				m_fallTimer = m_fallDuration;
+		}
+		
+		float a = m_fallTimer*m_fallForce;
+		
+		float oldWorld = m_worldY;
+		float newWorld = m_worldY + a*a;
+		int oldWorldI = (int)oldWorld;
+		int newWorldI = (int)newWorld;
+		for( i=oldWorldI; i<newWorldI; i++ )
+		{
+			if( physIsGround( x, i ))
+			{
+				foundGround = true;
+				break;
+			}
+		}
+		
+		if( foundGround )
+		{
+			m_worldY = i;
+		} else {
+			m_worldY = newWorld;
+		}
 	}
 }
 

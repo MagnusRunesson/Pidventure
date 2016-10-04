@@ -15,10 +15,18 @@ class Image;
 class CPlayerAvatar
 {
 public:
+	// Movement constants
+	float m_movementSpeed;
+	float m_jumpDuration;
+	float m_jumpForce;
+	float m_fallDuration;
+	float m_fallForce;
+
+	//
 	float m_worldX;
 	float m_worldY;
 	float m_jumpTimer;
-	float m_movementSpeed;
+	float m_fallTimer;
 	
 	CPlayerAvatar( float _worldX, float _worldY );
 	~CPlayerAvatar();

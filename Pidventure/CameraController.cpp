@@ -28,7 +28,7 @@ void cameraInit( CPlayerAvatar* _pPlayerAvatar )
 
 void cameraUpdate()
 {
-	const float CAMERA_BOUNDS = 30.0f;
+	const float CAMERA_BOUNDS = 40.0f;
 	int camPlayerDiff = g_pPlayerAvatar->m_worldX - camera.GetWorldX();
 	if( camPlayerDiff < CAMERA_BOUNDS )
 		camera.SetWorldPosition(camera.GetWorldX()-1.0f, camera.GetWorldY());
