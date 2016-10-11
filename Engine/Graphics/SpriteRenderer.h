@@ -42,6 +42,14 @@ public:
 	
 	//
 	void Render();
+
+	//
+	uint8 m_currentScanline;
+
+	void SortScanlineSprites();
+	void FrameStart();
+	void NextScanline( bool _debugPrint );
+	void RenderScanline( float* _targetBuffer, uint8* _collisionBits, uint8* _collisionIndices );
 };
 
 extern SpriteRenderer spriteRenderer;

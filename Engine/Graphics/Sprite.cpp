@@ -55,3 +55,64 @@ void Sprite::SetSort( float _newSort )
 	sort = _newSort;
 	spriteRenderer.SortAllSprites();
 }
+
+
+
+
+
+//
+// Refresh everything needed for rendering sprites, such as refresing their on screen bounds.
+//
+void Sprite::PreRender()
+{
+	// Should this sprite even render?
+	if( !HasBit( flags, SPRITE_FLAG_ENABLED))
+		return;
+	
+	//
+	int rotation = (flags & SPRITE_FLAG_ROTATE_MASK) >> SPRITE_FLAG_ROTATE_BASE;
+	int w, h;
+	if( rotation & 1 )
+	{
+		// Rotated 90 or 270 degrees means that width and height should be flipped
+		w = image->h;
+		h = image->w;
+	} else
+	{
+		w = image->w;
+		h = image->h;
+	}
+	
+	boundsLeft = x;
+	boundsTop = y;
+	boundsRight = x+w;
+	boundsBottom = y+h;
+}
+
+
+void Sprite::FrameStart()
+{
+	if( boundsTop < 0 )
+		readY = (-boundsTop)*image->w;
+	else
+		readY = 0;
+	
+	int xofs = -boundsLeft;
+	if( xofs<0) xofs=0;
+	
+	int rdofs = readY+xofs;
+	
+	pPixelData = &image->pixels[ rdofs*4 ];
+}
+
+void Sprite::NextScanLine()
+{
+	readY += image->w;
+	
+	int xofs = -boundsLeft;
+	if( xofs<0) xofs=0;
+	
+	int rdofs = readY+xofs;
+	
+	pPixelData = &image->pixels[ rdofs*4 ];
+}

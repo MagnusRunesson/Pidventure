@@ -118,6 +118,7 @@ void SpriteRenderer::SortSprites( Sprite** _apSprites )
 
 void SpriteRenderer::Render()
 {
+	/*
 	int i;
 	for(i=0; i<MAX_SPRITES; i++ )
 	{
@@ -190,6 +191,19 @@ void SpriteRenderer::Render()
 			}
 		}
 	}
+	/*/
+	
+	uint8 collisionBuffer[ SCREEN_WIDTH*256 ];
+	uint8 collisionBuffer2[ SCREEN_WIDTH*256 ];
+	
+	FrameStart();
+	int y;
+	for( y=0; y<SCREEN_HEIGHT; y++)
+	{
+		RenderScanline( &screenBuffer[((y*SCREEN_WIDTH)*4)], collisionBuffer, collisionBuffer2 );
+		NextScanline( false );
+	}
+	/**/
 }
 
 extern const char* stringFromBool( bool );
@@ -222,4 +236,304 @@ void SpriteRenderer::debugPrintStats()
 	}
 	
 	debugLog("Num sprites used: %i / %i\n", numUsed, MAX_SPRITES );
+}
+
+
+
+
+void SpriteRenderer::SortScanlineSprites()
+{
+	SortSprites( m_scanlineSprites );
+}
+
+void SpriteRenderer::FrameStart()
+{
+	m_currentScanline = 0;
+	
+	int i;
+	for( i=0; i<MAX_SPRITES+1; i++ )
+	{
+		m_potentialSprites[ i ] = NULL;
+		m_scanlineSprites[ i ] = NULL;
+	}
+	
+	int iPot = 0;
+	int iCurr = 0;
+	for( i=0; i<MAX_SPRITES; i++ )
+	{
+		Sprite* sprite = m_sortedSprites[ i ]; //&m_sprite[ i ];
+		if( sprite == NULL )
+			break;
+		
+		//printf("Sprite index %i. Image=0x%016llx\n", i, sprite->image );
+		if( HasBit( sprite->flags, SPRITE_FLAG_ENABLED ) && (sprite->image != NULL))
+		{
+			// Refresh sprite bounds and other render related flags
+			sprite->PreRender();
+			
+			//
+			if( sprite->boundsTop > 0 )
+			{
+				m_potentialSprites[ iPot ] = sprite;
+				sprite->FrameStart();
+				iPot++;
+			} else if( sprite->boundsBottom > 0 )
+			{
+				m_scanlineSprites[ iCurr ] = sprite;
+				sprite->FrameStart();
+				iCurr++;
+			}
+		}
+	}
+	
+	/*
+	 // NULL terminated lists
+	 m_potentialSprites[ iPot ] = NULL;
+	 m_scanlineSprites[ iCurr ] = NULL;
+	 */
+}
+
+
+void SpriteRenderer::NextScanline( bool _debugPrint )
+{
+	m_currentScanline++;
+	
+	
+	//
+	// First we iterate the sprites from the last scanline to see if we can remove any
+	//
+	Sprite** renderSpriteList = m_scanlineSprites;
+	Sprite* sprite = *renderSpriteList;
+	while( sprite != NULL )
+	{
+		if( sprite->boundsBottom == m_currentScanline )
+		{
+			// This sprite has been passed and should no longer be considered for rendering. Remove it from list and check the next sprite.
+			Sprite** removeList = renderSpriteList;
+			while( *removeList != NULL )
+			{
+				*removeList = *(removeList+1);
+				removeList++;
+			}
+		} else
+		{
+			sprite->NextScanLine();
+			
+			// Next sprite in list
+			renderSpriteList++;
+		}
+		
+		// Pick the next sprite
+		sprite = *renderSpriteList;
+	}
+	
+	//
+	// Then we iterate the potential sprites and add them to the list of scanline sprites
+	//
+	bool sortSprites = false;
+	Sprite** potentialSpriteList = m_potentialSprites;
+	sprite = *potentialSpriteList;
+	while( sprite != NULL )
+	{
+		if( sprite->boundsTop == m_currentScanline )
+		{
+			// This sprite should be added to the list of rendered sprites
+			*renderSpriteList = sprite;
+			renderSpriteList++;
+			sortSprites = true;
+			
+			// Also remove this sprite from the list of potential sprites
+			Sprite** removeList = potentialSpriteList;
+			while( *removeList != NULL )
+			{
+				*removeList = *(removeList+1);
+				removeList++;
+			}
+		} else
+		{
+			// If we added a sprite to the render list we also remove that sprite from the list of
+			// potential sprites. And if we've removed a sprite from the list of potential sprites
+			// then we should not go to the next element in that list. So that is why we only go to
+			// the next element of the list when we have not removed an entry from the list.
+			potentialSpriteList++;
+		}
+		
+		// Next sprite in the potential sprite list
+		sprite = *potentialSpriteList;
+	}
+	
+	if( sortSprites )
+		SortScanlineSprites();
+	
+	//
+	if( _debugPrint )
+	{
+		debugLog( "\n------------[ Scanline: %i\n", m_currentScanline );
+		
+		debugLog( "Current sprites: \n" );
+		renderSpriteList = m_scanlineSprites;
+		sprite = *renderSpriteList;
+		while( sprite != NULL )
+		{
+			debugLog( "  Image x=%i, y=%i, w=%i, h=%i, left=%i, top=%i, right=%i, bottom=%i, data=0x%016llx\n", sprite->x, sprite->y, sprite->image->w, sprite->image->h, sprite->boundsLeft, sprite->boundsTop, sprite->boundsRight, sprite->boundsBottom, sprite->image->pixels );
+			renderSpriteList++;
+			sprite = *renderSpriteList;
+		}
+		
+		debugLog( "Upcoming sprites: \n" );
+		renderSpriteList = m_potentialSprites;
+		sprite = *renderSpriteList;
+		while( sprite != NULL )
+		{
+			debugLog( "  Image x=%i, y=%i, w=%i, h=%i, left=%i, top=%i, right=%i, bottom=%i, data=0x%016llx\n", sprite->x, sprite->y, sprite->image->w, sprite->image->h, sprite->boundsLeft, sprite->boundsTop, sprite->boundsRight, sprite->boundsBottom, sprite->image->pixels );
+			renderSpriteList++;
+			sprite = *renderSpriteList;
+		}
+	}
+}
+
+void SpriteRenderer::RenderScanline( float* _targetBuffer, uint8* _collisionBits, uint8* _collisionIndices )
+{
+	Sprite** sprites = m_scanlineSprites;
+	Sprite* sprite = *sprites;
+	
+	while( sprite != NULL )
+	{
+		const Image* image = sprite->image;
+		
+		int drawLength = image->w;
+		
+		const float* color = &image->pixels[ sprite->readY*4 ];
+		
+		int drawx = sprite->boundsLeft;
+		if( drawx < 0 )
+		{
+			int skip = -drawx;
+			drawx = 0;
+			color += skip*4;
+			drawLength -= skip;
+		}
+		
+		int apa = drawx + drawLength;
+		if( apa >= SCREEN_WIDTH )
+		{
+			drawLength -= (apa - SCREEN_WIDTH);
+		}
+		
+		float* outBuffer = &_targetBuffer[ drawx*4 ];
+		uint8* collisionBits = &_collisionBits[ drawx ];
+		uint8* collisionIndices = &_collisionIndices[ drawx << 3 ];
+		
+		while( drawLength > 0 )
+		{
+			drawLength--;
+			
+			float r = *color; color++;
+			float g = *color; color++;
+			float b = *color; color++;
+			float a = *color; color++;
+			
+			if( sprite->flags & SPRITE_FLAG_DRAWWHITE )
+			{
+				r = 1.0f;
+				g = 1.0f;
+				b = 1.0f;
+			}
+			
+			if( a == 0.0f )
+			{
+				// Skip
+				outBuffer += 4;
+				collisionBits++;
+				collisionIndices += 8;
+			} else if( a == 1.0f )
+			{
+				// Full overdraw
+				float depth = outBuffer[ 3 ];
+				if( depth <= sprite->sort )
+				{
+					*outBuffer = r; outBuffer++;
+					*outBuffer = g; outBuffer++;
+					*outBuffer = b; outBuffer++;
+					*outBuffer = sprite->sort; outBuffer++;
+
+					if( sprite->collisionIndex != 0 )
+						*collisionBits |= (1<<sprite->collisionIndex);
+					
+				} else {
+					outBuffer += 4;
+				}
+				
+				
+				collisionBits++;
+				
+				collisionIndices[ sprite->collisionIndex ] = sprite->rendererIndex;
+				collisionIndices += 8;
+				
+				/*
+				 *_pOutPixel = rgb;
+				 *_pOutCollisionMask |= (1<<sprite->collisionIndex);
+				 m_collisionSprites[ sprite->collisionIndex ] = sprite;
+				 didRender = true;
+				 */
+			}
+			else
+			{
+				/*
+				uint16 srccol = ((rgb&0x00ff)<<8) + ((rgb&0xff00)>>8);
+				
+				uint32 srcr = (srccol >> COLORSHIFT_16_R) & COLORWIDTH_16_R;
+				uint32 srcg = (srccol >> COLORSHIFT_16_G) & COLORWIDTH_16_G;
+				uint32 srcb = (srccol >> COLORSHIFT_16_B) & COLORWIDTH_16_B;
+				
+				uint32 dsta = 255-alpha;
+				uint16 dstcol2 = *outBuffer;
+				uint16 dstcol = ((dstcol2&0x00ff)<<8) + ((dstcol2&0xff00)>>8);
+				
+				uint32 dstr = (dstcol >> COLORSHIFT_16_R) & COLORWIDTH_16_R;
+				uint32 dstg = (dstcol >> COLORSHIFT_16_G) & COLORWIDTH_16_G;
+				uint32 dstb = (dstcol >> COLORSHIFT_16_B) & COLORWIDTH_16_B;
+				
+				// Multiply
+				uint32 outr = (((srcr*alpha)+(dstr*dsta)) >> 8) & COLORWIDTH_16_R;
+				uint32 outg = (((srcg*alpha)+(dstg*dsta)) >> 8) & COLORWIDTH_16_G;
+				uint32 outb = (((srcb*alpha)+(dstb*dsta)) >> 8) & COLORWIDTH_16_B;
+				 */
+				
+				float dstr = outBuffer[ 0 ];
+				float dstg = outBuffer[ 1 ];
+				float dstb = outBuffer[ 2 ];
+				float dstSort = outBuffer[ 3 ];
+				if( dstSort <= sprite->sort )
+				{
+					float dsta = 1.0f-a;
+				
+					/*
+					 // Additive
+					 uint32 outr = ((srcr*srca)+(dstr<<8)) >> 8;
+					 uint32 outg = ((srcg*srca)+(dstg<<8)) >> 8;
+					 uint32 outb = ((srcb*srca)+(dstb<<8)) >> 8;
+					 if( outr > COLORWIDTH_16_R ) outr = COLORWIDTH_16_R;
+					 if( outg > COLORWIDTH_16_G ) outg = COLORWIDTH_16_G;
+					 if( outb > COLORWIDTH_16_B ) outb = COLORWIDTH_16_B;
+					 */
+				
+					*outBuffer = (r*a) + (dstr*dsta); outBuffer++;
+					*outBuffer = (g*a) + (dstg*dsta); outBuffer++;
+					*outBuffer = (b*a) + (dstb*dsta); outBuffer++;
+					*outBuffer = sprite->sort; outBuffer++;
+				
+					*collisionBits |= (1<<sprite->collisionIndex);
+				 
+					collisionIndices[ sprite->collisionIndex ] = sprite->rendererIndex;
+				} else {
+					outBuffer += 4;
+				}
+				collisionBits++;
+				collisionIndices += 8;
+			}
+		}
+		sprites++;
+		sprite = *sprites;
+	}
 }

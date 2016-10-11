@@ -59,6 +59,15 @@ public:
 	//
 	inline void SetFlags( int _flags ) { flags |= _flags; };
 	inline void ClrFlags( int _flags ) { flags &= ~_flags; };
+
+
+
+	uint16 readY;
+	const float* pPixelData;
+
+	void PreRender();
+	void FrameStart();
+	void NextScanLine();
 };
 
 
