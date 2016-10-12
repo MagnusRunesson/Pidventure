@@ -28,6 +28,10 @@ public:
 	sint32 y;
 	float sort;
 	uint32 flags;
+	uint8 collisionIndex;
+	uint8 pad0;
+	uint8 pad1;
+	uint8 pad2;
 };
 
 class CSceneDefinition
@@ -71,7 +75,7 @@ void sceneLoad( const char* _pszName )
 	for( i=0; i<pScene->NumObjects; i++ )
 	{
 		CSceneObject* pObj = &pScene->aObjects[ i ];
-		debugLog( "Object %i: %s at %i,%i sort %.2f\n", i, pObj->pszDefinitionName, pObj->x, pObj->y, pObj->sort );
+		debugLog( "Object %i: %s at %i,%i sort %.2f, collision index %i\n", i, pObj->pszDefinitionName, pObj->x, pObj->y, pObj->sort, pObj->collisionIndex );
 	}
 	
 	for( i=0; i<SCENE_MAX_SPRITES; i++ )
@@ -97,6 +101,7 @@ void sceneLoad( const char* _pszName )
 		Sprite* pSprite = pGO->GetSprite();
 		pGO->SetWorldPosition( pObj->x, pObj->y );
 		pSprite->SetSort( pObj->sort );
+		pSprite->collisionIndex = pObj->collisionIndex;
 		
 	}
 	

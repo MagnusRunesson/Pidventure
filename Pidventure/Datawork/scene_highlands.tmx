@@ -10,6 +10,7 @@
   <tile id="1">
    <properties>
     <property name="animation" value="prop_flower_red"/>
+    <property name="collision_index" value="1"/>
     <property name="hotspot_x" value="1"/>
     <property name="hotspot_y" value="4"/>
    </properties>
@@ -276,10 +277,26 @@
    <property name="sort" value="-100"/>
   </properties>
   <object id="4" name="signpost" gid="4100" x="90" y="944"/>
-  <object id="5" name="flower" gid="4098" x="80" y="944"/>
-  <object id="7" name="flower" gid="4098" x="85" y="944"/>
-  <object id="8" name="flower" gid="4098" x="23" y="944"/>
-  <object id="9" name="flower" gid="4098" x="18" y="944"/>
+  <object id="5" name="flower" gid="4098" x="80" y="944">
+   <properties>
+    <property name="collision_index" value="1"/>
+   </properties>
+  </object>
+  <object id="7" name="flower" gid="4098" x="85" y="944">
+   <properties>
+    <property name="collision_index" value="1"/>
+   </properties>
+  </object>
+  <object id="8" name="flower" gid="4098" x="23" y="944">
+   <properties>
+    <property name="collision_index" value="1"/>
+   </properties>
+  </object>
+  <object id="9" name="flower" gid="4098" x="18" y="944">
+   <properties>
+    <property name="collision_index" value="1"/>
+   </properties>
+  </object>
  </objectgroup>
  <objectgroup name="Infront of player">
   <properties>

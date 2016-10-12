@@ -35,6 +35,10 @@ public:
 	signed int y;
 	float sort;
 	unsigned int flags;
+	unsigned char collisionIndex;
+	unsigned char pad0;
+	unsigned char pad1;
+	unsigned char pad2;
 	
 	COutputSceneObject()
 	{
@@ -43,6 +47,8 @@ public:
 		y = 0;
 		sort = 0.0f;
 		flags = 0;
+		collisionIndex = 0;
+		pad0 = pad1 = pad2 = 0;
 	};
 };
 
@@ -88,6 +94,18 @@ public:
 class CSpriteDefinition
 {
 public:
+	CSpriteDefinition()
+	{
+		tile_id = 0;
+		pszName = NULL;
+		pszAnimationName = NULL;
+		w = 0;
+		h = 0;
+		hotspot_x = 0;
+		hotspot_y = 0;
+		collisionIndex = 0;
+	}
+
 	int tile_id;
 	const char* pszName;
 	const char* pszAnimationName;
@@ -95,6 +113,7 @@ public:
 	int h;
 	int hotspot_x;
 	int hotspot_y;
+	int collisionIndex;
 };
 
 class CSpriteInstance
@@ -104,7 +123,6 @@ public:
 	int x;
 	int y;
 	float sort;
-	
 };
 
 class CTileMap
@@ -209,7 +227,7 @@ CTileBank* ParseTilebankElement( const XMLElement* _pTileBankRootElement, const 
 	return pRet;
 }
 
-int GetIntProperty( const char* _pszPropertyName, const XMLElement* _pProperties, int _defaultValue = 0 )
+int GetIntProperty( const char* _pszPropertyName, const XMLElement* _pProperties, int _defaultValue = 0, bool _debug = false )
 {
 	//
 	const XMLElement* pPropertyElement = _pProperties->FirstChildElement();
@@ -247,6 +265,8 @@ void ParseSpriteDefinitionProperties( CSpriteDefinition* _pRet, const XMLElement
 {
 	_pRet->hotspot_x = GetIntProperty( "hotspot_x", _pProperties, 0 );
 	_pRet->hotspot_y = GetIntProperty( "hotspot_y", _pProperties, 0 );
+	_pRet->collisionIndex = GetIntProperty( "collision_index", _pProperties, 0 );
+	printf("collision index=%i\n", _pRet->collisionIndex );
 	_pRet->pszAnimationName = GetStringProperty( "animation", _pProperties, NULL );
 	printf("Animation: %s\n", _pRet->pszAnimationName);
 }
@@ -532,6 +552,7 @@ void ExportSceneObjects( CScene* _pOutputScene, const char* _pszOutFileName )
 		pOutputObject->flags = 0;
 		pOutputObject->x = pInputObject->x + pInputObject->pSpriteDefinition->hotspot_x;
 		pOutputObject->y = pInputObject->y + pInputObject->pSpriteDefinition->hotspot_y - pInputObject->pSpriteDefinition->h;
+		pOutputObject->collisionIndex = pInputObject->pSpriteDefinition->collisionIndex;
 		pOutputObject->sort = pInputObject->sort;
 		
 		if( pInputObject->pSpriteDefinition->pszAnimationName != NULL )
