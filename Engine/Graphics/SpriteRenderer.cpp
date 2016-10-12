@@ -6,6 +6,7 @@
 //  Copyright © 2015 Magnus Runesson. All rights reserved.
 //
 
+#include <memory.h>
 #include <stdio.h>
 #include <math.h>
 #include "Engine/Graphics/SpriteRenderer.h"
@@ -193,14 +194,16 @@ void SpriteRenderer::Render()
 	}
 	/*/
 	
-	uint8 collisionBuffer[ SCREEN_WIDTH*256 ];
-	uint8 collisionBuffer2[ SCREEN_WIDTH*256 ];
+	uint8 collisionBits[ SCREEN_WIDTH ];
+	uint8 collisionIndices[ SCREEN_WIDTH<<3 ];
 	
 	FrameStart();
 	int y;
 	for( y=0; y<SCREEN_HEIGHT; y++)
 	{
-		RenderScanline( &screenBuffer[((y*SCREEN_WIDTH)*4)], collisionBuffer, collisionBuffer2 );
+		memset( collisionBits, 0, sizeof(collisionBits));
+		memset( collisionIndices, 0, sizeof(collisionIndices));
+		RenderScanline( &screenBuffer[((y*SCREEN_WIDTH)*4)], collisionBits, collisionIndices );
 		NextScanline( false );
 	}
 	/**/
@@ -456,18 +459,15 @@ void SpriteRenderer::RenderScanline( float* _targetBuffer, uint8* _collisionBits
 					*outBuffer = g; outBuffer++;
 					*outBuffer = b; outBuffer++;
 					*outBuffer = sprite->sort; outBuffer++;
-
-					if( sprite->collisionIndex != 0 )
-						*collisionBits |= (1<<sprite->collisionIndex);
-					
 				} else {
 					outBuffer += 4;
 				}
 				
 				
-				collisionBits++;
-				
+				// Always detect collision, regardless of depth test result
+				*collisionBits |= (1<<sprite->collisionIndex);
 				collisionIndices[ sprite->collisionIndex ] = sprite->rendererIndex;
+				collisionBits++;
 				collisionIndices += 8;
 				
 				/*
@@ -507,7 +507,7 @@ void SpriteRenderer::RenderScanline( float* _targetBuffer, uint8* _collisionBits
 				if( dstSort <= sprite->sort )
 				{
 					float dsta = 1.0f-a;
-				
+
 					/*
 					 // Additive
 					 uint32 outr = ((srcr*srca)+(dstr<<8)) >> 8;
@@ -522,13 +522,14 @@ void SpriteRenderer::RenderScanline( float* _targetBuffer, uint8* _collisionBits
 					*outBuffer = (g*a) + (dstg*dsta); outBuffer++;
 					*outBuffer = (b*a) + (dstb*dsta); outBuffer++;
 					*outBuffer = sprite->sort; outBuffer++;
-				
-					*collisionBits |= (1<<sprite->collisionIndex);
-				 
-					collisionIndices[ sprite->collisionIndex ] = sprite->rendererIndex;
+
 				} else {
 					outBuffer += 4;
 				}
+				
+				// Always detect collision, regardless of depth test result
+				*collisionBits |= (1<<sprite->collisionIndex);
+				collisionIndices[ sprite->collisionIndex ] = sprite->rendererIndex;
 				collisionBits++;
 				collisionIndices += 8;
 			}
