@@ -198,13 +198,24 @@ void SpriteRenderer::Render()
 	uint8 collisionIndices[ SCREEN_WIDTH<<3 ];
 	
 	FrameStart();
-	int y;
+	int x, y;
 	for( y=0; y<SCREEN_HEIGHT; y++)
 	{
 		memset( collisionBits, 0, sizeof(collisionBits));
 		memset( collisionIndices, 0, sizeof(collisionIndices));
 		RenderScanline( &screenBuffer[((y*SCREEN_WIDTH)*4)], collisionBits, collisionIndices );
 		NextScanline( false );
+		
+		for( x=0; x<SCREEN_WIDTH; x++ )
+		{
+			if((collisionBits[ x ] & 0x06) == 0x06 )
+			{
+				int wr = ((y*SCREEN_WIDTH)+x) * 4;
+				screenBuffer[ wr+0 ] = 1.0f;
+				screenBuffer[ wr+1 ] = 1.0f;
+				screenBuffer[ wr+2 ] = 1.0f;
+			}
+		}
 	}
 	/**/
 }
