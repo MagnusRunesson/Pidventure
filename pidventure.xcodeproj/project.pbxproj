@@ -109,6 +109,7 @@
 		257D92561D794A63006B6512 /* Player.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Player.h; path = Pidventure/Player/Player.h; sourceTree = "<group>"; };
 		257D92571D794A63006B6512 /* PlayerInventory.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = PlayerInventory.cpp; path = Pidventure/Player/PlayerInventory.cpp; sourceTree = "<group>"; };
 		257D92581D794A63006B6512 /* PlayerInventory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PlayerInventory.h; path = Pidventure/Player/PlayerInventory.h; sourceTree = "<group>"; };
+		25A44AE31DAE019D00C6CE0C /* Collision.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Collision.h; path = Pidventure/Collision.h; sourceTree = "<group>"; };
 		25F9308C1D7E83640026DA4C /* file_osx.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = file_osx.cpp; path = Engine/Platform/OSX/file_osx.cpp; sourceTree = "<group>"; };
 		25F9308F1D7E87D80026DA4C /* File.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = File.h; path = Engine/IO/File.h; sourceTree = "<group>"; };
 		25F930901D7E88250026DA4C /* Engine.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Engine.h; path = Engine/Engine.h; sourceTree = "<group>"; };
@@ -292,6 +293,7 @@
 				25F9309F1D87B8660026DA4C /* Physics.h */,
 				25F930A11D890D250026DA4C /* CameraController.cpp */,
 				25F930A21D890D250026DA4C /* CameraController.h */,
+				25A44AE31DAE019D00C6CE0C /* Collision.h */,
 			);
 			name = Pidventure;
 			sourceTree = "<group>";

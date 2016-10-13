@@ -15,6 +15,7 @@
 #include "Engine/Core/Debug.h"
 #include "Pidventure/Player/PlayerAvatar.h"
 #include "Pidventure/Physics.h"
+#include "Pidventure/Collision.h"
 
 CPlayerAvatar::CPlayerAvatar( float _worldX, float _worldY )
 {
@@ -38,7 +39,7 @@ CPlayerAvatar::CPlayerAvatar( float _worldX, float _worldY )
 	debugLog("pa 3\n");
 	m_pGameObject->SetHotspot( 2.0f, 14.0f );
 	m_pGameObject->SetWorldPosition( _worldX, _worldY );
-	m_pGameObject->GetSprite()->collisionIndex = 2;
+	m_pGameObject->GetSprite()->collisionIndex = SCI_PLAYER_AVATAR;
 	debugLog("pa 4\n");
 }
 
