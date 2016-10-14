@@ -21,6 +21,7 @@
 #include "Pidventure/background.h"
 #include "Pidventure/Scene.h"
 #include "Pidventure/CameraController.h"
+#include "Pidventure/Gameplay/Door.h"
 #include "Pidventure/DataManual/Data.h"
 
 float t;
@@ -29,6 +30,8 @@ CPlayer* pPlayer;
 static CTileBank* pTileBank;
 static CTileMap* pTileMap;
 static TileRenderer* pTileRenderer;
+
+CDoor* g_pDoor;
 
 void game_setup()
 {
@@ -55,6 +58,13 @@ void game_setup()
 	pTileRenderer = new TileRenderer( pTileMap, pTileBank );
 	debugLog("Gamesetup start 9\n");
 	pTileRenderer->SetDepth( -1.0f );
+
+	debugLog("DoorManager init\n");
+	doorManager.Init();
+
+	debugLog("DoorManager init done\n");
+	
+	g_pDoor = doorManager.CreateDoor( 46, 936 );
 	
 	t = 0.0f;
 	debugLog("Gamesetup end\n");
@@ -80,7 +90,7 @@ void game_loop()
 			screenBuffer[wrofs*4 + 3] = -1000.0f;
 		}
 	}
-
+	
 	gameObjectManager.Update();
 	cameraUpdate();
 	bgSetCameraPosition( cameraWorldX(), 0.0f );
@@ -92,5 +102,26 @@ void game_loop()
 
 void game_debugTrigger(int _id)
 {
+	/*
 	debugLog("DebugTrigger %i\n", _id);
+	if(_id == 1 )
+		g_pDoor->Open();
+	
+	if( _id == 2 )
+		g_pDoor->Close();
+	 */
+	
+	if( _id == 1 )
+	{
+		CDoor* pDoor = doorManager.GetDoorAt( pPlayer->m_pAvatar->m_worldX, pPlayer->m_pAvatar->m_worldY );
+		if( pDoor != NULL )
+			pDoor->Open();
+	}
+
+	if( _id == 2 )
+	{
+		CDoor* pDoor = doorManager.GetDoorAt( pPlayer->m_pAvatar->m_worldX, pPlayer->m_pAvatar->m_worldY );
+		if( pDoor != NULL )
+			pDoor->Close();
+	}
 }

@@ -13,6 +13,7 @@
 #include "Engine/Graphics/SpriteRenderer.h"
 #include "Engine/Graphics/Animation.h"
 #include "Engine/Core/BitHelpers.h"
+#include "Engine/Core/Debug.h"
 
 GameObject::GameObject()
 {
@@ -49,7 +50,12 @@ void GameObject::Create( const AnimationSequenceDefinition* _animation )
 {
 	m_animationSequenceDefinition = _animation;
 	m_animation.Create( _animation, this );
-	Create( _animation->Frames[ 0 ].sourceImage );
+	
+	// Create a sprite from the first frame and apply other relevant data from that frame
+	AnimationFrameDefinition* pAnimFrame = &_animation->Frames[ 0 ];
+	Create( pAnimFrame->sourceImage );
+	m_imageHotspotX = pAnimFrame->HotspotX;
+	m_imageHotspotY = pAnimFrame->HotspotY;
 }
 
 void GameObject::Destroy()

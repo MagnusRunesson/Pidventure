@@ -36,9 +36,9 @@ public:
 	float sort;
 	unsigned int flags;
 	unsigned char collisionIndex;
+	unsigned char ID;
 	unsigned char pad0;
 	unsigned char pad1;
-	unsigned char pad2;
 	
 	COutputSceneObject()
 	{
@@ -48,7 +48,8 @@ public:
 		sort = 0.0f;
 		flags = 0;
 		collisionIndex = 0;
-		pad0 = pad1 = pad2 = 0;
+		ID = 0;
+		pad0 = pad1 = 0;
 	};
 };
 
@@ -123,6 +124,7 @@ public:
 	int x;
 	int y;
 	float sort;
+	unsigned char ID;
 };
 
 class CTileMap
@@ -229,15 +231,18 @@ CTileBank* ParseTilebankElement( const XMLElement* _pTileBankRootElement, const 
 
 int GetIntProperty( const char* _pszPropertyName, const XMLElement* _pProperties, int _defaultValue = 0, bool _debug = false )
 {
-	//
-	const XMLElement* pPropertyElement = _pProperties->FirstChildElement();
-	while(pPropertyElement != NULL)
+	if( _pProperties != NULL )
 	{
-		const char* pszPropName = pPropertyElement->Attribute( "name" );
-		if( !strcmp( pszPropName, _pszPropertyName ))
-			return pPropertyElement->IntAttribute( "value" );
-		
-		pPropertyElement = pPropertyElement->NextSiblingElement();
+		//
+		const XMLElement* pPropertyElement = _pProperties->FirstChildElement();
+		while(pPropertyElement != NULL)
+		{
+			const char* pszPropName = pPropertyElement->Attribute( "name" );
+			if( !strcmp( pszPropName, _pszPropertyName ))
+				return pPropertyElement->IntAttribute( "value" );
+			
+			pPropertyElement = pPropertyElement->NextSiblingElement();
+		}
 	}
 	
 	return _defaultValue;
@@ -245,15 +250,18 @@ int GetIntProperty( const char* _pszPropertyName, const XMLElement* _pProperties
 
 const char* GetStringProperty( const char* _pszPropertyName, const XMLElement* _pProperties, const char* _defaultValue = NULL )
 {
-	//
-	const XMLElement* pPropertyElement = _pProperties->FirstChildElement();
-	while(pPropertyElement != NULL)
+	if( _pProperties != NULL )
 	{
-		const char* pszPropName = pPropertyElement->Attribute( "name" );
-		if( !strcmp( pszPropName, _pszPropertyName ))
-			return pPropertyElement->Attribute( "value" );
-		
-		pPropertyElement = pPropertyElement->NextSiblingElement();
+		//
+		const XMLElement* pPropertyElement = _pProperties->FirstChildElement();
+		while(pPropertyElement != NULL)
+		{
+			const char* pszPropName = pPropertyElement->Attribute( "name" );
+			if( !strcmp( pszPropName, _pszPropertyName ))
+				return pPropertyElement->Attribute( "value" );
+			
+			pPropertyElement = pPropertyElement->NextSiblingElement();
+		}
 	}
 	
 	return _defaultValue;
@@ -266,9 +274,7 @@ void ParseSpriteDefinitionProperties( CSpriteDefinition* _pRet, const XMLElement
 	_pRet->hotspot_x = GetIntProperty( "hotspot_x", _pProperties, 0 );
 	_pRet->hotspot_y = GetIntProperty( "hotspot_y", _pProperties, 0 );
 	_pRet->collisionIndex = GetIntProperty( "collision_index", _pProperties, 0 );
-	printf("collision index=%i\n", _pRet->collisionIndex );
 	_pRet->pszAnimationName = GetStringProperty( "animation", _pProperties, NULL );
-	printf("Animation: %s\n", _pRet->pszAnimationName);
 }
 
 CSpriteDefinition* ParseSpriteDefinitionElement( const XMLElement* _pTileBankRootElement, const XMLElement* _pImageElement )
@@ -404,6 +410,21 @@ void ParseObjectGroupProperties( CScene* _pRet, const XMLElement* _pProperties )
 	_pRet->currentSortValue = GetIntProperty( "sort", _pProperties, 0 );
 }
 
+const XMLElement* GetChildElement( const char* _pszName, const XMLElement* _parent )
+{
+	const XMLElement* pChild = _parent->FirstChildElement();
+	while(pChild)
+	{
+		if( !strcmp( _pszName, pChild->Name() ))
+		{
+			return pChild;
+		}
+		
+		pChild = pChild->NextSiblingElement();
+	}
+	
+	return NULL;
+}
 
 void ParseObjectGroup( CScene* _pRet, const XMLElement* _pObjectgroupElement )
 {
@@ -418,6 +439,8 @@ void ParseObjectGroup( CScene* _pRet, const XMLElement* _pObjectgroupElement )
 			pSpriteInstance->x = child->IntAttribute( "x" );
 			pSpriteInstance->y = child->IntAttribute( "y" );
 			pSpriteInstance->sort = _pRet->currentSortValue;
+			const XMLElement* pProperties = GetChildElement( "properties",child );
+			pSpriteInstance->ID = GetIntProperty( "id", pProperties, 0 );
 			_pRet->currentSortValue += 0.01f;
 			_pRet->Sprites.push_back( pSpriteInstance );
 			//printf( "Sprite x=%i, y=%i, sort=%.2f, definition=%s\n", pSpriteInstance->x, pSpriteInstance->y, pSpriteInstance->sort, pSpriteInstance->pSpriteDefinition->pszName );
@@ -554,6 +577,7 @@ void ExportSceneObjects( CScene* _pOutputScene, const char* _pszOutFileName )
 		pOutputObject->y = pInputObject->y + pInputObject->pSpriteDefinition->hotspot_y - pInputObject->pSpriteDefinition->h;
 		pOutputObject->collisionIndex = pInputObject->pSpriteDefinition->collisionIndex;
 		pOutputObject->sort = pInputObject->sort;
+		pOutputObject->ID = pInputObject->ID;
 		
 		if( pInputObject->pSpriteDefinition->pszAnimationName != NULL )
 		{

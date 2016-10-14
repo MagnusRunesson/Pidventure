@@ -14,6 +14,10 @@
 //
 #define SCI_PLAYER_AVATAR		(1)
 #define SCI_PLAYER_WEAPON		(2)
+#define SCI_PLAYER_SHIELD		(3)
+#define SCI_ENEMY_AVATAR		(4)
+#define SCI_ENEMY_WEAPON		(5)
+#define SCI_ENEMY_SHIELD		(6)
 
 
 #endif /* Collision_h */
