@@ -47,11 +47,13 @@ public:
 	CSceneObject* aObjects;
 };
 
-const int SCENE_MAX_SPRITES								= 2048;
 
-GameObject* sceneObjects[ SCENE_MAX_SPRITES ];
+CScene::CScene()
+{
+	
+}
 
-void sceneLoad( const char* _pszName )
+bool CScene::Load( const char* _pszName )
 {
 	CSceneObject* pSceneObjects;
 	int readBytes;
@@ -62,7 +64,7 @@ void sceneLoad( const char* _pszName )
 	if( !fileLoad( objectFileName, (void**)&pSceneObjects, &readBytes ))
 	{
 		debugLog("Failed to load scene '%s'\n", objectFileName );
-		return;
+		return false;
 	}
 	
 	CSceneDefinition* pScene = new CSceneDefinition();
@@ -106,4 +108,6 @@ void sceneLoad( const char* _pszName )
 	}
 	
 	physInit();
+	
+	return true;
 }

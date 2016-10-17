@@ -32,6 +32,7 @@ static CTileMap* pTileMap;
 static TileRenderer* pTileRenderer;
 
 CDoor* g_pDoor;
+CScene* g_pScene;
 
 void game_setup()
 {
@@ -49,7 +50,8 @@ void game_setup()
 	debugLog("Gamesetup start 4\n");
 	bgInit();
 	debugLog("Gamesetup start 5\n");
-	sceneLoad( "scene_highlands" );
+	g_pScene = new CScene();
+	g_pScene->Load( "scene_highlands" );
 	debugLog("Gamesetup start 6\n");
 	pTileBank = tilebankLoad( "tilebank_highlands" );
 	debugLog("Gamesetup start 7\n");
