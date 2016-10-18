@@ -11,13 +11,28 @@
 
 const int SCENE_MAX_SPRITES								= 2048;
 
+class CTileMap;
+class CTileBank;
+class TileRenderer;
+
 class CScene
 {
-	GameObject* sceneObjects[ SCENE_MAX_SPRITES ];
-
 public:
+	CTileBank* pTileBank;
+	CTileMap* pTileMap;
+	TileRenderer* pTileRenderer;
+	
+	GameObject* sceneObjects[ SCENE_MAX_SPRITES ];
+	int m_worldX;
+	int m_worldY;
+	
 	CScene();
 	bool Load( const char* _pszName );
+
+	void SetWorldPosition( int _x, int _y );
+	void SetSort( float _sort );
+	void SetViewportTopLeft( int _x, int _y );
+	void Render();
 };
 
 /*

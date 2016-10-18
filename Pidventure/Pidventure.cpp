@@ -7,6 +7,7 @@
 //
 
 #include <stdlib.h>
+#include <stdio.h>
 #include "Engine/Core/Debug.h"
 #include "Engine/Graphics/Screen.h"
 #include "Engine/Graphics/Image.h"
@@ -27,15 +28,16 @@
 float t;
 
 CPlayer* pPlayer;
-static CTileBank* pTileBank;
-static CTileMap* pTileMap;
-static TileRenderer* pTileRenderer;
 
 CDoor* g_pDoor;
 CScene* g_pScene;
+CScene* g_pScene2;
+bool renderInside;
 
 void game_setup()
 {
+	renderInside = false;
+	
 	debugLog("Gamesetup start - banankontakt\n");	// This was printed
 	char* papa = (char*)malloc(10);
 	debugLog("Gamesetup start - kossa\n");			// And this was printed
@@ -52,14 +54,13 @@ void game_setup()
 	debugLog("Gamesetup start 5\n");
 	g_pScene = new CScene();
 	g_pScene->Load( "scene_highlands" );
+	
+	g_pScene2 = new CScene();
+	g_pScene2->Load( "scene_highlands_interior_test" );
+	g_pScene2->SetWorldPosition( 8*4, 229*4 );
+	g_pScene2->SetSort( -0.9f );
+	
 	debugLog("Gamesetup start 6\n");
-	pTileBank = tilebankLoad( "tilebank_highlands" );
-	debugLog("Gamesetup start 7\n");
-	pTileMap = tilemapLoad( "scene_highlands" );
-	debugLog("Gamesetup start 8\n");
-	pTileRenderer = new TileRenderer( pTileMap, pTileBank );
-	debugLog("Gamesetup start 9\n");
-	pTileRenderer->SetDepth( -1.0f );
 
 	debugLog("DoorManager init\n");
 	doorManager.Init();
@@ -67,6 +68,9 @@ void game_setup()
 	debugLog("DoorManager init done\n");
 	
 	g_pDoor = doorManager.CreateDoor( 46, 936 );
+	sprintf( g_pDoor->pszLayerName, "tilemap_highlands_interior_test" );
+	g_pDoor->layerX = 8;
+	g_pDoor->layerY = 229;
 	
 	t = 0.0f;
 	debugLog("Gamesetup end\n");
@@ -96,8 +100,15 @@ void game_loop()
 	gameObjectManager.Update();
 	cameraUpdate();
 	bgSetCameraPosition( cameraWorldX(), 0.0f );
-	pTileRenderer->SetPosition( (int)cameraWorldX(), (int)cameraWorldY());
-	pTileRenderer->Render();
+	g_pScene->SetViewportTopLeft((int)cameraWorldX(), (int)cameraWorldY());
+	g_pScene->Render();
+	
+	if(renderInside)
+	{
+		g_pScene2->SetViewportTopLeft((int)cameraWorldX(), (int)cameraWorldY());
+		g_pScene2->Render();
+	}
+	
 	gameObjectManager.Render();
 	spriteRenderer.Render();
 }
@@ -125,5 +136,10 @@ void game_debugTrigger(int _id)
 		CDoor* pDoor = doorManager.GetDoorAt( pPlayer->m_pAvatar->m_worldX, pPlayer->m_pAvatar->m_worldY );
 		if( pDoor != NULL )
 			pDoor->Close();
+	}
+	
+	if( _id == 0 )
+	{
+		renderInside = !renderInside;
 	}
 }

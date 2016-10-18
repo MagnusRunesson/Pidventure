@@ -12,6 +12,9 @@
 #include "Engine/Graphics/Image.h"
 #include "Engine/Graphics/Sprite.h"
 #include "Engine/Graphics/Animation.h"
+#include "Engine/Graphics/TileMap.h"
+#include "Engine/Graphics/TileBank.h"
+#include "Engine/Graphics/TileRenderer.h"
 #include "Engine/IO/File.h"
 #include "Engine/Core/Debug.h"
 #include "Pidventure/Scene.h"
@@ -50,7 +53,8 @@ public:
 
 CScene::CScene()
 {
-	
+	m_worldX = 0;
+	m_worldY = 0;
 }
 
 bool CScene::Load( const char* _pszName )
@@ -107,7 +111,36 @@ bool CScene::Load( const char* _pszName )
 		
 	}
 	
+	pTileBank = tilebankLoad( "tilebank_highlands" );
+	debugLog("Gamesetup start 7\n");
+	pTileMap = tilemapLoad( _pszName );
+	debugLog("Gamesetup start 8\n");
+	pTileRenderer = new TileRenderer( pTileMap, pTileBank );
+	debugLog("Gamesetup start 9\n");
+	pTileRenderer->SetDepth( -1.0f );
+
 	physInit();
 	
 	return true;
+}
+
+void CScene::SetWorldPosition( int _x, int _y )
+{
+	m_worldX = _x;
+	m_worldY = _y;
+}
+
+void CScene::SetSort( float _sort )
+{
+	pTileRenderer->SetDepth( _sort );
+}
+
+void CScene::SetViewportTopLeft( int _x, int _y )
+{
+	pTileRenderer->SetPosition( _x-m_worldX, _y-m_worldY );
+}
+
+void CScene::Render()
+{
+	pTileRenderer->Render();
 }
