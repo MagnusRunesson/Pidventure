@@ -19,6 +19,7 @@ class CScene
 {
 public:
 	CTileBank* pTileBank;
+	CTileBank* pTileBankCollision;
 	CTileMap* pTileMap;
 	TileRenderer* pTileRenderer;
 	

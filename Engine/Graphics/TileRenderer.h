@@ -27,12 +27,6 @@ struct RenderTile
 class TileRenderer
 {
 	RenderTile m_renderTiles[ 25 ];	// This should really be (96/tilemapwidth)+1
-	
-	int m_x;
-	int m_y;
-	float m_depth;
-	CTileBank* m_pTileBank;
-	CTileMap* m_pTileMap;
 
 	// Rendering variables
 	int m_scanlineTileMapIndex;		// For each scanline this is the index in the tile map on the far left of the screen
@@ -41,6 +35,13 @@ class TileRenderer
 	int m_tilePixelReadOfs;
 	
 public:
+	CTileBank* m_pTileBank;
+	CTileMap* m_pTileMap;
+	
+	int m_x;
+	int m_y;
+	float m_depth;
+
 	TileRenderer( CTileMap* _tileMap, CTileBank* _tileBank );
 	
 	//

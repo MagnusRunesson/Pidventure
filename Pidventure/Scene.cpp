@@ -112,15 +112,15 @@ bool CScene::Load( const char* _pszName )
 	}
 	
 	pTileBank = tilebankLoad( "tilebank_highlands" );
-	debugLog("Gamesetup start 7\n");
+	debugLog("Gamesetup start 7a\n");
+	pTileBankCollision = tilebankLoad( "tilebank_highlands_collision" );
+	debugLog("Gamesetup start 7b\n");
 	pTileMap = tilemapLoad( _pszName );
 	debugLog("Gamesetup start 8\n");
 	pTileRenderer = new TileRenderer( pTileMap, pTileBank );
 	debugLog("Gamesetup start 9\n");
 	pTileRenderer->SetDepth( -1.0f );
 
-	physInit();
-	
 	return true;
 }
 

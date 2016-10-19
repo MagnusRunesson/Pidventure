@@ -23,6 +23,7 @@
 #include "Pidventure/Scene.h"
 #include "Pidventure/CameraController.h"
 #include "Pidventure/Gameplay/Door.h"
+#include "Pidventure/Physics.h"
 #include "Pidventure/DataManual/Data.h"
 
 float t;
@@ -72,6 +73,8 @@ void game_setup()
 	g_pDoor->m_pSceneInside = g_pScene2;
 	g_pDoor->m_pSceneOutside = g_pScene;
 	
+	physInit( g_pScene );
+
 	t = 0.0f;
 	debugLog("Gamesetup end\n");
 }
