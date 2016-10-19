@@ -13,16 +13,24 @@
 
 class GameObject;
 class Image;
+class CScene;
 
 class CDoor
 {
+	bool m_isOpen;
+	
 public:
+	CScene* m_pSceneInside;
+	CScene* m_pSceneOutside;
+	
 	GameObject* m_pGameObject;
 	void Init();
 	void Reset();
 	
 	void Open();
 	void Close();
+	
+	bool IsOpen();
 };
 
 class CDoorManager

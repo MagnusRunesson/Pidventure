@@ -54,11 +54,12 @@ void game_setup()
 	debugLog("Gamesetup start 5\n");
 	g_pScene = new CScene();
 	g_pScene->Load( "scene_highlands" );
+	g_pScene->SetSort( -1.2f );
 	
 	g_pScene2 = new CScene();
 	g_pScene2->Load( "scene_highlands_interior_test" );
 	g_pScene2->SetWorldPosition( 8*4, 229*4 );
-	g_pScene2->SetSort( -0.9f );
+	g_pScene2->SetSort( -1.1f );
 	
 	debugLog("Gamesetup start 6\n");
 
@@ -68,9 +69,8 @@ void game_setup()
 	debugLog("DoorManager init done\n");
 	
 	g_pDoor = doorManager.CreateDoor( 46, 936 );
-	sprintf( g_pDoor->pszLayerName, "tilemap_highlands_interior_test" );
-	g_pDoor->layerX = 8;
-	g_pDoor->layerY = 229;
+	g_pDoor->m_pSceneInside = g_pScene2;
+	g_pDoor->m_pSceneOutside = g_pScene;
 	
 	t = 0.0f;
 	debugLog("Gamesetup end\n");
@@ -103,10 +103,10 @@ void game_loop()
 	g_pScene->SetViewportTopLeft((int)cameraWorldX(), (int)cameraWorldY());
 	g_pScene->Render();
 	
-	if(renderInside)
+	if(g_pDoor->IsOpen())
 	{
-		g_pScene2->SetViewportTopLeft((int)cameraWorldX(), (int)cameraWorldY());
-		g_pScene2->Render();
+		g_pDoor->m_pSceneInside->SetViewportTopLeft((int)cameraWorldX(), (int)cameraWorldY());
+		g_pDoor->m_pSceneInside->Render();
 	}
 	
 	gameObjectManager.Render();
@@ -128,14 +128,16 @@ void game_debugTrigger(int _id)
 	{
 		CDoor* pDoor = doorManager.GetDoorAt( pPlayer->m_pAvatar->m_worldX, pPlayer->m_pAvatar->m_worldY );
 		if( pDoor != NULL )
-			pDoor->Open();
+			if( !pDoor->IsOpen())
+				pDoor->Open();
 	}
 
 	if( _id == 2 )
 	{
 		CDoor* pDoor = doorManager.GetDoorAt( pPlayer->m_pAvatar->m_worldX, pPlayer->m_pAvatar->m_worldY );
 		if( pDoor != NULL )
-			pDoor->Close();
+			if( pDoor->IsOpen())
+				pDoor->Close();
 	}
 	
 	if( _id == 0 )

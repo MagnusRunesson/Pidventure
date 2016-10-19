@@ -100,6 +100,11 @@ void CDoor::Init()
 void CDoor::Reset()
 {
 	m_pGameObject->SetEnabled( false );
+
+	m_pSceneInside = NULL;
+	m_pSceneOutside = NULL;
+	
+	m_isOpen = false;
 }
 
 void CDoor::Open()
@@ -107,6 +112,7 @@ void CDoor::Open()
 	Animation* pAnim = m_pGameObject->GetAnimation();
 	pAnim->SetSequence( &animation_highlands_door_open );
 	pAnim->Play();
+	m_isOpen = true;
 }
 
 void CDoor::Close()
@@ -114,4 +120,10 @@ void CDoor::Close()
 	Animation* pAnim = m_pGameObject->GetAnimation();
 	pAnim->SetSequence( &animation_highlands_door_close );
 	pAnim->Play();
+	m_isOpen = false;
+}
+
+bool CDoor::IsOpen()
+{
+	return m_isOpen;
 }
