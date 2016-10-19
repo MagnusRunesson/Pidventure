@@ -9,9 +9,12 @@
 #ifndef Physics_h
 #define Physics_h
 
-void physInit();
+class CScene;
+
+void physInit( CScene* _pScene );
 bool physIsGround( int _x, int _y );
 bool physIsWall( int _x, int _y );
 bool physTakeSample( int _x, int _y );
+void physSetActiveScene( CScene* _pScene );
 
 #endif /* Physics_h */

@@ -6,32 +6,36 @@
 //  Copyright © 2016 Magnus Runesson. All rights reserved.
 //
 
+#include <stdlib.h>
 #include "Engine/Graphics/Image.h"
 #include "Engine/Graphics/SpriteRenderer.h"
 #include "Engine/Graphics/TileBank.h"
 #include "Engine/Graphics/TileMap.h"
 #include "Engine/Graphics/TileRenderer.h"
 #include "Pidventure/Physics.h"
+#include "Pidventure/Scene.h"
 
 Image* physCollisionMap;
 Sprite* physCollisionDebugSprite;
-static CTileBank* pTileBank;
-static CTileMap* pTileMap;
+//static CTileBank* pTileBank;
+//static CTileMap* pTileMap;
 static TileRenderer* pTileRenderer;
 float physSample[ 4 ];
 
-void physInit()
+void physInit( CScene* _pScene )
 {
 	//physCollisionMap = imageLoad( "sprite_collisiontest" );
-	pTileBank = tilebankLoad( "tilebank_highlands_collision" );
+	/*pTileBank = tilebankLoad( "tilebank_highlands_collision" );
 	pTileMap = tilemapLoad( "scene_highlands" );
-	pTileRenderer = new TileRenderer( pTileMap, pTileBank );
+	pTileRenderer = new TileRenderer( pTileMap, pTileBank );*/
 	/*
 	physCollisionDebugSprite = spriteRenderer.AllocateSprite( physCollisionMap );
 	physCollisionDebugSprite->x = 0.0f;
 	physCollisionDebugSprite->y = 0.0f;
 	physCollisionDebugSprite->SetSort( 200.0f );
 	 */
+	pTileRenderer = new TileRenderer( NULL, NULL );
+	physSetActiveScene( _pScene );
 }
 
 bool physIsGround(int _x, int _y)
@@ -49,4 +53,12 @@ bool physIsWall(int _x, int _y)
 bool physTakeSample( int _x, int _y )
 {
 	return pTileRenderer->Sample( _x, _y, physSample );
+}
+
+void physSetActiveScene( CScene* _pScene )
+{
+	pTileRenderer->m_pTileBank = _pScene->pTileBankCollision;
+	pTileRenderer->m_pTileMap = _pScene->pTileMap;
+	pTileRenderer->m_x = _pScene->m_worldX;
+	pTileRenderer->m_y = _pScene->m_worldY;
 }
