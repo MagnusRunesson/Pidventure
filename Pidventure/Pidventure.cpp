@@ -132,7 +132,10 @@ void game_debugTrigger(int _id)
 		CDoor* pDoor = doorManager.GetDoorAt( pPlayer->m_pAvatar->m_worldX, pPlayer->m_pAvatar->m_worldY );
 		if( pDoor != NULL )
 			if( !pDoor->IsOpen())
+			{
 				pDoor->Open();
+				physSetActiveScene( pDoor->m_pSceneInside );
+			}
 	}
 
 	if( _id == 2 )
@@ -140,7 +143,10 @@ void game_debugTrigger(int _id)
 		CDoor* pDoor = doorManager.GetDoorAt( pPlayer->m_pAvatar->m_worldX, pPlayer->m_pAvatar->m_worldY );
 		if( pDoor != NULL )
 			if( pDoor->IsOpen())
+			{
 				pDoor->Close();
+				physSetActiveScene( pDoor->m_pSceneOutside );
+			}
 	}
 	
 	if( _id == 0 )
