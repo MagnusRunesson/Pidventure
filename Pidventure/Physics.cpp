@@ -40,7 +40,7 @@ void physInit( CScene* _pScene )
 
 bool physIsGround(int _x, int _y)
 {
-	if( !physTakeSample( _x, _y)) return false;
+	if( !physTakeSample( _x, _y)) return true;
 	return physSample[ 0 ] > 0.5f;	// Red channel is ground
 }
 
