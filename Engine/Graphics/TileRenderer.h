@@ -49,7 +49,7 @@ public:
 	
 	void SetDepth( float _depth );
 
-	bool Sample( int _x, int _y, float* _pOutRGBA );
+	bool Sample( int _worldX, int _worldY, float* _pOutRGBA );
 	void Render();
 	
 	//

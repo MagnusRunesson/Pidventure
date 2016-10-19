@@ -41,19 +41,19 @@ void TileRenderer::SetDepth( float _depth )
 	m_depth = _depth;
 }
 
-bool TileRenderer::Sample( int _x, int _y, float* _pOutRGBA )
+bool TileRenderer::Sample( int _worldX, int _worldY, float* _pOutRGBA )
 {
-	int worldX = m_x + _x;
-	int worldY = m_y + _y;
-	int tilemapX = worldX >> 2;
-	int tilemapY = worldY >> 2;
+	int localX = _worldX - m_x;
+	int localY = _worldY - m_y;
+	int tilemapX = localX >> 2;
+	int tilemapY = localY >> 2;
 	if( tilemapX < 0 ) return false;
 	if( tilemapX >= m_pTileMap->Width ) return false;
 	if( tilemapY < 0 ) return false;
 	if( tilemapY >= m_pTileMap->Height ) return false;
 	
-	int pixelReadX = worldX & 3;
-	int pixelReadY = worldY & 3;
+	int pixelReadX = localX & 3;
+	int pixelReadY = localY & 3;
 	int tilemapIndex = (tilemapY*m_pTileMap->Width) + tilemapX;
 	int tileID = m_pTileMap->Tiles[ tilemapIndex ];
 	if( tileID == 0 )
