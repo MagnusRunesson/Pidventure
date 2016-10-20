@@ -340,7 +340,8 @@ void TileRenderer::RenderScanline( float* _targetBuffer )
 			_targetBuffer[ writeOfs+0 ] = (r*a)+(_targetBuffer[ writeOfs+0 ]*ia);
 			_targetBuffer[ writeOfs+1 ] = (g*a)+(_targetBuffer[ writeOfs+1 ]*ia);
 			_targetBuffer[ writeOfs+2 ] = (b*a)+(_targetBuffer[ writeOfs+2 ]*ia);
-			_targetBuffer[ writeOfs+3 ] = m_depth;
+			if(a > 0.0f)
+				_targetBuffer[ writeOfs+3 ] = m_depth;
 			
 			/*
 			if( alpha == 255 )
@@ -403,7 +404,8 @@ void TileRenderer::RenderScanline( float* _targetBuffer )
 					_targetBuffer[ writeOfs+0 ] = (r*a)+(_targetBuffer[ writeOfs+0 ]*ia);
 					_targetBuffer[ writeOfs+1 ] = (g*a)+(_targetBuffer[ writeOfs+1 ]*ia);
 					_targetBuffer[ writeOfs+2 ] = (b*a)+(_targetBuffer[ writeOfs+2 ]*ia);
-					_targetBuffer[ writeOfs+3 ] = m_depth;
+					if(a > 0.0f)
+						_targetBuffer[ writeOfs+3 ] = m_depth;
 
 					pTile->TixelOffset += pTile->TixelIncrementX;
 					writeX++;
@@ -530,6 +532,8 @@ void TileRenderer::RenderScanline( float* _targetBuffer )
 		_targetBuffer[ writeOfs+0 ] = (r*a)+(_targetBuffer[ writeOfs+0 ]*ia);
 		_targetBuffer[ writeOfs+1 ] = (g*a)+(_targetBuffer[ writeOfs+1 ]*ia);
 		_targetBuffer[ writeOfs+2 ] = (b*a)+(_targetBuffer[ writeOfs+2 ]*ia);
+		if(a > 0.0f)
+			_targetBuffer[ writeOfs+3 ] = m_depth;
 		
 		pTile->TixelOffset += pTile->TixelIncrementX;
 		writeX++;
