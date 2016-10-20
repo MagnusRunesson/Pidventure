@@ -80,6 +80,7 @@ bool TileRenderer::Sample( int _worldX, int _worldY, float* _pOutRGBA )
 
 void TileRenderer::Render()
 {
+	/*
 	int x, y;
 	for( y=0; y<SCREEN_HEIGHT; y++ )
 	{
@@ -98,6 +99,11 @@ void TileRenderer::Render()
 			int pixelReadY = worldY & 3;
 			int tilemapIndex = (tilemapY*m_pTileMap->Width) + tilemapX;
 			int tileID = m_pTileMap->Tiles[ tilemapIndex ];
+			bool flipZ = (tileID & 0x8000);
+			bool flipY = (tileID & 0x4000);
+			bool flipX = (tileID & 0x2000);
+			
+			tileID &= 0x1fff;
 			if( tileID == 0 )
 				continue;
 			
@@ -126,9 +132,8 @@ void TileRenderer::Render()
 				pWrite[ 3 ] = m_depth;
 			}
 		}
-	}
+	}*/
 
-	/*
 	FrameStart();
 	int y;
 	float* targetBuffer = screenBuffer;
@@ -138,7 +143,7 @@ void TileRenderer::Render()
 		RenderScanline( targetBuffer );
 		NextScanline();
 		targetBuffer += (SCREEN_WIDTH*4);
-	}*/
+	}
 }
 
 //
@@ -238,21 +243,26 @@ void TileRenderer::PrepareScanlineRenderTiles( bool _debug )
 
 		// Discard all flag data to get the tile index
 		tile &= 0x1fff;
-
-		if( _debug )
-			debugLog( " - TileIndex: %4i", tile );
-		
-		// Pre fetch the tixel data pointers for this tile
-		int tileoffset = tile;
-		tileoffset <<= 4;
-
-		if( _debug )
-			debugLog( " - Tile offset: %4i", tileoffset );
-
-		pTile->pTileColor = &m_pTileBank->Pixels[ tileoffset ];
-		if( tile == 0 )
+		if(tile == 0)
+		{
 			pTile->pTileColor = NULL;
-		
+		} else {
+			tile -= 1;
+			
+			if( _debug )
+				debugLog( " - TileIndex: %4i", tile );
+			
+			// Pre fetch the tixel data pointers for this tile
+			int tileoffset = tile;
+			tileoffset <<= 4;	// 16 pixels per tile
+			tileoffset <<= 2;	// 4 channels per pixel
+			
+			if( _debug )
+				debugLog( " - Tile offset: %4i", tileoffset );
+			
+			pTile->pTileColor = &m_pTileBank->Pixels[ tileoffset ];
+		}
+
 		if( _debug )
 			debugLog( " - Tile color pointer: 0x%08x", pTile->pTileColor );
 		
@@ -330,6 +340,7 @@ void TileRenderer::RenderScanline( float* _targetBuffer )
 			_targetBuffer[ writeOfs+0 ] = (r*a)+(_targetBuffer[ writeOfs+0 ]*ia);
 			_targetBuffer[ writeOfs+1 ] = (g*a)+(_targetBuffer[ writeOfs+1 ]*ia);
 			_targetBuffer[ writeOfs+2 ] = (b*a)+(_targetBuffer[ writeOfs+2 ]*ia);
+			_targetBuffer[ writeOfs+3 ] = m_depth;
 			
 			/*
 			if( alpha == 255 )
@@ -392,6 +403,7 @@ void TileRenderer::RenderScanline( float* _targetBuffer )
 					_targetBuffer[ writeOfs+0 ] = (r*a)+(_targetBuffer[ writeOfs+0 ]*ia);
 					_targetBuffer[ writeOfs+1 ] = (g*a)+(_targetBuffer[ writeOfs+1 ]*ia);
 					_targetBuffer[ writeOfs+2 ] = (b*a)+(_targetBuffer[ writeOfs+2 ]*ia);
+					_targetBuffer[ writeOfs+3 ] = m_depth;
 
 					pTile->TixelOffset += pTile->TixelIncrementX;
 					writeX++;
