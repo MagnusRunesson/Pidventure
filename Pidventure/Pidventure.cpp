@@ -105,7 +105,23 @@ void game_loop()
 	bgSetCameraPosition( cameraWorldX(), 0.0f );
 	g_pScene->SetViewportTopLeft((int)cameraWorldX(), (int)cameraWorldY());
 	g_pScene->Render();
-	
+
+	if(padGetPressed() & PAD_KEYMASK_SELECT )
+	{
+		CDoor* pDoor = doorManager.GetDoorAt( pPlayer->m_pAvatar->m_worldX, pPlayer->m_pAvatar->m_worldY );
+		if( pDoor != NULL )
+		{
+			if( !pDoor->IsOpen())
+			{
+				pDoor->Open();
+				physSetActiveScene( pDoor->m_pSceneInside );
+			} else {
+				pDoor->Close();
+				physSetActiveScene( pDoor->m_pSceneOutside );
+			}
+		}
+	}
+
 	if(g_pDoor->IsOpen())
 	{
 		g_pDoor->m_pSceneInside->SetViewportTopLeft((int)cameraWorldX(), (int)cameraWorldY());
