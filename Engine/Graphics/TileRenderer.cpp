@@ -55,7 +55,21 @@ bool TileRenderer::Sample( int _worldX, int _worldY, float* _pOutRGBA )
 	int pixelReadX = localX & 3;
 	int pixelReadY = localY & 3;
 	int tilemapIndex = (tilemapY*m_pTileMap->Width) + tilemapX;
-	int tileID = m_pTileMap->Tiles[ tilemapIndex ];
+	int tileData = m_pTileMap->Tiles[ tilemapIndex ];
+	bool flipX = (tileData & 0x8000) == 0x8000;
+	bool flipY = (tileData & 0x4000) == 0x4000;
+	bool flipD = (tileData & 0x2000) == 0x2000;
+	
+	if(flipX) pixelReadX = 3-pixelReadX;
+	if(flipY) pixelReadY = 3-pixelReadY;
+	if(flipD)
+	{
+		int s = pixelReadX;
+		pixelReadX = pixelReadY;
+		pixelReadY = s;
+	}
+	
+	int tileID = tileData & 0x1fff;
 	if( tileID == 0 )
 	{
 		_pOutRGBA[ 0 ] = 0.0f;
@@ -64,7 +78,7 @@ bool TileRenderer::Sample( int _worldX, int _worldY, float* _pOutRGBA )
 		_pOutRGBA[ 3 ] = 0.0f;
 		return true;
 	}
-	
+
 	tileID -= 1;
 	//debugLog("Screen x=%i, y=%i, tilemap index=%i, tile id=%i\n", x, y, tilemapIndex, tileID );
 	int pixelReadOfs = ((tileID*4*4) + ((pixelReadY*m_pTileBank->TileWidth)+pixelReadX))*4;
