@@ -114,6 +114,24 @@ void game_loop()
 	
 	gameObjectManager.Render();
 	spriteRenderer.Render();
+	
+	/* DEBUG OVERLAY for rendering the ground collision on screen
+	for( y=0; y<SCREEN_HEIGHT; y++ )
+	{
+		for( x=0; x<SCREEN_WIDTH; x++ )
+		{
+			int samplex = cameraWorldX()+x;
+			int sampley = cameraWorldY()+y;
+			if(physIsGround( samplex, sampley ))
+			{
+				int wr = ((y*SCREEN_WIDTH) + x) * 4;
+				screenBuffer[ wr+0 ] = 1.0f;
+				screenBuffer[ wr+1 ] = 0.0f;
+				screenBuffer[ wr+2 ] = 0.0f;
+			}
+		}
+	}
+	 */
 }
 
 void game_debugTrigger(int _id)
