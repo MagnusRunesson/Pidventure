@@ -19,6 +19,14 @@
 
 extern int gKeyDPadBuff;
 
+const int RPI_GPIO_UP		= 26;
+const int RPI_GPIO_DOWN		= 19;
+const int RPI_GPIO_LEFT		= 13;
+const int RPI_GPIO_RIGHT	= 6;
+const int RPI_GPIO_START	= 12;
+const int RPI_GPIO_BTN0		= 16;
+const int RPI_GPIO_BTN1		= 20;
+const int RPI_GPIO_BTN2		= 21;
 
 uint8 gkeys;
 int gKeyBuff;
@@ -27,27 +35,53 @@ void padInit()
 {
 #ifdef ENGINE_TARGET_RPI
 	wiringPiSetupGpio();
-	pullUpDnControl( 4, PUD_UP );
-	pullUpDnControl( 11, PUD_UP );
+	pullUpDnControl( RPI_GPIO_UP, PUD_UP );
+	pullUpDnControl( RPI_GPIO_DOWN, PUD_UP );
+	pullUpDnControl( RPI_GPIO_LEFT, PUD_UP );
+	pullUpDnControl( RPI_GPIO_RIGHT, PUD_UP );
+	pullUpDnControl( RPI_GPIO_START, PUD_UP );
+	pullUpDnControl( RPI_GPIO_BTN0, PUD_UP );
+	pullUpDnControl( RPI_GPIO_BTN1, PUD_UP );
+	pullUpDnControl( RPI_GPIO_BTN2, PUD_UP );
 #endif
 }
 
 void padUpdate()
 {
 #ifdef ENGINE_TARGET_RPI
-	if( !digitalRead( 4 ))
+	if( !digitalRead( RPI_GPIO_UP ))
+	{
+		gKeyDPadBuff |= PAD_KEYMASK_DPAD_UP;
+	} else {
+		gKeyDPadBuff &= ~PAD_KEYMASK_DPAD_UP;
+	}
+	
+	if( !digitalRead( RPI_GPIO_DOWN ))
+	{
+		gKeyDPadBuff |= PAD_KEYMASK_DPAD_DOWN;
+	} else {
+		gKeyDPadBuff &= ~PAD_KEYMASK_DPAD_DOWN;
+	}
+
+	if( !digitalRead( RPI_GPIO_LEFT ))
+	{
+		gKeyDPadBuff |= PAD_KEYMASK_DPAD_LEFT;
+	} else {
+		gKeyDPadBuff &= ~PAD_KEYMASK_DPAD_LEFT;
+	}
+
+	if( !digitalRead( RPI_GPIO_RIGHT ))
 	{
 		gKeyDPadBuff |= PAD_KEYMASK_DPAD_RIGHT;
 	} else {
 		gKeyDPadBuff &= ~PAD_KEYMASK_DPAD_RIGHT;
 	}
 
-	if( !digitalRead( 11 ))
-	{
-		gKeyDPadBuff |= PAD_KEYMASK_DPAD_LEFT;
-	} else {
-		gKeyDPadBuff &= ~PAD_KEYMASK_DPAD_LEFT;
-	}
+	gKeyBuff = 0;
+	if( !digitalRead( RPI_GPIO_START )) gKeyBuff |= PAD_KEYMASK_START;
+	if( !digitalRead( RPI_GPIO_BTN0 )) gKeyBuff |= PAD_KEYMASK_PRIMARY;
+	if( !digitalRead( RPI_GPIO_BTN1 )) gKeyBuff |= PAD_KEYMASK_SECONDARY;
+	if( !digitalRead( RPI_GPIO_BTN2 )) gKeyBuff |= PAD_KEYMASK_SELECT;
 #endif
 	gkeys <<= 4;
 	gkeys |= gKeyBuff;
