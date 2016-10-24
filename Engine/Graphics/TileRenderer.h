@@ -30,6 +30,9 @@ class TileRenderer
 
 	// Rendering variables
 	int m_scanlineTileMapIndex;		// For each scanline this is the index in the tile map on the far left of the screen
+	int m_scanlineTileMapLeft;		//
+	int m_scanlineTileMapX;			//
+	int m_scanlineTileMapY;			//
 	int m_scanlineTixelX;			// Which X position in the tile should we start at when we enter a new scanline
 	int m_scanlineTixelY;			// Which Y position in the tile should we start at when we enter a new scanline
 	int m_tilePixelReadOfs;
@@ -60,7 +63,7 @@ public:
 	void AdvanceScanlineRenderTiles( int _newTixelY );
 
 	void FrameStart();
-	void NextScanline( bool _debugPrint = false );
+	bool NextScanline( bool _debugPrint = false );
 	void RenderScanline( float* _targetBuffer );
 };
 

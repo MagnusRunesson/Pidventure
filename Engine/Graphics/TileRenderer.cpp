@@ -155,7 +155,9 @@ void TileRenderer::Render()
 	for( y=0; y<SCREEN_HEIGHT; y++ )
 	{
 		RenderScanline( targetBuffer );
-		NextScanline();
+		if( !NextScanline())
+			break;
+		
 		targetBuffer += (SCREEN_WIDTH*4);
 	}
 }
@@ -172,6 +174,9 @@ void TileRenderer::FrameStart()
 	int tileX = m_x >> 2;
 	int tileY = m_y >> 2;
 	m_scanlineTileMapIndex = (tileY * m_pTileMap->Width) + tileX;
+	m_scanlineTileMapY = tileY;
+	m_scanlineTileMapLeft = tileX;
+	
 	
 	PrepareScanlineRenderTiles();
 }
@@ -226,6 +231,7 @@ uint8 startOfs[ 8 ] = {
 
 void TileRenderer::PrepareScanlineRenderTiles( bool _debug )
 {
+	m_scanlineTileMapX = m_scanlineTileMapLeft;
 	const uint16* pTileData = &m_pTileMap->Tiles[ m_scanlineTileMapIndex ];
 
 	int i;
@@ -241,6 +247,15 @@ void TileRenderer::PrepareScanlineRenderTiles( bool _debug )
 
 		if( _debug )
 			debugLog( "Slot %2i - Tile: 0x%04x", i, tile );
+
+		// Verify off screen
+		int cx = m_scanlineTileMapX;
+		m_scanlineTileMapX++;
+		if((cx < 0 ) || (cx >= m_pTileMap->Width) || (m_scanlineTileMapY < 0))
+		{
+			pTile->pTileColor = NULL;
+			continue;
+		}
 
 		//
 		int flipFlags = (tile&0xe000)>>13;
@@ -301,20 +316,25 @@ void TileRenderer::AdvanceScanlineRenderTiles( int _newTixelY )
 	}
 }
 
-void TileRenderer::NextScanline( bool _debugPrint )
+bool TileRenderer::NextScanline( bool _debugPrint )
 {
 	m_scanlineTixelY++;
 	if( m_scanlineTixelY >= 4 )
 	{
 		m_scanlineTixelY = 0;
-		m_scanlineTileMapIndex += m_pTileMap->Width;
+		m_scanlineTileMapY++;
+		if( m_scanlineTileMapY >= m_pTileMap->Height )
+			return false;
+		else
+			m_scanlineTileMapIndex += m_pTileMap->Width;
 		PrepareScanlineRenderTiles();
 	}
 	else
 	{
 		AdvanceScanlineRenderTiles( m_scanlineTixelY );
-	
 	}
+	
+	return true;
 }
 
 void TileRenderer::RenderScanline( float* _targetBuffer )
