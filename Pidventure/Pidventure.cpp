@@ -57,6 +57,8 @@ void game_setup()
 	g_pScene->Load( "scene_highlands_home" );
 	g_pScene->SetSort( -1.2f );
 	
+	cameraSetBounds( g_pScene );
+	
 	g_pScene2 = new CScene();
 	g_pScene2->Load( "scene_highlands_interior_test" );
 	g_pScene2->SetWorldPosition( 8*4, 7*4 );
