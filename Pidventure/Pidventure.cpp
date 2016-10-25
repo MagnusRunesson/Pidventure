@@ -61,7 +61,7 @@ void game_setup()
 	
 	g_pScene2 = new CScene();
 	g_pScene2->Load( "scene_highlands_interior_test" );
-	g_pScene2->SetWorldPosition( 8*4, 7*4 );
+	g_pScene2->SetWorldPosition( 8*4, 8*4 );
 	g_pScene2->SetSort( -1.1f );
 	
 	debugLog("Gamesetup start 6\n");
@@ -71,7 +71,7 @@ void game_setup()
 
 	debugLog("DoorManager init done\n");
 	
-	g_pDoor = doorManager.CreateDoor( 46, 936 );
+	g_pDoor = doorManager.CreateDoor( 46, 52 );
 	g_pDoor->m_pSceneInside = g_pScene2;
 	g_pDoor->m_pSceneOutside = g_pScene;
 	
