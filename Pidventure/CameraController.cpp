@@ -8,32 +8,85 @@
 
 #include "Engine/Scene/Camera.h"
 #include "Engine/Graphics/Screen.h"
+#include "Engine/Graphics/TileMap.h"
+#include "Engine/Graphics/TileBank.h"
 #include "Engine/Core/Debug.h"
+#include "Pidventure/Scene.h"
 #include "Pidventure/CameraController.h"
 #include "Pidventure/Player/PlayerAvatar.h"
 
 Camera camera;
-CPlayerAvatar* g_pPlayerAvatar;
+
+static float g_camX;
+static float g_camY;
+static float g_camBoundsLeft;
+static float g_camBoundsRight;
+static float g_camBoundsTop;
+static float g_camBoundsBottom;
+static CPlayerAvatar* g_pPlayerAvatar;
 
 void cameraInit( CPlayerAvatar* _pPlayerAvatar )
 {
 	Camera::main = &camera;
-	
+
 	g_pPlayerAvatar = _pPlayerAvatar;
-	float wx = g_pPlayerAvatar->m_worldX-40.0;
-	float wy = g_pPlayerAvatar->m_worldY-50.0f;
-	debugLog("Camera x=%.2f, y=%.2f\n", wx, wy);
-	camera.SetWorldPosition( wx, wy );
+	g_camX = g_pPlayerAvatar->m_worldX-40.0;
+	g_camY = g_pPlayerAvatar->m_worldY-50.0f;
+	debugLog("Camera x=%.2f, y=%.2f\n", g_camX, g_camY );
+	camera.SetWorldPosition( g_camX, g_camY );
+}
+
+void cameraSetBounds( CScene* _pScene )
+{
+	g_camBoundsLeft = _pScene->m_worldX;
+	g_camBoundsRight = _pScene->m_worldX + _pScene->pTileMap->Width*_pScene->pTileBank->TileWidth - SCREEN_WIDTH;
+	
+	g_camBoundsTop = _pScene->m_worldY;
+	g_camBoundsBottom = _pScene->m_worldY + _pScene->pTileMap->Height*_pScene->pTileBank->TileHeight - SCREEN_HEIGHT;
+
+	if( g_camX < g_camBoundsLeft ) g_camX = g_camBoundsLeft;
+	if( g_camX > g_camBoundsRight ) g_camX = g_camBoundsRight;
+	if( g_camY < g_camBoundsTop ) g_camY = g_camBoundsTop;
+	if( g_camY > g_camBoundsBottom ) g_camY = g_camBoundsBottom;
+	
+	debugLog( "New camera bounds, l=%.2f, r=%.2f\n", g_camBoundsLeft, g_camBoundsRight );
 }
 
 void cameraUpdate()
 {
 	const float CAMERA_BOUNDS = 40.0f;
-	int camPlayerDiff = g_pPlayerAvatar->m_worldX - camera.GetWorldX();
+	
+	int camPlayerDiff = g_pPlayerAvatar->m_worldX - g_camX;
 	if( camPlayerDiff < CAMERA_BOUNDS )
-		camera.SetWorldPosition(camera.GetWorldX()-1.0f, camera.GetWorldY());
+	{
+		g_camX -= 1.0f;
+		if( g_camX < g_camBoundsLeft )
+			g_camX = g_camBoundsLeft;
+	}
+	
 	if( camPlayerDiff > SCREEN_WIDTH - CAMERA_BOUNDS )
-		camera.SetWorldPosition(camera.GetWorldX()+1.0f, camera.GetWorldY());
+	{
+		g_camX += 1.0f;
+		if( g_camX > g_camBoundsRight )
+			g_camX = g_camBoundsRight;
+	}
+	
+	camPlayerDiff = g_pPlayerAvatar->m_worldY - g_camY;
+	if( camPlayerDiff < CAMERA_BOUNDS )
+	{
+		g_camY -= 1.0f;
+		if( g_camY < g_camBoundsTop )
+			g_camY = g_camBoundsTop;
+	}
+	
+	if( camPlayerDiff > SCREEN_WIDTH - CAMERA_BOUNDS )
+	{
+		g_camY += 1.0f;
+		if( g_camY > g_camBoundsBottom )
+			g_camY = g_camBoundsBottom;
+	}
+	
+	camera.SetWorldPosition( g_camX, g_camY );
 }
 
 float cameraWorldX()

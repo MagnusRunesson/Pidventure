@@ -10,8 +10,10 @@
 #define CameraController_h
 
 class CPlayerAvatar;
+class CScene;
 
 void cameraInit( CPlayerAvatar* _pPlayerAvatar );
+void cameraSetBounds( CScene* _pScene );
 void cameraUpdate();
 float cameraWorldX();
 float cameraWorldY();
