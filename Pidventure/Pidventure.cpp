@@ -44,7 +44,7 @@ void game_setup()
 	debugLog("Gamesetup start - kossa\n");			// And this was printed
 	pPlayer = new CPlayer();
 	debugLog("Gamesetup start - apa\n");			// But this was never printed. Added a bunch of prints in between, that should help find out what is going on.
-	pPlayer->SetWorldPosition( 40.0f, 943.0f );
+	pPlayer->SetWorldPosition( 40.0f, 62.0f );
 
 	debugLog("Gamesetup start 2\n");
 	dataInit();
@@ -54,12 +54,12 @@ void game_setup()
 	bgInit();
 	debugLog("Gamesetup start 5\n");
 	g_pScene = new CScene();
-	g_pScene->Load( "scene_highlands" );
+	g_pScene->Load( "scene_highlands_home" );
 	g_pScene->SetSort( -1.2f );
 	
 	g_pScene2 = new CScene();
 	g_pScene2->Load( "scene_highlands_interior_test" );
-	g_pScene2->SetWorldPosition( 8*4, 229*4 );
+	g_pScene2->SetWorldPosition( 8*4, 7*4 );
 	g_pScene2->SetSort( -1.1f );
 	
 	debugLog("Gamesetup start 6\n");
