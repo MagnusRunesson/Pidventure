@@ -14,6 +14,7 @@ const int SCENE_MAX_SPRITES								= 2048;
 class CTileMap;
 class CTileBank;
 class TileRenderer;
+class GameObject;
 
 class CScene
 {
