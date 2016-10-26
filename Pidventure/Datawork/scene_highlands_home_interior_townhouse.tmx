@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="23" height="12" tilewidth="4" tileheight="4" nextobjectid="18">
+ <tileset firstgid="1" name="tilebank_highlands" tilewidth="4" tileheight="4">
+  <image source="tilebank_highlands.png" width="256" height="256"/>
+ </tileset>
+ <tileset firstgid="4097" name="Objects" tilewidth="31" tileheight="18">
+  <tile id="0">
+   <image width="23" height="10" source="sprite_prop_bridge.png"/>
+  </tile>
+  <tile id="1">
+   <properties>
+    <property name="animation" value="prop_flower_red"/>
+    <property name="hotspot_x" value="1"/>
+    <property name="hotspot_y" value="4"/>
+   </properties>
+   <image width="3" height="5" source="sprite_prop_flower_red_af00.png"/>
+  </tile>
+  <tile id="2">
+   <properties>
+    <property name="animation" value="prop_house_highlands"/>
+    <property name="hotspot_x" value="16"/>
+    <property name="hotspot_y" value="17"/>
+   </properties>
+   <image width="31" height="18" source="sprite_prop_house_highlands.png"/>
+  </tile>
+  <tile id="3">
+   <image width="5" height="9" source="sprite_prop_signpost.png"/>
+  </tile>
+ </tileset>
+ <layer name="Tile Layer 1" width="23" height="12">
+  <data encoding="csv">
+541,542,543,544,545,544,544,545,546,547,548,545,544,544,545,544,544,544,545,544,549,550,551,
+605,606,607,608,607,607,607,607,607,611,612,607,607,607,607,607,607,607,607,607,607,742,615,
+669,670,671,672,673,607,607,607,607,1073742435,1073742436,607,607,607,607,607,607,607,607,607,607,742,679,
+733,734,735,736,737,607,607,607,607,1073742435,1073742436,607,607,607,607,607,607,607,607,607,607,742,743,
+615,734,607,607,607,607,607,607,607,1073742435,1073742436,607,607,607,607,607,607,607,607,607,607,742,605,
+679,798,2684355302,2684355302,799,607,2147484447,2684355302,1073742370,675,676,2147484449,2684355302,2684355302,799,607,607,607,607,2147484447,2684355302,806,669,
+743,849,850,851,852,853,849,850,851,852,853,854,855,851,852,853,854,855,856,857,858,859,733,
+669,542,543,544,545,544,544,545,546,547,548,544,544,544,544,545,544,544,544,544,549,550,679,
+605,606,607,608,609,607,608,609,610,611,612,607,607,607,607,607,607,607,607,607,607,742,605,
+669,670,671,672,673,671,672,673,674,675,676,799,607,607,607,607,607,607,607,607,607,742,2147484317,
+733,734,735,736,737,735,736,737,738,739,740,741,607,607,607,607,607,607,607,607,607,742,743,
+797,798,2684355302,799,607,607,2684355302,801,802,803,804,805,2147484449,2684355302,2684355302,607,607,607,607,607,2684355302,806,807
+</data>
+ </layer>
+ <objectgroup name="Behind player">
+  <properties>
+   <property name="sort" value="-100"/>
+  </properties>
+ </objectgroup>
+ <objectgroup name="Infront of player">
+  <properties>
+   <property name="sort" value="10"/>
+  </properties>
+ </objectgroup>
+</map>
