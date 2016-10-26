@@ -30,9 +30,10 @@ float t;
 
 CPlayer* pPlayer;
 
-CDoor* g_pDoor;
+CDoor* g_pDoor[10];
 CScene* g_pScene;
 CScene* g_pScene2;
+CScene* g_pScene3;
 bool renderInside;
 
 void game_setup()
@@ -63,7 +64,12 @@ void game_setup()
 	g_pScene2->Load( "scene_highlands_interior_test" );
 	g_pScene2->SetWorldPosition( 8*4, 8*4 );
 	g_pScene2->SetSort( -1.1f );
-	
+
+	g_pScene3 = new CScene();
+	g_pScene3->Load( "scene_highlands_home_interior_townhouse" );
+	g_pScene3->SetWorldPosition( 40*4, 1*4 );
+	g_pScene3->SetSort( -1.1f );
+
 	debugLog("Gamesetup start 6\n");
 
 	debugLog("DoorManager init\n");
@@ -71,10 +77,14 @@ void game_setup()
 
 	debugLog("DoorManager init done\n");
 	
-	g_pDoor = doorManager.CreateDoor( 46, 52 );
-	g_pDoor->m_pSceneInside = g_pScene2;
-	g_pDoor->m_pSceneOutside = g_pScene;
-	
+	g_pDoor[0] = doorManager.CreateDoor( 46, 52 );
+	g_pDoor[0]->m_pSceneInside = g_pScene2;
+	g_pDoor[0]->m_pSceneOutside = g_pScene;
+
+	g_pDoor[1] = doorManager.CreateDoor( (46*4)+2, 13*4 );
+	g_pDoor[1]->m_pSceneInside = g_pScene3;
+	g_pDoor[1]->m_pSceneOutside = g_pScene;
+
 	physInit( g_pScene );
 
 	t = 0.0f;
@@ -124,10 +134,16 @@ void game_loop()
 		}
 	}
 
-	if(g_pDoor->IsOpen())
+	if(g_pDoor[0]->IsOpen())
 	{
-		g_pDoor->m_pSceneInside->SetViewportTopLeft((int)cameraWorldX(), (int)cameraWorldY());
-		g_pDoor->m_pSceneInside->Render();
+		g_pDoor[0]->m_pSceneInside->SetViewportTopLeft((int)cameraWorldX(), (int)cameraWorldY());
+		g_pDoor[0]->m_pSceneInside->Render();
+	}
+	
+	if(g_pDoor[1]->IsOpen())
+	{
+		g_pDoor[1]->m_pSceneInside->SetViewportTopLeft((int)cameraWorldX(), (int)cameraWorldY());
+		g_pDoor[1]->m_pSceneInside->Render();
 	}
 	
 	gameObjectManager.Render();
