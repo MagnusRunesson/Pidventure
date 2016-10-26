@@ -53,6 +53,7 @@ SRCS=\
 	Pidventure/Player/PlayerInventory.cpp \
 	Pidventure/Scene.cpp \
 	Pidventure/Gameplay/Door.cpp \
+	Pidventure/Content/World.cpp \
 	Pidventure/DataManual/Data.cpp \
 	Pidventure/DataManual/Animations.cpp
 
