@@ -98,10 +98,14 @@ void CPlayerAvatar::Jump()
 
 void CPlayerAvatar::MoveHorizontal( float _delta )
 {
+	int offset = -1;
+	if( _delta > 0.0f )
+		offset = 2;
+	
 	float newX = m_worldX + _delta;
 	int inewx = (int)newX;
 	
-	if( physIsWall( inewx, ((int)m_worldY)-2 ) == false )
+	if( physIsWall( inewx+offset, ((int)m_worldY)-2 ) == false )
 		m_worldX = newX;
 }
 
