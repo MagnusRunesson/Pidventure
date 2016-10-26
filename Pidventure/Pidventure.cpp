@@ -34,12 +34,9 @@ CDoor* g_pDoor[10];
 CScene* g_pScene;
 CScene* g_pScene2;
 CScene* g_pScene3;
-bool renderInside;
 
 void game_setup()
 {
-	renderInside = false;
-	
 	debugLog("Gamesetup start - banankontakt\n");	// This was printed
 	char* papa = (char*)malloc(10);
 	debugLog("Gamesetup start - kossa\n");			// And this was printed
@@ -199,10 +196,5 @@ void game_debugTrigger(int _id)
 				pDoor->Close();
 				physSetActiveScene( pDoor->m_pSceneOutside );
 			}
-	}
-	
-	if( _id == 0 )
-	{
-		renderInside = !renderInside;
 	}
 }
