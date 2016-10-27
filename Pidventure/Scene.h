@@ -35,6 +35,11 @@ public:
 	void SetSort( float _sort );
 	void SetViewportTopLeft( int _x, int _y );
 	void Render();
+
+	int GetWorldTop();
+	int GetWorldBottom();
+	int GetWorldLeft();
+	int GetWorldRight();
 };
 
 /*

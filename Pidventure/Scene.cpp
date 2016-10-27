@@ -144,3 +144,23 @@ void CScene::Render()
 {
 	pTileRenderer->Render();
 }
+
+int CScene::GetWorldTop()
+{
+	return m_worldY;
+}
+
+int CScene::GetWorldBottom()
+{
+	return m_worldY + pTileMap->Height*pTileBank->TileHeight;
+}
+
+int CScene::GetWorldLeft()
+{
+	return m_worldX;
+}
+
+int CScene::GetWorldRight()
+{
+	return m_worldX + pTileMap->Width*pTileBank->TileWidth;
+}
