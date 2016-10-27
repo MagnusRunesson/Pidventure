@@ -64,6 +64,9 @@ void worldInit()
 
 void worldUpdate()
 {
+	if( pPlayer->m_pAvatar->m_worldX < g_pScene->GetWorldLeft() + 2.0f ) debugLog( "OUtside left!\n" );
+	if( pPlayer->m_pAvatar->m_worldX > g_pScene->GetWorldRight() - 2.0f ) debugLog( "OUtside right!\n" );
+	
 	g_pScene->SetViewportTopLeft((int)cameraWorldX(), (int)cameraWorldY());
 	g_pScene->Render();
 
