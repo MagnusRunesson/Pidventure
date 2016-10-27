@@ -19,6 +19,7 @@
 
 extern int gKeyDPadBuff;
 
+#ifdef ENGINE_TARGET_RPI
 const int RPI_GPIO_UP		= 26;
 const int RPI_GPIO_DOWN		= 19;
 const int RPI_GPIO_LEFT		= 13;
@@ -27,6 +28,7 @@ const int RPI_GPIO_START	= 12;
 const int RPI_GPIO_BTN0		= 16;
 const int RPI_GPIO_BTN1		= 20;
 const int RPI_GPIO_BTN2		= 21;
+#endif
 
 uint8 gkeys;
 int gKeyBuff;
