@@ -26,10 +26,18 @@ public:
 		int worldY;
 	};
 	
+	class CSubScene
+	{
+	public:
+		const char* pszName;
+		int worldX;
+		int worldY;
+	};
+	
 	const char* pszMainScene;
-	const char* apszScene[10];
-	int numDoors;
-	CWorldDoorData aDoors[10];	// Door x always lead to apszScene[x]
+	int numSubScenes;
+	CSubScene aSubScene[10];
+	CWorldDoorData aDoor[10];	// Door x always lead to apszScene[x]
 };
 
 static CDoor* g_pDoor[10];
@@ -39,40 +47,56 @@ static int g_numDoors;
 
 extern CPlayer* pPlayer;
 
+CWorldData firstWorld {
+	"scene_highlands_home",
+	2,
+	{
+		{ "scene_highlands_interior_test", 8*4, 8*4 },
+		{ "scene_highlands_home_interior_townhouse", 40*4, 1*4 },
+	},
+	{
+		{ (11*4)+2, 13*4 },
+		{ (46*4)+2, 13*4 },
+	}
+};
+
 void worldInit()
 {
+	debugLog("DoorManager init\n");
+	doorManager.Init();
+	debugLog("DoorManager init done\n");
+	
 	g_pMainScene = new CScene();
-	g_pMainScene->Load( "scene_highlands_home" );
+	g_pMainScene->Load( firstWorld.pszMainScene );
 	g_pMainScene->SetSort( -1.2f );
 	
 	cameraSetBounds( g_pMainScene );
 	
-	g_apSubScene[ 0 ] = new CScene();
-	g_apSubScene[ 0 ]->Load( "scene_highlands_interior_test" );
-	g_apSubScene[ 0 ]->SetWorldPosition( 8*4, 8*4 );
-	g_apSubScene[ 0 ]->SetSort( -1.1f );
-	
-	g_apSubScene[ 1 ] = new CScene();
-	g_apSubScene[ 1 ]->Load( "scene_highlands_home_interior_townhouse" );
-	g_apSubScene[ 1 ]->SetWorldPosition( 40*4, 1*4 );
-	g_apSubScene[ 1 ]->SetSort( -1.1f );
+	int subScene;
+	for( subScene=0; subScene<firstWorld.numSubScenes; subScene++ )
+	{
+		//
+		// Create subscene
+		//
+		CWorldData::CSubScene* pSubSceneDefinition = &firstWorld.aSubScene[ subScene ];
+		CScene* pSubScene = new CScene();
+		pSubScene->Load( pSubSceneDefinition->pszName );
+		pSubScene->SetWorldPosition( pSubSceneDefinition->worldX, pSubSceneDefinition->worldY );
+		pSubScene->SetSort( -1.1f );
+		g_apSubScene[ subScene ] = pSubScene;
+		
+		//
+		// Create door that leads into subscene
+		//
+		CDoor* pDoor = doorManager.CreateDoor( firstWorld.aDoor[ subScene ].worldX, firstWorld.aDoor[ subScene ].worldY );
+		pDoor->m_pSceneInside = pSubScene;
+		pDoor->m_pSceneOutside = g_pMainScene;
+		g_pDoor[ subScene ] = pDoor;
+	}
 	
 	debugLog("Gamesetup start 6\n");
 	
-	debugLog("DoorManager init\n");
-	doorManager.Init();
-	
-	debugLog("DoorManager init done\n");
-	
-	g_pDoor[ 0 ] = doorManager.CreateDoor( 46, 52 );
-	g_pDoor[ 0 ]->m_pSceneInside = g_apSubScene[ 0 ];
-	g_pDoor[ 0 ]->m_pSceneOutside = g_pMainScene;
-	
-	g_pDoor[ 1 ] = doorManager.CreateDoor( (46*4)+2, 13*4 );
-	g_pDoor[ 1 ]->m_pSceneInside = g_apSubScene[ 1 ];
-	g_pDoor[ 1 ]->m_pSceneOutside = g_pMainScene;
-	
-	g_numDoors = 2;
+	g_numDoors =firstWorld.numSubScenes;
 	
 	physInit( g_pMainScene );
 }
