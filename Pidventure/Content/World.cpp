@@ -21,6 +21,8 @@ static CScene* g_pScene;
 static CScene* g_pScene2;
 static CScene* g_pScene3;
 
+extern CPlayer* pPlayer;
+
 void worldInit()
 {
 	g_pScene = new CScene();
@@ -75,9 +77,9 @@ void worldUpdate()
 	}
 }
 
-void worldInteract(CPlayer* _pPlayer)
+void worldInteract()
 {
-	CDoor* pDoor = doorManager.GetDoorAt( _pPlayer->m_pAvatar->m_worldX, _pPlayer->m_pAvatar->m_worldY );
+	CDoor* pDoor = doorManager.GetDoorAt( pPlayer->m_pAvatar->m_worldX, pPlayer->m_pAvatar->m_worldY );
 	if( pDoor != NULL )
 	{
 		if( !pDoor->IsOpen())

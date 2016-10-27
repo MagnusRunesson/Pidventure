@@ -14,7 +14,7 @@ class CPlayer;
 
 void worldInit();
 void worldUpdate();
-void worldInteract( CPlayer* _pPlayer );
+void worldInteract();
 
 CDoor* worldGetDoorAt();
 

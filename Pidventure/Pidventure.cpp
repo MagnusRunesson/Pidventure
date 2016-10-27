@@ -84,7 +84,7 @@ void game_loop()
 
 	if(padGetPressed() & PAD_KEYMASK_SELECT )
 	{
-		worldInteract( pPlayer );
+		worldInteract();
 	}
 
 	gameObjectManager.Render();
