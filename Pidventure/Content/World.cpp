@@ -20,6 +20,7 @@ static CDoor* g_pDoor[10];
 static CScene* g_pScene;
 static CScene* g_pScene2;
 static CScene* g_pScene3;
+static int g_numDoors;
 
 extern CPlayer* pPlayer;
 
@@ -56,6 +57,8 @@ void worldInit()
 	g_pDoor[1]->m_pSceneInside = g_pScene3;
 	g_pDoor[1]->m_pSceneOutside = g_pScene;
 	
+	g_numDoors = 2;
+	
 	physInit( g_pScene );
 }
 
@@ -64,16 +67,14 @@ void worldUpdate()
 	g_pScene->SetViewportTopLeft((int)cameraWorldX(), (int)cameraWorldY());
 	g_pScene->Render();
 
-	if(g_pDoor[0]->IsOpen())
+	int i;
+	for( i=0; i<g_numDoors; i++ )
 	{
-		g_pDoor[0]->m_pSceneInside->SetViewportTopLeft((int)cameraWorldX(), (int)cameraWorldY());
-		g_pDoor[0]->m_pSceneInside->Render();
-	}
-	
-	if(g_pDoor[1]->IsOpen())
-	{
-		g_pDoor[1]->m_pSceneInside->SetViewportTopLeft((int)cameraWorldX(), (int)cameraWorldY());
-		g_pDoor[1]->m_pSceneInside->Render();
+		if(g_pDoor[i]->IsOpen())
+		{
+			g_pDoor[i]->m_pSceneInside->SetViewportTopLeft((int)cameraWorldX(), (int)cameraWorldY());
+			g_pDoor[i]->m_pSceneInside->Render();
+		}
 	}
 }
 
