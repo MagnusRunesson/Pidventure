@@ -34,6 +34,7 @@
 		257D92591D794A63006B6512 /* Player.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 257D92551D794A63006B6512 /* Player.cpp */; settings = {ASSET_TAGS = (); }; };
 		257D925A1D794A63006B6512 /* PlayerInventory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 257D92571D794A63006B6512 /* PlayerInventory.cpp */; settings = {ASSET_TAGS = (); }; };
 		258A2EF81DC0F8EC005915CD /* World.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 258A2EF61DC0F8EC005915CD /* World.cpp */; settings = {ASSET_TAGS = (); }; };
+		258A2EFB1DC71BAD005915CD /* Memory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 258A2EF91DC71BAD005915CD /* Memory.cpp */; settings = {ASSET_TAGS = (); }; };
 		25A44AE71DAFD8E900C6CE0C /* Door.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 25A44AE51DAFD8E900C6CE0C /* Door.cpp */; settings = {ASSET_TAGS = (); }; };
 		25F9308E1D7E83640026DA4C /* file_osx.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 25F9308C1D7E83640026DA4C /* file_osx.cpp */; settings = {ASSET_TAGS = (); }; };
 		25F930971D7E8A560026DA4C /* Image.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 25F930961D7E8A560026DA4C /* Image.cpp */; settings = {ASSET_TAGS = (); }; };
@@ -113,6 +114,8 @@
 		257D92581D794A63006B6512 /* PlayerInventory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PlayerInventory.h; path = Pidventure/Player/PlayerInventory.h; sourceTree = "<group>"; };
 		258A2EF61DC0F8EC005915CD /* World.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = World.cpp; path = Pidventure/Content/World.cpp; sourceTree = "<group>"; };
 		258A2EF71DC0F8EC005915CD /* World.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = World.h; path = Pidventure/Content/World.h; sourceTree = "<group>"; };
+		258A2EF91DC71BAD005915CD /* Memory.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Memory.cpp; path = Engine/Core/Memory.cpp; sourceTree = "<group>"; };
+		258A2EFA1DC71BAD005915CD /* Memory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Memory.h; path = Engine/Core/Memory.h; sourceTree = "<group>"; };
 		25A44AE31DAE019D00C6CE0C /* Collision.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Collision.h; path = Pidventure/Collision.h; sourceTree = "<group>"; };
 		25A44AE51DAFD8E900C6CE0C /* Door.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Door.cpp; path = Pidventure/Gameplay/Door.cpp; sourceTree = "<group>"; };
 		25A44AE61DAFD8E900C6CE0C /* Door.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Door.h; path = Pidventure/Gameplay/Door.h; sourceTree = "<group>"; };
@@ -202,6 +205,8 @@
 				257AE6B31D6B548100CACB74 /* Types.h */,
 				257AE6C21D700AFA00CACB74 /* Timer.cpp */,
 				257AE6C31D700AFA00CACB74 /* Timer.h */,
+				258A2EF91DC71BAD005915CD /* Memory.cpp */,
+				258A2EFA1DC71BAD005915CD /* Memory.h */,
 			);
 			name = Core;
 			sourceTree = "<group>";
@@ -408,6 +413,7 @@
 				257AE6C41D700AFA00CACB74 /* Timer.cpp in Sources */,
 				257AE6AD1D6B507E00CACB74 /* GameObjectTemplate.cpp in Sources */,
 				257AE6AC1D6B507E00CACB74 /* GameObjectManager.cpp in Sources */,
+				258A2EFB1DC71BAD005915CD /* Memory.cpp in Sources */,
 				257D92591D794A63006B6512 /* Player.cpp in Sources */,
 				257AE6B51D6B548100CACB74 /* Debug.cpp in Sources */,
 				257AE6AB1D6B507E00CACB74 /* GameObject.cpp in Sources */,

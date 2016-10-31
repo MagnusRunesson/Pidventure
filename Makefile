@@ -29,6 +29,7 @@ SRCS=\
 	Engine/Core/BitHelpers.cpp \
 	Engine/Core/Debug.cpp \
 	Engine/Core/Timer.cpp \
+	Engine/Core/Memory.cpp \
 	Engine/Graphics/Animation.cpp \
 	Engine/Graphics/Image.cpp \
 	Engine/Graphics/Screen.cpp \
