@@ -9,6 +9,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include "Engine/Core/Debug.h"
+#include "Engine/Core/Memory.h"
 #include "Engine/Graphics/Screen.h"
 #include "Engine/Graphics/Image.h"
 #include "Engine/Graphics/SpriteRenderer.h"

@@ -7,6 +7,7 @@
 //
 
 #include <stdlib.h>
+#include "Engine/Core/Memory.h"
 #include "Engine/Graphics/Image.h"
 #include "Engine/Graphics/SpriteRenderer.h"
 #include "Engine/Graphics/TileBank.h"

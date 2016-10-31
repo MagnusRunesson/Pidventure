@@ -11,6 +11,7 @@
 #include "Engine/Graphics/Image.h"
 #include "Engine/IO/File.h"
 #include "Engine/Core/Debug.h"
+#include "Engine/Core/Memory.h"
 
 static char g_pszImageFullFileName[ 1024 ];
 

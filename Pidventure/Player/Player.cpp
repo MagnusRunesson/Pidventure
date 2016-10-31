@@ -10,6 +10,7 @@
 #include "Engine/IO/Joypad.h"
 #include "Engine/Core/Timer.h"
 #include "Engine/Core/Debug.h"
+#include "Engine/Core/Memory.h"
 #include "Pidventure/Player/Player.h"
 #include "Pidventure/Player/PlayerAvatar.h"
 #include "Pidventure/Player/PlayerInventory.h"

@@ -17,6 +17,7 @@
 #include "Engine/Graphics/TileRenderer.h"
 #include "Engine/IO/File.h"
 #include "Engine/Core/Debug.h"
+#include "Engine/Core/Memory.h"
 #include "Pidventure/Scene.h"
 #include "Pidventure/Physics.h"
 #include "Pidventure/DataManual/Data.h"

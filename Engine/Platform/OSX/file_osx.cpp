@@ -10,6 +10,7 @@
 #include <memory.h>
 #include "Engine/IO/File.h"
 #include "Engine/Core/Debug.h"
+#include "Engine/Core/Memory.h"
 
 const char* pszBasePath = "/Users/magnusrunesson/Projects/Pidventure/Pidventure/data/";
 char g_pszFileName[ 1024 ];

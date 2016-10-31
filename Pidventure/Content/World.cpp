@@ -8,6 +8,7 @@
 
 #include <stdlib.h>
 #include "Engine/Core/Debug.h"
+#include "Engine/Core/Memory.h"
 #include "Pidventure/Gameplay/Door.h"
 #include "Pidventure/Content/World.h"
 #include "Pidventure/CameraController.h"

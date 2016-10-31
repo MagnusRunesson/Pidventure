@@ -14,6 +14,7 @@
 #include "Engine/Core/Types.h"
 #include "Engine/Core/BitHelpers.h"
 #include "Engine/Core/Timer.h"
+#include "Engine/Core/Memory.h"
 
 #include "Engine/Audio/AudioHandler.h"
 
