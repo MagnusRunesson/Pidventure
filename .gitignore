@@ -15,3 +15,5 @@ Tools/tmx2scene/main.o
 Tools/tmx2scene/tinyxml2.o
 Tools/tmx2scene/tmx2scene
 wd
+Tools/memanalyze/memanalyze/memanalyze.xcodeproj/project.xcworkspace/xcuserdata
+Tools/memanalyze/memanalyze/memanalyze.xcodeproj/xcuserdata
