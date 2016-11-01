@@ -338,6 +338,7 @@ bool update()
 int main(int argc, const char * argv[])
 {
 	dev = NULL;
+	memInit();
 	
 	if( init() == true )
 	{
@@ -348,6 +349,7 @@ int main(int argc, const char * argv[])
 	}
 	
 	exit();
+	memExit();
 	
     return 0;
 }
