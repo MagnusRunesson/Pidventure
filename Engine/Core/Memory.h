@@ -11,6 +11,9 @@
 
 #include <stdlib.h>
 
+void memInit();
+void memExit();
+
 void* operator new(size_t size, const char* _pszFile, int _line);
 void* operator new[](size_t size, const char* _pszFile, int _line);
 
