@@ -20,12 +20,12 @@ static FILE* g_fileDelete;
 
 void memTrackAlloc(void* _ptr, size_t _size, const char* _pszFileName, int _line)
 {
-	fprintf(g_fileNew, "0x%016llx,%u,%s,%i\n", (unsigned long long)_ptr, (unsigned int)_size, _pszFileName, _line);
+	fprintf( g_fileNew, "0x%016llx,%s,%i,%u\n", (unsigned long long)_ptr, _pszFileName, _line, (unsigned int)_size );
 }
 
 void memTrackDelete(void* _ptr)
 {
-	fprintf(g_fileDelete, "0x%016llx\n", (unsigned long long)_ptr);
+	fprintf( g_fileDelete, "0x%016llx\n", (unsigned long long)_ptr );
 }
 
 void memInit()
