@@ -17,7 +17,7 @@
 #include "Pidventure/Physics.h"
 #include "Pidventure/Collision.h"
 
-CPlayerAvatar::CPlayerAvatar( float _worldX, float _worldY )
+CPlayerAvatar::CPlayerAvatar()
 {
 	debugLog("pa 0\n");
 	m_movementSpeed = 30.0f;
@@ -26,8 +26,8 @@ CPlayerAvatar::CPlayerAvatar( float _worldX, float _worldY )
 	m_fallDuration = m_jumpDuration;
 	m_fallForce = m_jumpForce * 1.2f;
 
-	m_worldX = _worldX;
-	m_worldY = _worldY;
+	m_worldX = 0.0f;
+	m_worldY = 0.0f;
 	m_jumpTimer = 0.0f;
 	m_fallTimer = 0.0f;
 	m_wasGrounded = true;
@@ -38,7 +38,7 @@ CPlayerAvatar::CPlayerAvatar( float _worldX, float _worldY )
 	m_pGameObject = gameObjectManager.CreateGameObject( m_pImage );
 	debugLog("pa 3\n");
 	m_pGameObject->SetHotspot( 2.0f, 14.0f );
-	m_pGameObject->SetWorldPosition( _worldX, _worldY );
+	m_pGameObject->SetWorldPosition( 0.0f, 0.0f );
 	m_pGameObject->GetSprite()->collisionIndex = SCI_PLAYER_AVATAR;
 	debugLog("pa 4\n");
 }

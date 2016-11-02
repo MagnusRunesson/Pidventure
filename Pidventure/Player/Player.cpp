@@ -18,24 +18,20 @@
 CPlayer::CPlayer()
 {
 	debugLog("Player a\n");
-	m_pAvatar = new CPlayerAvatar( m_worldX, m_worldY );
-	debugLog("Player b\n");
-	m_pInventory = new CPlayerInventory();
+	m_Avatar.SetWorldPosition( m_worldX, m_worldY );
 	debugLog("Player c\n");
 }
 
 CPlayer::~CPlayer()
 {
-	delete m_pAvatar;
-	delete m_pInventory;
 }
 
 void CPlayer::SetWorldPosition( float _x, float _y )
 {
-	m_pAvatar->SetWorldPosition( _x, _y );
+	m_Avatar.SetWorldPosition( _x, _y );
 }
 
 void CPlayer::Update()
 {
-	m_pAvatar->Update();
+	m_Avatar.Update();
 }

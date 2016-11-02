@@ -9,8 +9,8 @@
 #ifndef Player_h
 #define Player_h
 
-class CPlayerAvatar;
-class CPlayerInventory;
+#include "Pidventure/Player/PlayerAvatar.h"
+#include "Pidventure/Player/PlayerInventory.h"
 
 class CPlayer
 {
@@ -21,8 +21,8 @@ public:
 	void Update();
 	void SetWorldPosition( float _x, float _y );
 	
-	CPlayerAvatar* m_pAvatar;
-	CPlayerInventory* m_pInventory;
+	CPlayerAvatar m_Avatar;
+	CPlayerInventory m_Inventory;
 	
 private:
 	float m_worldX;

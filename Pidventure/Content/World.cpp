@@ -104,8 +104,8 @@ void worldInit()
 
 void worldUpdate()
 {
-	if( pPlayer->m_pAvatar->m_worldX < g_pMainScene->GetWorldLeft() + 2.0f ) debugLog( "OUtside left!\n" );
-	if( pPlayer->m_pAvatar->m_worldX > g_pMainScene->GetWorldRight() - 2.0f ) debugLog( "OUtside right!\n" );
+	if( pPlayer->m_Avatar.m_worldX < g_pMainScene->GetWorldLeft() + 2.0f ) debugLog( "OUtside left!\n" );
+	if( pPlayer->m_Avatar.m_worldX > g_pMainScene->GetWorldRight() - 2.0f ) debugLog( "OUtside right!\n" );
 	
 	g_pMainScene->SetViewportTopLeft((int)cameraWorldX(), (int)cameraWorldY());
 	g_pMainScene->Render();
@@ -123,7 +123,7 @@ void worldUpdate()
 
 void worldInteract()
 {
-	CDoor* pDoor = doorManager.GetDoorAt( pPlayer->m_pAvatar->m_worldX, pPlayer->m_pAvatar->m_worldY );
+	CDoor* pDoor = doorManager.GetDoorAt( pPlayer->m_Avatar.m_worldX, pPlayer->m_Avatar.m_worldY );
 	if( pDoor != NULL )
 	{
 		if( !pDoor->IsOpen())

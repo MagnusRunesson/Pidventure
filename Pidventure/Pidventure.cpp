@@ -44,7 +44,7 @@ void game_setup()
 	debugLog("Gamesetup start 2\n");
 	dataInit();
 	debugLog("Gamesetup start 3\n");
-	cameraInit( pPlayer->m_pAvatar );
+	cameraInit( &pPlayer->m_Avatar );
 	debugLog("Gamesetup start 4\n");
 	bgInit();
 	debugLog("Gamesetup start 5\n");

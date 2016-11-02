@@ -29,7 +29,7 @@ public:
 	float m_fallTimer;
 	bool m_wasGrounded;
 	
-	CPlayerAvatar( float _worldX, float _worldY );
+	CPlayerAvatar();
 	~CPlayerAvatar();
 
 	Image* m_pImage;
