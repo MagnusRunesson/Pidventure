@@ -52,7 +52,7 @@ public:
 };
 
 
-CScene::CScene()
+CScene::CScene() : TileRenderer( NULL, NULL )
 {
 	m_worldX = 0;
 	m_worldY = 0;
@@ -72,7 +72,8 @@ bool CScene::Load( const char* _pszName )
 		return false;
 	}
 	
-	CSceneDefinition* pScene = new CSceneDefinition();
+	CSceneDefinition sceneDefinition;
+	CSceneDefinition* pScene = &sceneDefinition;
 	pScene->NumObjects = readBytes / sizeof( CSceneObject );
 	pScene->aObjects = pSceneObjects;
 
@@ -118,10 +119,13 @@ bool CScene::Load( const char* _pszName )
 	debugLog("Gamesetup start 7b\n");
 	pTileMap = tilemapLoad( _pszName );
 	debugLog("Gamesetup start 8\n");
-	pTileRenderer = new TileRenderer( pTileMap, pTileBank );
+	TileRenderer.m_pTileBank = pTileBank;
+	TileRenderer.m_pTileMap = pTileMap;
 	debugLog("Gamesetup start 9\n");
-	pTileRenderer->SetDepth( -1.0f );
+	TileRenderer.SetDepth( -1.0f );
 
+	delete[] pSceneObjects;
+	
 	return true;
 }
 
@@ -133,17 +137,17 @@ void CScene::SetWorldPosition( int _x, int _y )
 
 void CScene::SetSort( float _sort )
 {
-	pTileRenderer->SetDepth( _sort );
+	TileRenderer.SetDepth( _sort );
 }
 
 void CScene::SetViewportTopLeft( int _x, int _y )
 {
-	pTileRenderer->SetPosition( _x-m_worldX, _y-m_worldY );
+	TileRenderer.SetPosition( _x-m_worldX, _y-m_worldY );
 }
 
 void CScene::Render()
 {
-	pTileRenderer->Render();
+	TileRenderer.Render();
 }
 
 int CScene::GetWorldTop()
