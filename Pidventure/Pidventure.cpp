@@ -110,6 +110,10 @@ void game_loop()
 	 */
 }
 
+void game_exit()
+{
+}
+
 void game_debugTrigger(int _id)
 {
 	/*

@@ -23,6 +23,7 @@
 //
 extern void game_setup();
 extern void game_loop();
+extern void game_exit();
 extern void game_debugTrigger( int );
 
 SDL_Window* window;
@@ -133,6 +134,8 @@ void audioInit( int _frequency )
 
 void exit()
 {
+	game_exit();
+	
 	delete[] screenBuffer;
 	
 	SDL_Quit();
