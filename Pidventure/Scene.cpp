@@ -124,8 +124,8 @@ bool CScene::Load( const char* _pszName )
 	debugLog("Gamesetup start 9\n");
 	TileRenderer.SetDepth( -1.0f );
 
-	delete[] pSceneObjects;
-	
+	fileUnload( pSceneObjects );
+
 	return true;
 }
 

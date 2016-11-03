@@ -30,5 +30,5 @@ CTileMap* tilemapLoad( const char* _pszFileName )
 
 void tilemapUnload( CTileMap* _pszImage )
 {
-	delete _pszImage;
+	fileUnload( _pszImage );
 }

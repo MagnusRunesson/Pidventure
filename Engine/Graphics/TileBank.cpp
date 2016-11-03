@@ -30,5 +30,5 @@ CTileBank* tilebankLoad(const char* _pszFileName)
 
 void tilebankUnload( CTileBank* _pszImage )
 {
-	delete _pszImage;
+	fileUnload( _pszImage );
 }
