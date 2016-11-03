@@ -21,6 +21,13 @@ void dataInit()
 		data_animAll[ i ]->LoadImages();
 }
 
+void dataExit()
+{
+	int i;
+	for( i=0; i<data_numAnimations; i++ )
+		data_animAll[ i ]->UnloadImages();
+}
+
 AnimationSequenceDefinition* dataGetAnimationSequenceDefinition( const char* _pszSpriteName )
 {
 	//debugLog("Looking for animation definition %s\n", _pszSpriteName );

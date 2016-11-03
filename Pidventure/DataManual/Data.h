@@ -12,6 +12,7 @@
 #include "Pidventure/DataManual/Animations.h"
 
 void dataInit();
+void dataExit();
 AnimationSequenceDefinition* dataGetAnimationSequenceDefinition( const char* _pszSpriteName );
 
 #endif /* Data_h */
