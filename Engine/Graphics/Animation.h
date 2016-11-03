@@ -35,6 +35,7 @@ public:
 	AnimationFrameDefinition* Frames;
 	
 	void LoadImages();
+	void UnloadImages();
 };
 
 class Animation

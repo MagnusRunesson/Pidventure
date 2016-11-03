@@ -24,6 +24,16 @@ void AnimationSequenceDefinition::LoadImages()
 	}
 }
 
+void AnimationSequenceDefinition::UnloadImages()
+{
+	int i;
+	for( i=0; i<NumFrames; i++ )
+	{
+		AnimationFrameDefinition* pFrame = &Frames[ i ];
+		imageUnload( pFrame->sourceImage );
+	}
+}
+
 void Animation::Create( const AnimationSequenceDefinition* _pSequence, GameObject* _pTarget )
 {
 	pTarget = _pTarget;
