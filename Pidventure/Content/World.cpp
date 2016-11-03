@@ -61,16 +61,12 @@ CWorldData firstWorld {
 	}
 };
 
-void worldInit()
+void worldLoad()
 {
-	debugLog("DoorManager init\n");
-	doorManager.Init();
-	debugLog("DoorManager init done\n");
-	
 	g_pMainScene = new CScene();
 	g_pMainScene->Load( firstWorld.pszMainScene );
 	g_pMainScene->SetSort( -1.2f );
-	
+
 	cameraSetBounds( g_pMainScene );
 	
 	int subScene;
@@ -94,12 +90,31 @@ void worldInit()
 		pDoor->m_pSceneOutside = g_pMainScene;
 		g_pDoor[ subScene ] = pDoor;
 	}
+
+	g_numDoors = firstWorld.numSubScenes;
+}
+
+void worldUnload()
+{
+}
+
+void worldInit()
+{
+	debugLog("DoorManager init\n");
+	doorManager.Init();
+	debugLog("DoorManager init done\n");
+
+	worldLoad();
+	
 	
 	debugLog("Gamesetup start 6\n");
 	
-	g_numDoors =firstWorld.numSubScenes;
-	
 	physInit( g_pMainScene );
+}
+
+void worldExit()
+{
+	worldUnload();
 }
 
 void worldUpdate()

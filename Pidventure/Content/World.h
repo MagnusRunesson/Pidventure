@@ -13,6 +13,8 @@ class CDoor;
 class CPlayer;
 
 void worldInit();
+void worldExit();
+
 void worldUpdate();
 void worldInteract();
 
