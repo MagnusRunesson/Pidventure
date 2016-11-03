@@ -58,6 +58,10 @@ CScene::CScene() : TileRenderer( NULL, NULL )
 	m_worldY = 0;
 }
 
+CScene::~CScene()
+{
+}
+
 bool CScene::Load( const char* _pszName )
 {
 	CSceneObject* pSceneObjects;
