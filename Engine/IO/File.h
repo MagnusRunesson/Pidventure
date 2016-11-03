@@ -11,5 +11,6 @@
 
 bool fileLoad(const char* _pszFileName, void** _ppReadData, int* _pReadBytes);
 bool fileLoad(const char* _pszFileName, void* _pReadDestination, int _bufferSize, int* _pReadBytes);
+void fileUnload(void* _ptr);
 
 #endif /* File_h */

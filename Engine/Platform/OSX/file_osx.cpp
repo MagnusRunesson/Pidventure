@@ -1,3 +1,5 @@
+#define FILE_TRACKING	(0)
+
 //
 //  file_osx.cpp
 //  pidventure
@@ -11,6 +13,46 @@
 #include "Engine/IO/File.h"
 #include "Engine/Core/Debug.h"
 #include "Engine/Core/Memory.h"
+
+#if FILE_TRACKING == 1
+
+static FILE* g_fileNew = NULL;
+static FILE* g_fileDelete = NULL;
+
+void fileTrackInit()
+{
+	g_fileNew = fopen("filetrack_open.txt", "w");
+	g_fileDelete = fopen("filetrack_close.txt", "w");
+}
+
+void fileTrackExit()
+{
+	fclose(g_fileNew);
+	fclose(g_fileDelete);
+}
+
+void fileTrackOpen(void* _ptr, const char* _pszFileName)
+{
+	if(g_fileNew == NULL)
+		fileTrackInit();
+	fprintf( g_fileNew, "0x%016llx,%s\n", (unsigned long long)_ptr, _pszFileName );
+	//debugLog("------------------> Calling new from %s:%i - returning 0x%08x\n", _pszFileName, 0, _ptr );
+}
+
+void fileTrackClose(void* _ptr)
+{
+	if(g_fileNew == NULL)
+		fileTrackInit();
+	fprintf( g_fileDelete, "0x%016llx\n", (unsigned long long)_ptr );
+}
+
+#else
+
+#define fileTrackOpen(a,b)
+#define fileTrackClose(a)
+
+#endif
+
 
 const char* pszBasePath = "/Users/magnusrunesson/Projects/Pidventure/Pidventure/data/";
 char g_pszFileName[ 1024 ];
@@ -29,7 +71,7 @@ bool fileLoad(const char* _pszFileName, void** _ppReadData, int* _pReadBytes)
 	debugLog( "Opened file: 0x%08x\n", f );
 	if(f == NULL)
 		return false;
-	
+
 	// Get file size
 	fseek( f, 0, SEEK_END );
 	long fileSize = ftell( f );
@@ -43,7 +85,9 @@ bool fileLoad(const char* _pszFileName, void** _ppReadData, int* _pReadBytes)
 	
 	fclose( f );
 	debugLog("Done\n");
-	
+
+	fileTrackOpen( *_ppReadData, _pszFileName );
+
 	return true;
 }
 
@@ -70,4 +114,10 @@ bool fileLoad(const char* _pszFileName, void* _pReadDestination, int _bufferSize
 	fclose( f );
 	
 	return true;
+}
+
+void fileUnload( void* _ptr )
+{
+	fileTrackClose( _ptr );
+	delete[] (char*)_ptr;
 }

@@ -75,3 +75,9 @@ bool fileLoad(const char* _pszFileName, void* _pReadDestination, int _bufferSize
 	
 	return true;
 }
+
+
+void fileUnload( void* _ptr )
+{
+	delete[] (char*)_ptr;
+}
