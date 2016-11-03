@@ -57,6 +57,13 @@ void game_setup()
 	free(papa);
 }
 
+void game_exit()
+{
+	worldExit();
+	bgExit();
+	dataExit();
+}
+
 void game_loop()
 {
 	float dt = 1.0f / 60.0f;
@@ -108,10 +115,6 @@ void game_loop()
 		}
 	}
 	 */
-}
-
-void game_exit()
-{
 }
 
 void game_debugTrigger(int _id)
