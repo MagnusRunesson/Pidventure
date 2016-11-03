@@ -24,5 +24,6 @@ public:
 
 Image* imageLoad( const char* _pszFileName );
 void imageUnload( Image* _pImage );
+void imageUnload( const Image* _pImage );
 
 #endif /* Image_hpp */

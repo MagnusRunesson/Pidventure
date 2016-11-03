@@ -29,7 +29,12 @@ Image* imageLoad(const char* _pszFileName)
 	return (Image*)pData;
 }
 
+void imageUnload( const Image* _pszImage )
+{
+	fileUnload( (void*)_pszImage );
+}
+
 void imageUnload( Image* _pszImage )
 {
-	delete _pszImage;
+	fileUnload( _pszImage );
 }
