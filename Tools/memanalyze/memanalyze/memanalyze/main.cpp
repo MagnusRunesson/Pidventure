@@ -75,12 +75,12 @@ char* getZeroTerminatedLine( char* _pszLine )
 	return pszString2;
 }
 
-int main(int argc, const char * argv[])
+void checkLeaks(const char* _pszOutFileName, const char* _pszAllocFileName, const char* _pszFreeName )
 {
-	char* pszNew = fileReadContent("memtrack_new.txt");
-	char* pszDel = fileReadContent("memtrack_del.txt");
-
-	FILE* fOut = fopen("leaks.txt", "w");
+	char* pszNew = fileReadContent(_pszAllocFileName);
+	char* pszDel = fileReadContent(_pszFreeName);
+	
+	FILE* fOut = fopen(_pszOutFileName, "w");
 	
 	int numLines=0;
 	char* pszLine = pszNew;
@@ -90,7 +90,7 @@ int main(int argc, const char * argv[])
 		
 		if( strstr( pszDel, pszPointer ) == NULL)
 		{
-			fprintf(fOut, "Found memory leak. %s\n", getZeroTerminatedLine( pszLine ));
+			fprintf(fOut, "%s\n", getZeroTerminatedLine( pszLine ));
 			//printf(pszLine);
 			//printf("\n");
 			//printf("line %i: ", numLines);
@@ -98,18 +98,23 @@ int main(int argc, const char * argv[])
 			//printf("\n");
 			numLines++;
 		}
-
+		
 		pszLine = skipToEndOfLine( pszLine );
 	}
-
+	
 	fclose(fOut);
-
+	
 	printf("Found %i leaks\n", numLines);
 	
 	//printf("new=%s\n", pszNew);
 	
 	delete[] pszNew;
 	delete[] pszDel;
-	
+}
+
+int main(int argc, const char * argv[])
+{
+	checkLeaks( "memleaks.txt", "memtrack_new.txt", "memtrack_del.txt");
+	checkLeaks( "fileleaks.txt", "filetrack_open.txt", "filetrack_close.txt");
     return 0;
 }
