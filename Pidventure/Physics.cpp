@@ -20,7 +20,7 @@ Image* physCollisionMap;
 Sprite* physCollisionDebugSprite;
 //static CTileBank* pTileBank;
 //static CTileMap* pTileMap;
-static TileRenderer* pTileRenderer;
+static TileRenderer physTileRenderer( NULL, NULL );
 float physSample[ 4 ];
 
 void physInit( CScene* _pScene )
@@ -35,7 +35,7 @@ void physInit( CScene* _pScene )
 	physCollisionDebugSprite->y = 0.0f;
 	physCollisionDebugSprite->SetSort( 200.0f );
 	 */
-	pTileRenderer = new TileRenderer( NULL, NULL );
+	//pTileRenderer = new TileRenderer( NULL, NULL );
 	physSetActiveScene( _pScene );
 }
 
@@ -53,13 +53,13 @@ bool physIsWall(int _x, int _y)
 
 bool physTakeSample( int _x, int _y )
 {
-	return pTileRenderer->Sample( _x, _y, physSample );
+	return physTileRenderer.Sample( _x, _y, physSample );
 }
 
 void physSetActiveScene( CScene* _pScene )
 {
-	pTileRenderer->m_pTileBank = _pScene->pTileBankCollision;
-	pTileRenderer->m_pTileMap = _pScene->pTileMap;
-	pTileRenderer->m_x = _pScene->m_worldX;
-	pTileRenderer->m_y = _pScene->m_worldY;
+	physTileRenderer.m_pTileBank = _pScene->pTileBankCollision;
+	physTileRenderer.m_pTileMap = _pScene->pTileMap;
+	physTileRenderer.m_x = _pScene->m_worldX;
+	physTileRenderer.m_y = _pScene->m_worldY;
 }
