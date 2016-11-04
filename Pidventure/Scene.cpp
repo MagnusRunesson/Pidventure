@@ -138,6 +138,22 @@ void CScene::Unload()
 	tilebankUnload( pTileBank );
 	tilebankUnload( pTileBankCollision );
 	tilemapUnload( pTileMap );
+
+	int i;
+	for( i=0; i<MAX_GAMEOBJECTS; i++ )
+	{
+		GameObject* pGO = sceneObjects[ i ];
+		if(!pGO)
+			continue;
+		
+		//
+		if(!pGO->GetAnimationSequenceDefinition())
+		{
+			// Not an animated object. That means it has an image that we should free up.
+			Sprite* pSprite = pGO->GetSprite();
+			imageUnload( pSprite->image );
+		}
+	}
 }
 
 void CScene::SetWorldPosition( int _x, int _y )
