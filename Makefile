@@ -39,6 +39,7 @@ SRCS=\
 	Engine/Graphics/TileMap.cpp \
 	Engine/Graphics/TileRenderer.cpp \
 	Engine/IO/Joypad.cpp \
+	Engine/IO/FileCache.cpp \
 	Engine/Platform/RPi/file_rpi.cpp \
 	Engine/Platform/RPi/main.cpp \
 	Engine/Scene/Camera.cpp \
