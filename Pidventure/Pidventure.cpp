@@ -59,6 +59,8 @@ void game_setup()
 
 void game_exit()
 {
+	delete pPlayer;
+	
 	worldExit();
 	bgExit();
 	dataExit();
