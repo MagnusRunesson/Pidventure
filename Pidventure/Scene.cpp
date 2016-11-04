@@ -133,6 +133,13 @@ bool CScene::Load( const char* _pszName )
 	return true;
 }
 
+void CScene::Unload()
+{
+	tilebankUnload( pTileBank );
+	tilebankUnload( pTileBankCollision );
+	tilemapUnload( pTileMap );
+}
+
 void CScene::SetWorldPosition( int _x, int _y )
 {
 	m_worldX = _x;

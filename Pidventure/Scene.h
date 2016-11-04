@@ -33,6 +33,7 @@ public:
 	~CScene();
 
 	bool Load( const char* _pszName );
+	void Unload();
 
 	void SetWorldPosition( int _x, int _y );
 	void SetSort( float _sort );
