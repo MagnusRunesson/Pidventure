@@ -31,11 +31,11 @@ void fileTrackExit()
 	fclose(g_fileDelete);
 }
 
-void fileTrackOpen(void* _ptr, const char* _pszFileName)
+void fileTrackOpen(void* _ptr, const char* _pszFileName, size_t _fileSize)
 {
 	if(g_fileNew == NULL)
 		fileTrackInit();
-	fprintf( g_fileNew, "0x%016llx,%s\n", (unsigned long long)_ptr, _pszFileName );
+	fprintf( g_fileNew, "0x%016llx,%s,%u\n", (unsigned long long)_ptr, _pszFileName, (unsigned int)_fileSize );
 	//debugLog("------------------> Calling new from %s:%i - returning 0x%08x\n", _pszFileName, 0, _ptr );
 }
 
@@ -48,7 +48,7 @@ void fileTrackClose(void* _ptr)
 
 #else
 
-#define fileTrackOpen(a,b)
+#define fileTrackOpen(a,b,c)
 #define fileTrackClose(a)
 
 #endif
@@ -86,7 +86,7 @@ bool fileLoad(const char* _pszFileName, void** _ppReadData, int* _pReadBytes)
 	fclose( f );
 	debugLog("Done\n");
 
-	fileTrackOpen( *_ppReadData, _pszFileName );
+	fileTrackOpen( *_ppReadData, _pszFileName, *_pReadBytes );
 
 	return true;
 }
