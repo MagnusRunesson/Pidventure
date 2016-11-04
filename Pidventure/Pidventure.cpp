@@ -15,6 +15,7 @@
 #include "Engine/Graphics/SpriteRenderer.h"
 #include "Engine/Scene/GameObjectManager.h"
 #include "Engine/IO/Joypad.h"
+#include "Engine/IO/FileCache.h"
 #include "Engine/Graphics/Animation.h"
 #include "Engine/Graphics/TileBank.h"
 #include "Engine/Graphics/TileMap.h"
@@ -64,6 +65,8 @@ void game_exit()
 	worldExit();
 	bgExit();
 	dataExit();
+	
+	fileCacheReset();
 }
 
 void game_loop()
