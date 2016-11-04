@@ -42,8 +42,8 @@ public:
 };
 
 static CDoor* g_pDoor[10];
-static CScene* g_pMainScene;
-static CScene* g_apSubScene[10];
+static CScene g_MainScene;
+static CScene g_aSubScene[10];
 static int g_numDoors;
 
 extern CPlayer* pPlayer;
@@ -63,11 +63,10 @@ CWorldData firstWorld {
 
 void worldLoad()
 {
-	g_pMainScene = new CScene();
-	g_pMainScene->Load( firstWorld.pszMainScene );
-	g_pMainScene->SetSort( -1.2f );
+	g_MainScene.Load( firstWorld.pszMainScene );
+	g_MainScene.SetSort( -1.2f );
 
-	cameraSetBounds( g_pMainScene );
+	cameraSetBounds( &g_MainScene );
 	
 	int subScene;
 	for( subScene=0; subScene<firstWorld.numSubScenes; subScene++ )
@@ -76,18 +75,17 @@ void worldLoad()
 		// Create subscene
 		//
 		CWorldData::CSubScene* pSubSceneDefinition = &firstWorld.aSubScene[ subScene ];
-		CScene* pSubScene = new CScene();
+		CScene* pSubScene = &g_aSubScene[ subScene ];
 		pSubScene->Load( pSubSceneDefinition->pszName );
 		pSubScene->SetWorldPosition( pSubSceneDefinition->worldX, pSubSceneDefinition->worldY );
 		pSubScene->SetSort( -1.1f );
-		g_apSubScene[ subScene ] = pSubScene;
 		
 		//
 		// Create door that leads into subscene
 		//
 		CDoor* pDoor = doorManager.CreateDoor( firstWorld.aDoor[ subScene ].worldX, firstWorld.aDoor[ subScene ].worldY );
 		pDoor->m_pSceneInside = pSubScene;
-		pDoor->m_pSceneOutside = g_pMainScene;
+		pDoor->m_pSceneOutside = &g_MainScene;
 		g_pDoor[ subScene ] = pDoor;
 	}
 
@@ -96,6 +94,16 @@ void worldLoad()
 
 void worldUnload()
 {
+	doorManager.Reset();
+	
+	g_MainScene.Unload();
+	
+	int subScene;
+	for( subScene=0; subScene<firstWorld.numSubScenes; subScene++ )
+	{
+		g_pDoor[ subScene ] = NULL;
+		g_aSubScene[ subScene ].Unload();
+	}
 }
 
 void worldInit()
@@ -109,7 +117,7 @@ void worldInit()
 	
 	debugLog("Gamesetup start 6\n");
 	
-	physInit( g_pMainScene );
+	physInit( &g_MainScene );
 }
 
 void worldExit()
@@ -119,11 +127,11 @@ void worldExit()
 
 void worldUpdate()
 {
-	if( pPlayer->m_Avatar.m_worldX < g_pMainScene->GetWorldLeft() + 2.0f ) debugLog( "OUtside left!\n" );
-	if( pPlayer->m_Avatar.m_worldX > g_pMainScene->GetWorldRight() - 2.0f ) debugLog( "OUtside right!\n" );
+	if( pPlayer->m_Avatar.m_worldX < g_MainScene.GetWorldLeft() + 2.0f ) debugLog( "OUtside left!\n" );
+	if( pPlayer->m_Avatar.m_worldX > g_MainScene.GetWorldRight() - 2.0f ) debugLog( "OUtside right!\n" );
 	
-	g_pMainScene->SetViewportTopLeft((int)cameraWorldX(), (int)cameraWorldY());
-	g_pMainScene->Render();
+	g_MainScene.SetViewportTopLeft((int)cameraWorldX(), (int)cameraWorldY());
+	g_MainScene.Render();
 
 	int i;
 	for( i=0; i<g_numDoors; i++ )
