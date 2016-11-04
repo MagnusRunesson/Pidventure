@@ -9,6 +9,7 @@
 #include <stdio.h>
 #include <memory.h>
 #include "Engine/IO/File.h"
+#include "Engine/IO/FileCache.h"
 #include "Engine/Core/Debug.h"
 #include "Engine/Core/Memory.h"
 
@@ -23,6 +24,12 @@ char* fileGetFullName(const char* _pszFileName)
 
 bool fileLoad(const char* _pszFileName, void** _ppReadData, int* _pReadBytes)
 {
+	if( fileCacheGetFile( _pszFileName, _ppReadData, _pReadBytes ))
+		return true;
+	
+	//
+	// File didn't exist in log
+	//
 	debugLog( "Loading file '%s'\n", _pszFileName );
 	const char* pszFullFileName = fileGetFullName( _pszFileName );
 	debugLog( "Full name '%s'\n", pszFullFileName );
@@ -48,36 +55,12 @@ bool fileLoad(const char* _pszFileName, void** _ppReadData, int* _pReadBytes)
 	fclose( f );
 	debugLog("Done\n");
 	
-	return true;
-}
-
-bool fileLoad(const char* _pszFileName, void* _pReadDestination, int _bufferSize, int* _pReadBytes)
-{
-	const char* pszFullFileName = fileGetFullName( _pszFileName );
-	FILE* f = fopen(pszFullFileName, "rb");
-	if(f == NULL)
-		return false;
-	
-	// Get file size
-	fseek( f, 0, SEEK_END );
-	long fileSize = ftell( f );
-	fseek( f, 0, SEEK_SET );
-
-	if( fileSize > _bufferSize )
-	{
-		fclose( f );
-		return false;
-	}
-	
-	*_pReadBytes = (int)fread( _pReadDestination, 1, fileSize, f );
-	
-	fclose( f );
+	fileCacheAddFile( _pszFileName, *_ppReadData, *_pReadBytes );
 	
 	return true;
 }
-
 
 void fileUnload( void* _ptr )
 {
-	delete[] (char*)_ptr;
+	fileCacheUnreferenceFile( _ptr );
 }
