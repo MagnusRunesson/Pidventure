@@ -50,14 +50,16 @@ extern CPlayer* pPlayer;
 
 CWorldData firstWorld {
 	"scene_highlands_home",
-	2,
+	3,
 	{
 		{ "scene_highlands_interior_test", 8*4, 8*4 },
 		{ "scene_highlands_home_interior_townhouse", 40*4, 1*4 },
+		{ "scene_highlands_home_interior_treehouse", 79*4, 3*4 },
 	},
 	{
 		{ (11*4)+2, 13*4 },
 		{ (46*4)+2, 13*4 },
+		{ ((79+7)*4)+2, (3+5)*4 },
 	}
 };
 
