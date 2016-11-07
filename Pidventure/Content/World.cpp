@@ -63,20 +63,41 @@ CWorldData firstWorld {
 	}
 };
 
+CWorldData* apAllWorlds[] = {
+	&firstWorld,
+};
+
+CWorldData* g_pCurrentWorld;
+
+void worldLoad(int _index);
+void worldLoad(CWorldData* _pWorld);
+
 void worldLoad()
 {
-	g_MainScene.Load( firstWorld.pszMainScene );
+	worldLoad( 0 );
+}
+
+void worldLoad(int _index)
+{
+	worldLoad( apAllWorlds[ _index ]);
+}
+
+void worldLoad(CWorldData* _pWorld)
+{
+	g_pCurrentWorld = _pWorld;
+	
+	g_MainScene.Load( g_pCurrentWorld->pszMainScene );
 	g_MainScene.SetSort( -1.2f );
 
 	cameraSetBounds( &g_MainScene );
 	
 	int subScene;
-	for( subScene=0; subScene<firstWorld.numSubScenes; subScene++ )
+	for( subScene=0; subScene<g_pCurrentWorld->numSubScenes; subScene++ )
 	{
 		//
 		// Create subscene
 		//
-		CWorldData::CSubScene* pSubSceneDefinition = &firstWorld.aSubScene[ subScene ];
+		CWorldData::CSubScene* pSubSceneDefinition = &g_pCurrentWorld->aSubScene[ subScene ];
 		CScene* pSubScene = &g_aSubScene[ subScene ];
 		pSubScene->Load( pSubSceneDefinition->pszName );
 		pSubScene->SetWorldPosition( pSubSceneDefinition->worldX, pSubSceneDefinition->worldY );
@@ -85,13 +106,13 @@ void worldLoad()
 		//
 		// Create door that leads into subscene
 		//
-		CDoor* pDoor = doorManager.CreateDoor( firstWorld.aDoor[ subScene ].worldX, firstWorld.aDoor[ subScene ].worldY );
+		CDoor* pDoor = doorManager.CreateDoor( g_pCurrentWorld->aDoor[ subScene ].worldX, g_pCurrentWorld->aDoor[ subScene ].worldY );
 		pDoor->m_pSceneInside = pSubScene;
 		pDoor->m_pSceneOutside = &g_MainScene;
 		g_pDoor[ subScene ] = pDoor;
 	}
 
-	g_numDoors = firstWorld.numSubScenes;
+	g_numDoors = g_pCurrentWorld->numSubScenes;
 }
 
 void worldUnload()
@@ -101,7 +122,7 @@ void worldUnload()
 	g_MainScene.Unload();
 	
 	int subScene;
-	for( subScene=0; subScene<firstWorld.numSubScenes; subScene++ )
+	for( subScene=0; subScene<g_pCurrentWorld->numSubScenes; subScene++ )
 	{
 		g_pDoor[ subScene ] = NULL;
 		g_aSubScene[ subScene ].Unload();
