@@ -71,6 +71,19 @@ void SpriteRenderer::AddSpriteToSortList( Sprite* _pSprite )
 	}
 }
 
+void SpriteRenderer::RemoveSpriteFromSortList( Sprite* _pSprite )
+{
+	int i;
+	for( i=0; i<MAX_SPRITES; i++ )
+	{
+		if( m_sortedSprites[ i ] == _pSprite )
+		{
+			m_sortedSprites[ i ] = NULL;
+			return;
+		}
+	}
+}
+
 void SpriteRenderer::FreeSprite( Sprite* _spriteInstance )
 {
 	//printf("freeing sprite from image %s\n", _spriteInstance->image->DEBUG_name );
@@ -78,6 +91,7 @@ void SpriteRenderer::FreeSprite( Sprite* _spriteInstance )
 	_spriteInstance->owner = NULL;
 	_spriteInstance->rendererIndex = INVALID_SPRITE_RENDERER_INDEX;
 	ClrBit( _spriteInstance->flags, SPRITE_FLAG_ENABLED );
+	RemoveSpriteFromSortList( _spriteInstance );
 }
 
 Sprite* SpriteRenderer::GetSprite( int _spriteRendererIndex )

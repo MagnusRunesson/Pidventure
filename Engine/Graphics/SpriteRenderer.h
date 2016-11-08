@@ -37,6 +37,7 @@ public:
 
 	//
 	void AddSpriteToSortList( Sprite* _pSprite );
+	void RemoveSpriteFromSortList( Sprite* _pSprite );
 	void SortAllSprites();
 	void SortSprites( Sprite** _apSprites );
 	
