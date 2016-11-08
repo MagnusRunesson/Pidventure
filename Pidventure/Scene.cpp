@@ -153,6 +153,8 @@ void CScene::Unload()
 			Sprite* pSprite = pGO->GetSprite();
 			imageUnload( pSprite->image );
 		}
+		
+		gameObjectManager.FreeGameObject( pGO );
 	}
 }
 
