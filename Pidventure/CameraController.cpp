@@ -55,16 +55,27 @@ void cameraSetBounds( CScene* _pScene )
 void cameraUpdate()
 {
 	const float CAMERA_BOUNDS = 40.0f;
+	const float CAMERA_BOUNDS_TELEPORT = 100.0f;
 	
 	int camPlayerDiff = g_pPlayerAvatar->m_worldX - g_camX;
-	if( camPlayerDiff < CAMERA_BOUNDS )
+	if( camPlayerDiff < -CAMERA_BOUNDS_TELEPORT )
+	{
+		g_camX = g_pPlayerAvatar->m_worldX - CAMERA_BOUNDS;
+		if( g_camX < g_camBoundsLeft )
+			g_camX = g_camBoundsLeft;
+	} else if( camPlayerDiff < CAMERA_BOUNDS )
 	{
 		g_camX -= 1.0f;
 		if( g_camX < g_camBoundsLeft )
 			g_camX = g_camBoundsLeft;
 	}
-	
-	if( camPlayerDiff > SCREEN_WIDTH - CAMERA_BOUNDS )
+
+	if( camPlayerDiff > CAMERA_BOUNDS_TELEPORT )
+	{
+		g_camX = g_pPlayerAvatar->m_worldX - CAMERA_BOUNDS;
+		if( g_camX > g_camBoundsRight )
+			g_camX = g_camBoundsRight;
+	} else if( camPlayerDiff > SCREEN_WIDTH - CAMERA_BOUNDS )
 	{
 		g_camX += 1.0f;
 		if( g_camX > g_camBoundsRight )
@@ -72,14 +83,24 @@ void cameraUpdate()
 	}
 	
 	camPlayerDiff = g_pPlayerAvatar->m_worldY - g_camY;
-	if( camPlayerDiff < CAMERA_BOUNDS )
+	if( camPlayerDiff < -CAMERA_BOUNDS_TELEPORT )
+	{
+		g_camY = g_pPlayerAvatar->m_worldY - CAMERA_BOUNDS;
+		if( g_camY < g_camBoundsTop )
+			g_camY = g_camBoundsTop;
+	} else if( camPlayerDiff < CAMERA_BOUNDS )
 	{
 		g_camY -= 1.0f;
 		if( g_camY < g_camBoundsTop )
 			g_camY = g_camBoundsTop;
 	}
 	
-	if( camPlayerDiff > SCREEN_WIDTH - CAMERA_BOUNDS )
+	if( camPlayerDiff > CAMERA_BOUNDS_TELEPORT )
+	{
+		g_camY = g_pPlayerAvatar->m_worldY - CAMERA_BOUNDS;
+		if( g_camY > g_camBoundsBottom )
+			g_camY = g_camBoundsBottom;
+	} else if( camPlayerDiff > SCREEN_WIDTH - CAMERA_BOUNDS )
 	{
 		g_camY += 1.0f;
 		if( g_camY > g_camBoundsBottom )
