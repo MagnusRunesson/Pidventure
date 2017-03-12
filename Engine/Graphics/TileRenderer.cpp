@@ -13,7 +13,7 @@
 #include "Engine/Graphics/Screen.h"
 #include "Engine/Core/Debug.h"
 
-TileRenderer::TileRenderer( CTileMap* _pTileMap, CTileBank* _tileBank )
+CTileRenderer::CTileRenderer( CTileMap* _pTileMap, CTileBank* _tileBank )
 {
 	m_pTileBank = _tileBank;
 	m_pTileMap = _pTileMap;
@@ -23,25 +23,25 @@ TileRenderer::TileRenderer( CTileMap* _pTileMap, CTileBank* _tileBank )
 }
 
 //
-void TileRenderer::SetPosition( int _x, int _y )
+void CTileRenderer::SetPosition( int _x, int _y )
 {
 	m_x = _x;
 	m_y = _y;
 }
 
 //
-void TileRenderer::GetPosition( int* _x, int* _y )
+void CTileRenderer::GetPosition( int* _x, int* _y )
 {
 	*_x = m_x;
 	*_y = m_y;
 }
 
-void TileRenderer::SetDepth( float _depth )
+void CTileRenderer::SetDepth( float _depth )
 {
 	m_depth = _depth;
 }
 
-bool TileRenderer::Sample( int _worldX, int _worldY, float* _pOutRGBA )
+bool CTileRenderer::Sample( int _worldX, int _worldY, float* _pOutRGBA )
 {
 	int localX = _worldX - m_x;
 	int localY = _worldY - m_y;
@@ -92,7 +92,7 @@ bool TileRenderer::Sample( int _worldX, int _worldY, float* _pOutRGBA )
 	return true;
 }
 
-void TileRenderer::Render()
+void CTileRenderer::Render()
 {
 	/*
 	int x, y;
@@ -165,7 +165,7 @@ void TileRenderer::Render()
 //
 // Rendering
 //
-void TileRenderer::FrameStart()
+void CTileRenderer::FrameStart()
 {
 	// NEW AND IMPROVED
 	m_scanlineTixelY = m_y & 3;
@@ -229,7 +229,7 @@ uint8 startOfs[ 8 ] = {
 	15,		// 111 -      - Flip X, Y and diagonally
 };
 
-void TileRenderer::PrepareScanlineRenderTiles( bool _debug )
+void CTileRenderer::PrepareScanlineRenderTiles( bool _debug )
 {
 	m_scanlineTileMapX = m_scanlineTileMapLeft;
 	const uint16* pTileData = &m_pTileMap->Tiles[ m_scanlineTileMapIndex ];
@@ -305,7 +305,7 @@ void TileRenderer::PrepareScanlineRenderTiles( bool _debug )
 	}
 }
 
-void TileRenderer::AdvanceScanlineRenderTiles( int _newTixelY )
+void CTileRenderer::AdvanceScanlineRenderTiles( int _newTixelY )
 {
 	int i;
 	for( i=0; i<25; i++ )
@@ -316,7 +316,7 @@ void TileRenderer::AdvanceScanlineRenderTiles( int _newTixelY )
 	}
 }
 
-bool TileRenderer::NextScanline( bool _debugPrint )
+bool CTileRenderer::NextScanline( bool _debugPrint )
 {
 	m_scanlineTixelY++;
 	if( m_scanlineTixelY >= 4 )
@@ -337,7 +337,7 @@ bool TileRenderer::NextScanline( bool _debugPrint )
 	return true;
 }
 
-void TileRenderer::RenderScanline( float* _targetBuffer )
+void CTileRenderer::RenderScanline( float* _targetBuffer )
 {
 	int writeX=0;
 	int tx;

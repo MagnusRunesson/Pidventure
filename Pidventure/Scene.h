@@ -23,7 +23,7 @@ public:
 	CTileBank* pTileBank;
 	CTileBank* pTileBankCollision;
 	CTileMap* pTileMap;
-	TileRenderer TileRenderer;
+	CTileRenderer TileRenderer;
 	
 	GameObject* sceneObjects[ SCENE_MAX_SPRITES ];
 	int m_worldX;

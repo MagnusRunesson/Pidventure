@@ -20,7 +20,7 @@ Image* physCollisionMap;
 Sprite* physCollisionDebugSprite;
 //static CTileBank* pTileBank;
 //static CTileMap* pTileMap;
-static TileRenderer physTileRenderer( NULL, NULL );
+static CTileRenderer physTileRenderer( NULL, NULL );
 float physSample[ 4 ];
 
 void physInit( CScene* _pScene )

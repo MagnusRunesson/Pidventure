@@ -24,7 +24,7 @@ struct RenderTile
 };
 
 
-class TileRenderer
+class CTileRenderer
 {
 	RenderTile m_renderTiles[ 25 ];	// This should really be (96/tilemapwidth)+1
 
@@ -45,7 +45,7 @@ public:
 	int m_y;
 	float m_depth;
 
-	TileRenderer( CTileMap* _tileMap, CTileBank* _tileBank );
+	CTileRenderer( CTileMap* _tileMap, CTileBank* _tileBank );
 	
 	//
 	void SetPosition( int _x, int _y );
