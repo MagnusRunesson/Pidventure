@@ -1,7 +1,7 @@
 INCPATHS=-I/opt/vc/include \
          -I/opt/vc/include/interface/vcos/pthreads \
          -I/opt/vc/include/interface/vmcs_host/linux \
-         -I/home/pi/pidventure
+         -I/home/pi/projects/pidventure
 
 #CXXFLAGS=-std=c++11 $(INCPATHS) -DENGINE_TARGET_RPI
 CXXFLAGS=$(INCPATHS) -DENGINE_TARGET_RPI

@@ -1,7 +1,7 @@
 #!/bin/bash
 
 HOST=192.168.1.12
-TARGET_FOLDER=pidventure
+TARGET_FOLDER=projects/pidventure
 #HOST=192.168.2.65
 #HOST=m3pi
 #HOST=m3pi.local
