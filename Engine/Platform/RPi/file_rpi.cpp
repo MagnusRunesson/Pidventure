@@ -13,7 +13,7 @@
 #include "Engine/Core/Debug.h"
 #include "Engine/Core/Memory.h"
 
-const char* pszBasePath = "/home/pi/pidventure/Pidventure/data/";
+const char* pszBasePath = "/home/pi/projects/pidventure/Pidventure/data/";
 char g_pszFileName[ 1024 ];
 
 char* fileGetFullName(const char* _pszFileName)
