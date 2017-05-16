@@ -29,7 +29,7 @@
 #include "EGL/egl.h"
 #include "EGL/eglext.h"
 
-#include "cube_texture_and_coords.h"
+#include "Engine/Platform/RPi/cube_texture_and_coords.h"
 #include "audioplay.h"
 
 //#define PATH "/opt/vc/src/hello_pi/hello_triangle/"
