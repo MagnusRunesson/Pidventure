@@ -33,6 +33,8 @@ float t;
 
 CPlayer* pPlayer;
 
+Image* pImageOverlay;
+
 void game_setup()
 {
 	debugLog("Gamesetup start - banankontakt\n");	// This was printed
@@ -54,6 +56,8 @@ void game_setup()
 
 	t = 0.0f;
 	debugLog("Gamesetup end\n");
+
+	pImageOverlay = imageLoad( "sprite_overlaytest" );
 	
 	free(papa);
 }
@@ -61,6 +65,8 @@ void game_setup()
 void game_exit()
 {
 	delete pPlayer;
+	
+	imageUnload( pImageOverlay );
 	
 	worldExit();
 	bgExit();
@@ -102,6 +108,26 @@ void game_loop()
 
 	gameObjectManager.Render();
 	spriteRenderer.Render();
+	
+	/*
+	for(y=0; y<SCREEN_HEIGHT; y++)
+	{
+		for(x=0; x<SCREEN_WIDTH; x++)
+		{
+			int ofs = (y*SCREEN_WIDTH)+x;
+			float srcr = screenBuffer[ofs*4 + 0];
+			float srcg = screenBuffer[ofs*4 + 1];
+			float srcb = screenBuffer[ofs*4 + 2];
+			float dstr = pImageOverlay->pixels[ofs*4 + 0];
+			float dstg = pImageOverlay->pixels[ofs*4 + 1];
+			float dstb = pImageOverlay->pixels[ofs*4 + 2];
+			screenBuffer[ofs*4 + 0] = srcr*dstr;
+			screenBuffer[ofs*4 + 1] = srcg*dstg;
+			screenBuffer[ofs*4 + 2] = srcb*dstb;
+		}
+	}
+	*/
+	
 	
 	/* DEBUG OVERLAY for rendering the ground collision on screen
 	for( y=0; y<SCREEN_HEIGHT; y++ )
