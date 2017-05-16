@@ -30,6 +30,7 @@
 #include "EGL/eglext.h"
 
 #include "cube_texture_and_coords.h"
+#include "audioplay.h"
 
 //#define PATH "/opt/vc/src/hello_pi/hello_triangle/"
 
@@ -859,10 +860,111 @@ bool update()
 	return !quit;
 }
 
+
+#define N_WAVE          1024    /* dimension of Sinewave[] */
+#define PI (1<<16>>1)
+#define SIN(x) Sinewave[((x)>>6) & (N_WAVE-1)]
+#define COS(x) SIN((x)+(PI>>1))
+#define OUT_CHANNELS(num_channels) ((num_channels) > 4 ? 8: (num_channels) > 2 ? 4: (num_channels))
+extern short Sinewave[];
+
+#define CTTW_SLEEP_TIME 10
+#define MIN_LATENCY_TIME 20
+#define BUFFER_SIZE_SAMPLES 1024
+
+
+static const char *audio_dest[] = {"local", "hdmi"};
+void play_api_test(int samplerate, int bitdepth, int nchannels, int dest)
+{
+   AUDIOPLAY_STATE_T *st;
+   int32_t ret;
+   unsigned int i, j, n;
+   int phase = 0;
+   int inc = 256<<16;
+   int dinc = 0;
+   int buffer_size = (BUFFER_SIZE_SAMPLES * bitdepth * OUT_CHANNELS(nchannels))>>3;
+
+   assert(dest == 0 || dest == 1);
+
+   ret = audioplay_create(&st, samplerate, nchannels, bitdepth, 10, buffer_size);
+   assert(ret == 0);
+
+   ret = audioplay_set_dest(st, audio_dest[dest]);
+   assert(ret == 0);
+
+   // iterate for 5 seconds worth of packets
+   for (n=0; n<((samplerate * 1000)/ BUFFER_SIZE_SAMPLES); n++)
+   {
+      uint8_t *buf;
+      int16_t *p;
+      uint32_t latency;
+
+      while((buf = audioplay_get_buffer(st)) == NULL)
+         usleep(10*1000);
+
+      p = (int16_t *) buf;
+
+printf("arne %i / %i\n", n, ((samplerate * 1000)/ BUFFER_SIZE_SAMPLES));
+
+      // fill the buffer
+      for (i=0; i<BUFFER_SIZE_SAMPLES; i++)
+      {
+         int16_t val = SIN(phase);
+         phase += inc>>16;
+         inc += dinc;
+         if (inc>>16 < 512)
+            dinc++;
+         else
+            dinc--;
+
+         for(j=0; j<OUT_CHANNELS(nchannels); j++)
+         {
+            if (bitdepth == 32)
+               *p++ = 0;
+            *p++ = val;
+         }
+      }
+
+      // try and wait for a minimum latency time (in ms) before
+      // sending the next packet
+      while((latency = audioplay_get_latency(st)) > (samplerate * (MIN_LATENCY_TIME + CTTW_SLEEP_TIME) / 1000))
+         usleep(CTTW_SLEEP_TIME*1000);
+
+      ret = audioplay_play_buffer(st, buf, buffer_size);
+      assert(ret == 0);
+   }
+
+   audioplay_delete(st);
+}
+
+
 int main(int argc, const char * argv[])
 {
 	//dev = NULL;
-	
+
+   /*
+   // 0=headphones, 1=hdmi
+   int audio_dest = 0;
+   // audio sample rate in Hz
+   int samplerate = 48000;
+   // numnber of audio channels
+   int channels = 2;
+   // number of bits per sample
+   int bitdepth = 16;
+   bcm_host_init();
+
+   if (argc > 1)
+      audio_dest = atoi(argv[1]);
+   if (argc > 2)
+      channels = atoi(argv[2]);
+   if (argc > 3)
+      samplerate = atoi(argv[3]);
+
+   printf("Outputting audio to %s\n", audio_dest==0 ? "analogue":"hdmi");
+
+   play_api_test(samplerate, bitdepth, channels, audio_dest);
+	*/
+
 	if( init() == true )
 	{
 		game_setup();	// Call Arduino like code

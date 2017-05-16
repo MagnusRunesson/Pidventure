@@ -1,7 +1,9 @@
 INCPATHS=-I/opt/vc/include \
          -I/opt/vc/include/interface/vcos/pthreads \
          -I/opt/vc/include/interface/vmcs_host/linux \
-         -I/home/pi/projects/pidventure
+         -I/home/pi/projects/pidventure \
+         -I/home/pi/projects/pidventure/Engine/Platform/RPi \
+         -I/home/pi/projects/pidventure/Engine/Platform/RPi/libs/ilclient \
 
 #CXXFLAGS=-std=c++11 $(INCPATHS) -DENGINE_TARGET_RPI
 CXXFLAGS=$(INCPATHS) -DENGINE_TARGET_RPI
@@ -41,6 +43,8 @@ SRCS=\
 	Engine/IO/Joypad.cpp \
 	Engine/IO/FileCache.cpp \
 	Engine/Platform/RPi/file_rpi.cpp \
+	Engine/Platform/RPi/audio_rpi.cpp \
+	Engine/Platform/RPi/sinewave.cpp \
 	Engine/Platform/RPi/libs/ilclient/ilclient.cpp \
 	Engine/Platform/RPi/libs/ilclient/ilcore.cpp \
 	Engine/Platform/RPi/main.cpp \
