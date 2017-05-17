@@ -7,6 +7,7 @@
 //
 
 #include <iostream>
+#include <thread>
 //#include "SDL2/SDL.h"
 #include "Engine/Graphics/Image.h"
 #include "Engine/IO/Joypad.h"
@@ -904,7 +905,7 @@ void play_api_test(int samplerate, int bitdepth, int nchannels, int dest)
 
       p = (int16_t *) buf;
 
-printf("arne %i / %i\n", n, ((samplerate * 1000)/ BUFFER_SIZE_SAMPLES));
+   printf("arne %i / %i\n", n, ((samplerate * 1000)/ BUFFER_SIZE_SAMPLES));
 
       // fill the buffer
       for (i=0; i<BUFFER_SIZE_SAMPLES; i++)
@@ -937,12 +938,8 @@ printf("arne %i / %i\n", n, ((samplerate * 1000)/ BUFFER_SIZE_SAMPLES));
    audioplay_delete(st);
 }
 
-
-int main(int argc, const char * argv[])
+void audio_party()
 {
-	//dev = NULL;
-
-   /*
    // 0=headphones, 1=hdmi
    int audio_dest = 0;
    // audio sample rate in Hz
@@ -953,17 +950,31 @@ int main(int argc, const char * argv[])
    int bitdepth = 16;
    bcm_host_init();
 
+   /*
    if (argc > 1)
       audio_dest = atoi(argv[1]);
    if (argc > 2)
       channels = atoi(argv[2]);
    if (argc > 3)
       samplerate = atoi(argv[3]);
+      */
 
    printf("Outputting audio to %s\n", audio_dest==0 ? "analogue":"hdmi");
 
    play_api_test(samplerate, bitdepth, channels, audio_dest);
-	*/
+}
+
+int main(int argc, const char * argv[])
+{
+	//dev = NULL;
+
+   pthread_t audioThread;
+
+   printf("Starting thread\n" );
+
+   pthread_create( &audioThread, NULL, audio_party, NULL );
+
+   printf("Thread started, yay!\n");
 
 	if( init() == true )
 	{
