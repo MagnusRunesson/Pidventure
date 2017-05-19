@@ -34,7 +34,10 @@ const int RPI_GPIO_BTN6		= 16;
 const int RPI_GPIO_BTN7		= 24;
 #endif
 
-uint8 gkeys;
+#define BUFFER_SWITCH_LENGTH	(16)
+#define BUFFER_SWITCH_MASK		((1<<BUFFER_SWITCH_LENGTH)-1)
+
+uint32 gkeys;
 int gKeyBuff;
 
 void padInit()
@@ -97,7 +100,7 @@ void padUpdate()
 	if( !digitalRead( RPI_GPIO_BTN6 )) gKeyBuff |= PAD_KEYMASK_PGM_L;
 	if( !digitalRead( RPI_GPIO_BTN7 )) gKeyBuff |= PAD_KEYMASK_PGM_R;
 #endif
-	gkeys <<= 4;
+	gkeys <<= BUFFER_SWITCH_LENGTH;
 	gkeys |= gKeyBuff;
 }
 
@@ -134,16 +137,16 @@ float padGetY()
 
 uint8 padGetPressed()
 {
-	uint8 prev = (gkeys>>4) & 0x0f;
-	uint8 curr = (gkeys) & 0x0f;
+	uint8 prev = (gkeys>>BUFFER_SWITCH_LENGTH) & BUFFER_SWITCH_MASK;
+	uint8 curr = (gkeys) & BUFFER_SWITCH_MASK;
 	uint8 ret = (prev ^ curr) & curr;
 	return ret;
 }
 
 uint8 padGetReleased()
 {
-	uint8 prev = (gkeys>>4) & 0x0f;
-	uint8 curr = (gkeys) & 0x0f;
+	uint8 prev = (gkeys>>BUFFER_SWITCH_LENGTH) & BUFFER_SWITCH_MASK;
+	uint8 curr = (gkeys) & BUFFER_SWITCH_MASK;
 	uint8 ret = (prev ^ curr) & prev;
 	return ret;
 }
