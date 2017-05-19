@@ -258,10 +258,14 @@ void blit_screenBufferToSDL()
 	//SDL_Delay( 15 );
 }
 
-const int SDL_KEYCODE_PRIMARY		= SDLK_z;
-const int SDL_KEYCODE_SECONDARY		= SDLK_x;
-const int SDL_KEYCODE_SELECT		= SDLK_SPACE;
-const int SDL_KEYCODE_START			= SDLK_RETURN;
+const int SDL_KEYCODE_ACTION_UL		= SDLK_a;
+const int SDL_KEYCODE_ACTION_UM		= SDLK_s;
+const int SDL_KEYCODE_ACTION_UR		= SDLK_d;
+const int SDL_KEYCODE_ACTION_LL		= SDLK_z;
+const int SDL_KEYCODE_ACTION_LM		= SDLK_x;
+const int SDL_KEYCODE_ACTION_LR		= SDLK_c;
+const int SDL_KEYCODE_PGM_L			= SDLK_SPACE;
+const int SDL_KEYCODE_PGM_R			= SDLK_RETURN;
 
 const int SDL_KEYCODE_DPAD_UP		= SDLK_UP;
 const int SDL_KEYCODE_DPAD_DOWN		= SDLK_DOWN;
@@ -287,10 +291,14 @@ bool DoSDL()
 					quit = true;
 					break;
 					
-				case SDL_KEYCODE_PRIMARY:		SetBit( gKeyBuff, PAD_KEYMASK_PRIMARY );			break;
-				case SDL_KEYCODE_SECONDARY:		SetBit( gKeyBuff, PAD_KEYMASK_SECONDARY );			break;
-				case SDL_KEYCODE_SELECT:		SetBit( gKeyBuff, PAD_KEYMASK_SELECT );				break;
-				case SDL_KEYCODE_START:			SetBit( gKeyBuff, PAD_KEYMASK_START );				break;
+				case SDL_KEYCODE_ACTION_UL:		SetBit( gKeyBuff, PAD_KEYMASK_ACTION_UL );			break;
+				case SDL_KEYCODE_ACTION_UM:		SetBit( gKeyBuff, PAD_KEYMASK_ACTION_UM );			break;
+				case SDL_KEYCODE_ACTION_UR:		SetBit( gKeyBuff, PAD_KEYMASK_ACTION_UR );			break;
+				case SDL_KEYCODE_ACTION_LL:		SetBit( gKeyBuff, PAD_KEYMASK_ACTION_LL );			break;
+				case SDL_KEYCODE_ACTION_LM:		SetBit( gKeyBuff, PAD_KEYMASK_ACTION_LM );			break;
+				case SDL_KEYCODE_ACTION_LR:		SetBit( gKeyBuff, PAD_KEYMASK_ACTION_LR );			break;
+				case SDL_KEYCODE_PGM_L:			SetBit( gKeyBuff, PAD_KEYMASK_PGM_L );				break;
+				case SDL_KEYCODE_PGM_R:			SetBit( gKeyBuff, PAD_KEYMASK_PGM_R );				break;
 				case SDL_KEYCODE_DPAD_UP:		SetBit( gKeyDPadBuff, PAD_KEYMASK_DPAD_UP );		break;
 				case SDL_KEYCODE_DPAD_DOWN:		SetBit( gKeyDPadBuff, PAD_KEYMASK_DPAD_DOWN );		break;
 				case SDL_KEYCODE_DPAD_LEFT:		SetBit( gKeyDPadBuff, PAD_KEYMASK_DPAD_LEFT );		break;
@@ -311,10 +319,14 @@ bool DoSDL()
 		{
 			switch( e.key.keysym.sym )
 			{
-				case SDL_KEYCODE_PRIMARY:		ClrBit( gKeyBuff, PAD_KEYMASK_PRIMARY );			break;
-				case SDL_KEYCODE_SECONDARY:		ClrBit( gKeyBuff, PAD_KEYMASK_SECONDARY );			break;
-				case SDL_KEYCODE_SELECT:		ClrBit( gKeyBuff, PAD_KEYMASK_SELECT );				break;
-				case SDL_KEYCODE_START:			ClrBit( gKeyBuff, PAD_KEYMASK_START );				break;
+				case SDL_KEYCODE_ACTION_UL:		ClrBit( gKeyBuff, PAD_KEYMASK_ACTION_UL );			break;
+				case SDL_KEYCODE_ACTION_UM:		ClrBit( gKeyBuff, PAD_KEYMASK_ACTION_UM );			break;
+				case SDL_KEYCODE_ACTION_UR:		ClrBit( gKeyBuff, PAD_KEYMASK_ACTION_UR );			break;
+				case SDL_KEYCODE_ACTION_LL:		ClrBit( gKeyBuff, PAD_KEYMASK_ACTION_LL );			break;
+				case SDL_KEYCODE_ACTION_LM:		ClrBit( gKeyBuff, PAD_KEYMASK_ACTION_LM );			break;
+				case SDL_KEYCODE_ACTION_LR:		ClrBit( gKeyBuff, PAD_KEYMASK_ACTION_LR );			break;
+				case SDL_KEYCODE_PGM_L:			ClrBit( gKeyBuff, PAD_KEYMASK_PGM_L );				break;
+				case SDL_KEYCODE_PGM_R:			ClrBit( gKeyBuff, PAD_KEYMASK_PGM_R );				break;
 				case SDL_KEYCODE_DPAD_UP:		ClrBit( gKeyDPadBuff, PAD_KEYMASK_DPAD_UP );		break;
 				case SDL_KEYCODE_DPAD_DOWN:		ClrBit( gKeyDPadBuff, PAD_KEYMASK_DPAD_DOWN );		break;
 				case SDL_KEYCODE_DPAD_LEFT:		ClrBit( gKeyDPadBuff, PAD_KEYMASK_DPAD_LEFT );		break;
