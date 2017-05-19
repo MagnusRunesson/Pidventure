@@ -18,7 +18,7 @@ const int PAD_KEYMASK_ACTION_LL		= (1<<3);
 const int PAD_KEYMASK_ACTION_LM		= (1<<4);
 const int PAD_KEYMASK_ACTION_LR		= (1<<5);
 const int PAD_KEYMASK_PGM_L			= (1<<6);
-const int PAD_KEYMASK_PGM_R			= (1<<6);
+const int PAD_KEYMASK_PGM_R			= (1<<7);
 
 const int PAD_KEYMASK_PRIMARY		= PAD_KEYMASK_ACTION_LL;
 const int PAD_KEYMASK_SECONDARY		= PAD_KEYMASK_ACTION_LM;
