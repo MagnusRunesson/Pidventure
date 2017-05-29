@@ -55,7 +55,7 @@ void fileTrackClose(void* _ptr)
 #endif
 
 
-const char* pszBasePath = "/Users/magnusrunesson/Projects/Pidventure/Pidventure/data/";
+const char* pszBasePath = "./data/";
 char g_pszFileName[ 1024 ];
 
 char* fileGetFullName(const char* _pszFileName)
