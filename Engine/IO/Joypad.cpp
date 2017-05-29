@@ -20,18 +20,18 @@
 extern int gKeyDPadBuff;
 
 #ifdef ENGINE_TARGET_RPI
-const int RPI_GPIO_UP		= 26;
-const int RPI_GPIO_DOWN		= 19;
+const int RPI_GPIO_UP		= 19;
+const int RPI_GPIO_DOWN		= 26;
 const int RPI_GPIO_LEFT		= 13;
 const int RPI_GPIO_RIGHT	= 6;
-const int RPI_GPIO_BTN0		= 12;
-const int RPI_GPIO_BTN1		= 20;
-const int RPI_GPIO_BTN2		= 21;
-const int RPI_GPIO_BTN3		= 27;
-const int RPI_GPIO_BTN4		= 22;
-const int RPI_GPIO_BTN5		= 23;
-const int RPI_GPIO_BTN6		= 16;
-const int RPI_GPIO_BTN7		= 24;
+const int RPI_GPIO_BTN0		= 20;
+const int RPI_GPIO_BTN1		= 16;
+const int RPI_GPIO_BTN2		= 12;
+const int RPI_GPIO_BTN3		= 22;
+const int RPI_GPIO_BTN4		= 23;
+const int RPI_GPIO_BTN5		= 24;
+const int RPI_GPIO_BTN6		= 27;
+const int RPI_GPIO_BTN7		= 21;
 #endif
 
 #define BUFFER_SWITCH_LENGTH	(16)
