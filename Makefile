@@ -12,4 +12,6 @@ SRCS=\
 	Pidventure/DataManual/Data.cpp \
 	Pidventure/DataManual/Animations.cpp
 
+BUILD_FOLDER=Pidventure
+
 include Engine/Build/RPi/Makefile.include

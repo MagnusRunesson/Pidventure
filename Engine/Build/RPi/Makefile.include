@@ -58,7 +58,7 @@ SRCS+=\
 OBJS:=$(addprefix build/,$(SRCS:.cpp=.o))
 # SRCS:=$(addprefix src/,$(SRCS))
 
-OUT=runme
+OUT=$(BUILD_FOLDER)/runme
 
 all: $(OUT)
 
