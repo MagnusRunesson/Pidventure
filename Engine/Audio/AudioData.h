@@ -19,4 +19,7 @@ public:
 	const sint8* samples;
 };
 
+AudioData* audioDataLoad( const char* _pszFileName, bool _looping );
+void audioDataUnload( AudioData* _pAudioData );
+
 #endif /* AudioData_h */
