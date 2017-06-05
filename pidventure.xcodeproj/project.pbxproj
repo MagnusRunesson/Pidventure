@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2504273B1EE54BE500409835 /* Font.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 250427371EE54BE500409835 /* Font.cpp */; settings = {ASSET_TAGS = (); }; };
+		2504273C1EE54BE500409835 /* TextRenderer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 250427391EE54BE500409835 /* TextRenderer.cpp */; settings = {ASSET_TAGS = (); }; };
 		257AE69A1D6B507700CACB74 /* Animation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 257AE68A1D6B507700CACB74 /* Animation.cpp */; settings = {ASSET_TAGS = (); }; };
 		257AE69C1D6B507700CACB74 /* Screen.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 257AE68E1D6B507700CACB74 /* Screen.cpp */; settings = {ASSET_TAGS = (); }; };
 		257AE69D1D6B507700CACB74 /* Sprite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 257AE6901D6B507700CACB74 /* Sprite.cpp */; settings = {ASSET_TAGS = (); }; };
@@ -60,6 +62,10 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		250427371EE54BE500409835 /* Font.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Font.cpp; path = Engine/Graphics/Font.cpp; sourceTree = "<group>"; };
+		250427381EE54BE500409835 /* Font.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Font.h; path = Engine/Graphics/Font.h; sourceTree = "<group>"; };
+		250427391EE54BE500409835 /* TextRenderer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = TextRenderer.cpp; path = Engine/Graphics/TextRenderer.cpp; sourceTree = "<group>"; };
+		2504273A1EE54BE500409835 /* TextRenderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TextRenderer.h; path = Engine/Graphics/TextRenderer.h; sourceTree = "<group>"; };
 		252E53F61D6AC32100E833F6 /* pidventure */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = pidventure; sourceTree = BUILT_PRODUCTS_DIR; };
 		257AE68A1D6B507700CACB74 /* Animation.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Animation.cpp; path = Engine/Graphics/Animation.cpp; sourceTree = "<group>"; };
 		257AE68B1D6B507700CACB74 /* Animation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Animation.h; path = Engine/Graphics/Animation.h; sourceTree = "<group>"; };
@@ -217,6 +223,10 @@
 		257AE6861D6B505800CACB74 /* Graphics */ = {
 			isa = PBXGroup;
 			children = (
+				250427371EE54BE500409835 /* Font.cpp */,
+				250427381EE54BE500409835 /* Font.h */,
+				250427391EE54BE500409835 /* TextRenderer.cpp */,
+				2504273A1EE54BE500409835 /* TextRenderer.h */,
 				25F930941D7E89290026DA4C /* Graphics.h */,
 				257AE6B91D6B55F800CACB74 /* TileRenderer.cpp */,
 				257AE6BA1D6B55F800CACB74 /* TileRenderer.h */,
@@ -436,6 +446,8 @@
 				257AE69D1D6B507700CACB74 /* Sprite.cpp in Sources */,
 				257D925A1D794A63006B6512 /* PlayerInventory.cpp in Sources */,
 				257AE6DB1D7800E300CACB74 /* AudioStream.cpp in Sources */,
+				2504273B1EE54BE500409835 /* Font.cpp in Sources */,
+				2504273C1EE54BE500409835 /* TextRenderer.cpp in Sources */,
 				25A44AE71DAFD8E900C6CE0C /* Door.cpp in Sources */,
 				257AE69C1D6B507700CACB74 /* Screen.cpp in Sources */,
 				257AE6DF1D78023D00CACB74 /* Pidventure.cpp in Sources */,
