@@ -35,50 +35,133 @@ void Text::Render()
 	for( i=0; i<nChars; i++ )
 	{
 		unsigned char glyphID = m_pszText[ i ];
-		//debugLog( "Render glyph: '%c'\n", glyphID );
-		FontGlyph* pGlyphData = m_pFont->GetGlyph( glyphID );
-		int glyphW = pGlyphData->rectWidth;
-		int glyphH = pGlyphData->rectHeight;
-
-		//debugLog("Glyph data=0x%08x - width=%i, height=%i\n", pGlyphData, glyphW, glyphH );
-
-		int glyphX, glyphY;
-		for( glyphY=0; glyphY<glyphH; glyphY++ )
+		
+		Image* specialImage = NULL;
+		if( glyphID == '&' )
 		{
-			for( glyphX=0; glyphX<glyphW; glyphX++ )
+			// Special case, yo! Reference to joystick or other special images
+			if( i+1 == nChars )
 			{
-				int screenX = carriageX + glyphX;
-				int screenY = baselineY - pGlyphData->baseline + glyphY;
-				
-				if( screenX<0 ) continue;
-				if( screenX>=SCREEN_WIDTH ) continue;
-				if( screenY<0 ) continue;
-				if( screenY>=SCREEN_HEIGHT ) continue;
-				
-				int wrofs = (screenY * SCREEN_WIDTH + screenX) * 4;
-				
-				int rdx = pGlyphData->rectLeft + glyphX;
-				int rdy = pGlyphData->rectTop + glyphY;
-				int rdofs = (rdy*m_pFont->pImage->w) + rdx;
-				rdofs *= 4;
-				
-				float srcR = r;
-				float srcG = g;
-				float srcB = b;
-				float srcA = m_pFont->pImage->pixels[ rdofs+3 ];
-				srcA *= a;
-				float dstA = 1.0f - srcA;
-				float dstR = screenBuffer[ wrofs+0 ];
-				float dstG = screenBuffer[ wrofs+1 ];
-				float dstB = screenBuffer[ wrofs+2 ];
-				screenBuffer[ wrofs+0 ] = srcR*srcA + dstR*dstA;
-				screenBuffer[ wrofs+1 ] = srcG*srcA + dstG*dstA;
-				screenBuffer[ wrofs+2 ] = srcB*srcA + dstB*dstA;
+				// This was the last character of the string, treat it as a &
+			} else
+			{
+				i++;
+				unsigned char specialChar = m_pszText[ i ];
+				if( specialChar == '&' )
+				{
+					// This is "&&", treat it as a &
+				} else {
+					specialImage = textRenderer.GetImage( specialChar );
+				}
 			}
 		}
 		
-		carriageX += glyphW + 1;
+		if( specialImage != NULL )
+		{
+			// Render special image
+			int glyphW = specialImage->w;
+			int glyphH = specialImage->h;
+			
+			int glyphX, glyphY;
+			for( glyphY=0; glyphY<glyphH; glyphY++ )
+			{
+				for( glyphX=0; glyphX<glyphW; glyphX++ )
+				{
+					int screenX = carriageX + glyphX;
+					int screenY = baselineY - glyphH + glyphY;
+					
+					if( screenX<0 ) continue;
+					if( screenX>=SCREEN_WIDTH ) continue;
+					if( screenY<0 ) continue;
+					if( screenY>=SCREEN_HEIGHT ) continue;
+					
+					int wrofs = (screenY * SCREEN_WIDTH + screenX) * 4;
+					
+					int rdx = glyphX;
+					int rdy = glyphY;
+					int rdofs = (rdy*glyphW) + rdx;
+					rdofs *= 4;
+					
+					float srcR = specialImage->pixels[ rdofs+0 ];
+					float srcG = specialImage->pixels[ rdofs+1 ];
+					float srcB = specialImage->pixels[ rdofs+2 ];
+					float srcA = specialImage->pixels[ rdofs+3 ];
+					srcA *= a;
+					float dstA = 1.0f - srcA;
+					float dstR = screenBuffer[ wrofs+0 ];
+					float dstG = screenBuffer[ wrofs+1 ];
+					float dstB = screenBuffer[ wrofs+2 ];
+					screenBuffer[ wrofs+0 ] = srcR*srcA + dstR*dstA;
+					screenBuffer[ wrofs+1 ] = srcG*srcA + dstG*dstA;
+					screenBuffer[ wrofs+2 ] = srcB*srcA + dstB*dstA;
+				}
+			}
+			
+			carriageX += glyphW + 1;
+		} else
+		{
+			//debugLog( "Render glyph: '%c'\n", glyphID );
+			FontGlyph* pGlyphData = m_pFont->GetGlyph( glyphID );
+			int glyphW = pGlyphData->rectWidth;
+			int glyphH = pGlyphData->rectHeight;
+			
+			//debugLog("Glyph data=0x%08x - width=%i, height=%i\n", pGlyphData, glyphW, glyphH );
+			
+			int glyphX, glyphY;
+			for( glyphY=0; glyphY<glyphH; glyphY++ )
+			{
+				for( glyphX=0; glyphX<glyphW; glyphX++ )
+				{
+					int screenX = carriageX + glyphX;
+					int screenY = baselineY - pGlyphData->baseline + glyphY;
+					
+					if( screenX<0 ) continue;
+					if( screenX>=SCREEN_WIDTH ) continue;
+					if( screenY<0 ) continue;
+					if( screenY>=SCREEN_HEIGHT ) continue;
+					
+					int wrofs = (screenY * SCREEN_WIDTH + screenX) * 4;
+					
+					int rdx = pGlyphData->rectLeft + glyphX;
+					int rdy = pGlyphData->rectTop + glyphY;
+					int rdofs = (rdy*m_pFont->pImage->w) + rdx;
+					rdofs *= 4;
+					
+					float srcR = r;
+					float srcG = g;
+					float srcB = b;
+					float srcA = m_pFont->pImage->pixels[ rdofs+3 ];
+					srcA *= a;
+					float dstA = 1.0f - srcA;
+					float dstR = screenBuffer[ wrofs+0 ];
+					float dstG = screenBuffer[ wrofs+1 ];
+					float dstB = screenBuffer[ wrofs+2 ];
+					screenBuffer[ wrofs+0 ] = srcR*srcA + dstR*dstA;
+					screenBuffer[ wrofs+1 ] = srcG*srcA + dstG*dstA;
+					screenBuffer[ wrofs+2 ] = srcB*srcA + dstB*dstA;
+				}
+			}
+			
+			carriageX += glyphW + 1;
+		}
 	}
+}
+
+TextRenderer::TextRenderer()
+{
+	int i;
+	for( i=0; i<NUM_SPECIAL_IMAGES; i++ )
+		m_specialImages[ i ] = NULL;
+}
+
+void TextRenderer::SetImage( unsigned char _ID, Image *_pImage )
+{
+	m_specialImages[ _ID ] = _pImage;
+}
+
+Image* TextRenderer::GetImage( unsigned char _ID )
+{
+	return m_specialImages[ _ID ];
 }
 
 Text* TextRenderer::GetFreeText()

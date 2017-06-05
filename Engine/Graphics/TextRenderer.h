@@ -12,10 +12,11 @@
 #include "Engine/Core/Types.h"
 
 class Font;
+class Image;
 class TextRenderer;
 
 #define MAX_TEXTS (1024)
-
+#define NUM_SPECIAL_IMAGES (128)
 #define TEXT_FLAG_ENABLED (1<<0)
 
 class Text
@@ -40,10 +41,14 @@ public:
 class TextRenderer
 {
 	Text m_text[ MAX_TEXTS ];
+	Image* m_specialImages[ NUM_SPECIAL_IMAGES ];
 
 	Text* GetFreeText();
 	
 public:
+	TextRenderer();
+	void SetImage( unsigned char _ID, Image* _pImage );
+	Image* GetImage( unsigned char _ID );
 	Text* AllocatedText( const Font* _pFont, const char* _pszText );
 	void FreeText( Text* _pText );
 	void Render();
