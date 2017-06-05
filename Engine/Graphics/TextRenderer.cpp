@@ -62,10 +62,11 @@ void Text::Render()
 				int rdofs = (rdy*m_pFont->pImage->w) + rdx;
 				rdofs *= 4;
 				
-				float srcR = m_pFont->pImage->pixels[ rdofs+0 ];
-				float srcG = m_pFont->pImage->pixels[ rdofs+1 ];
-				float srcB = m_pFont->pImage->pixels[ rdofs+2 ];
+				float srcR = r;
+				float srcG = g;
+				float srcB = b;
 				float srcA = m_pFont->pImage->pixels[ rdofs+3 ];
+				srcA *= a;
 				float dstA = 1.0f - srcA;
 				float dstR = screenBuffer[ wrofs+0 ];
 				float dstG = screenBuffer[ wrofs+1 ];
