@@ -42,6 +42,8 @@ SRCS+=\
 	Engine/Graphics/TileBank.cpp \
 	Engine/Graphics/TileMap.cpp \
 	Engine/Graphics/TileRenderer.cpp \
+	Engine/Graphics/Font.cpp \
+	Engine/Graphics/TextRenderer.cpp \
 	Engine/IO/Joypad.cpp \
 	Engine/IO/FileCache.cpp \
 	Engine/Platform/RPi/file_rpi.cpp \
