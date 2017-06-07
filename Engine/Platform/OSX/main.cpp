@@ -108,7 +108,7 @@ bool init()
 	padInit();
 	
 	dev = NULL;
-	audioInit( 11025 );
+	audioInit( 44100 );
 	
 	return true;
 }
