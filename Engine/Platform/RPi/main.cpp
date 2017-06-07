@@ -16,6 +16,7 @@
 #include "Engine/Core/BitHelpers.h"
 #include "Engine/Core/Timer.h"
 #include "Engine/Audio/AudioHandler.h"
+#include "Engine/Audio/AudioMixer.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -871,8 +872,48 @@ extern short Sinewave[];
 
 #define CTTW_SLEEP_TIME 10
 #define MIN_LATENCY_TIME 20
-#define BUFFER_SIZE_SAMPLES 1024
+#define BUFFER_SIZE_SAMPLES 100
 
+pthread_mutex_t mutexFrameCounter;
+volatile int frameCounter;
+
+pthread_mutex_t mutexAudioBuffer;
+
+const int audiofixMainToAudioBufferSize = 1200; // NEEDS TO BE THE SAME AS OUTPUT_BUFFER_SIZE IN AudioMixer.cpp
+
+extern sint8 audioMixOutputBuffer[ audiofixMainToAudioBufferSize ];
+int audiofixMainToAudioReadPosition = 0;
+int audiofixMainToAudioWritePosition = 0;
+sint16 audioFixMainToAudioBuffer[ audiofixMainToAudioBufferSize ];
+
+void threadMainToAudio()
+{
+   pthread_mutex_lock( &mutexAudioBuffer );
+   int bytesToFill = audiofixMainToAudioWritePosition - audioMixer.outputReadPosition;
+   pthread_mutex_unlock( &mutexAudioBuffer );
+
+   if( bytesToFill < 0 )
+   {
+      // Audio buffer have looped
+      bytesToFill += audiofixMainToAudioBufferSize;
+   }
+
+   int i=0;
+   while( i<bytesToFill )
+   {
+      // Read audio from audio mixer on main thread and move th audio play thread
+      sint32 src = audioMixer.pOutputBuffer[ audioMixer.outputReadPosition ];
+      audioFixMainToAudioBuffer[ audioMixer.outputReadPosition ] = src << 11;
+
+      // Advance and loop read position
+      audioMixer.outputReadPosition++;
+      if( audioMixer.outputReadPosition >= audiofixMainToAudioBufferSize )
+         audioMixer.outputReadPosition -= audiofixMainToAudioBufferSize;
+
+      //
+      i++;
+   }
+}
 
 static const char *audio_dest[] = {"local", "hdmi"};
 void play_api_test(int samplerate, int bitdepth, int nchannels, int dest)
@@ -905,26 +946,19 @@ void play_api_test(int samplerate, int bitdepth, int nchannels, int dest)
 
       p = (int16_t *) buf;
 
-   printf("arne %i / %i\n", n, ((samplerate * 1000)/ BUFFER_SIZE_SAMPLES));
-
+      pthread_mutex_lock( &mutexAudioBuffer );
       // fill the buffer
       for (i=0; i<BUFFER_SIZE_SAMPLES; i++)
       {
-         int16_t val = SIN(phase);
-         phase += inc>>16;
-         inc += dinc;
-         if (inc>>16 < 512)
-            dinc++;
-         else
-            dinc--;
+         sint16 src = audioFixMainToAudioBuffer[ audiofixMainToAudioWritePosition ];
+         *p++ = src;
 
-         for(j=0; j<OUT_CHANNELS(nchannels); j++)
-         {
-            if (bitdepth == 32)
-               *p++ = 0;
-            *p++ = val;
-         }
+         audiofixMainToAudioWritePosition++;
+         if( audiofixMainToAudioWritePosition >= audiofixMainToAudioBufferSize )
+            audiofixMainToAudioWritePosition -= audiofixMainToAudioBufferSize;
+
       }
+      pthread_mutex_unlock( &mutexAudioBuffer );
 
       // try and wait for a minimum latency time (in ms) before
       // sending the next packet
@@ -943,9 +977,9 @@ void audio_party()
    // 0=headphones, 1=hdmi
    int audio_dest = 0;
    // audio sample rate in Hz
-   int samplerate = 48000;
+   int samplerate = 44100;
    // numnber of audio channels
-   int channels = 2;
+   int channels = 1;
    // number of bits per sample
    int bitdepth = 16;
    bcm_host_init();
@@ -968,20 +1002,26 @@ int main(int argc, const char * argv[])
 {
 	//dev = NULL;
 
-   pthread_t audioThread;
-
-   printf("Starting thread\n" );
-
-   pthread_create( &audioThread, NULL, audio_party, NULL );
-
-   printf("Thread started, yay!\n");
+   frameCounter = 0;
 
 	if( init() == true )
 	{
 		game_setup();	// Call Arduino like code
+
+      pthread_t audioThread;
+      printf("Starting thread\n" );
+      pthread_create( &audioThread, NULL, audio_party, NULL );
+      printf("Thread started, yay!\n");
 		
 		// Main loop woot!
-		while( update());
+		while( update())
+      {
+         threadMainToAudio();
+
+         pthread_mutex_lock( &mutexFrameCounter );
+         frameCounter++;
+         pthread_mutex_unlock( &mutexFrameCounter );
+      };
 	}
 	
 	exit();
