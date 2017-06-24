@@ -27,6 +27,9 @@ using namespace std;
 
 #define OSO_FLAG_ANIMATED			(1<<0)
 
+#define SPRITE_FLAG_FLIP_X			(1<<3)
+#define SPRITE_FLAG_FLIP_Y			(1<<4)
+
 class COutputSceneObject
 {
 public:
@@ -124,6 +127,8 @@ public:
 	int x;
 	int y;
 	float sort;
+	bool flipX;
+	bool flipY;
 	unsigned char ID;
 };
 
@@ -177,6 +182,7 @@ public:
 	
 	CSpriteDefinition* GetSpriteDefinitionForTile( int _tile_id )
 	{
+		_tile_id &= 0x0fffffff;
 		list<CSpriteDefinition*>::iterator i;
 		for( i=SpriteDefinitions.begin(); i != SpriteDefinitions.end(); i++ )
 		{
@@ -435,9 +441,22 @@ void ParseObjectGroup( CScene* _pRet, const XMLElement* _pObjectgroupElement )
 		if( !strcmp( "object", child->Name()))
 		{
 			CSpriteInstance* pSpriteInstance = new CSpriteInstance();
-			pSpriteInstance->pSpriteDefinition = _pRet->GetSpriteDefinitionForTile( child->IntAttribute( "gid" ));
+			int objectID = child->IntAttribute( "id" );
+			int spriteGid = child->IntAttribute( "gid" );
+			pSpriteInstance->pSpriteDefinition = _pRet->GetSpriteDefinitionForTile( spriteGid & 0x0fffffff );
 			pSpriteInstance->x = child->IntAttribute( "x" );
 			pSpriteInstance->y = child->IntAttribute( "y" );
+			/*
+			if( spriteGid < 0 )
+			{
+				printf("Sprite GID < 0: ");
+				printf("GID=%i\n", spriteGid );
+			}
+			 */
+			pSpriteInstance->flipX = (((unsigned int)spriteGid) & 0x80000000) == 0x80000000;
+			pSpriteInstance->flipY = (((unsigned int)spriteGid) & 0x40000000) == 0x40000000;
+			//if( pSpriteInstance->flipX ) printf("Object ID %i Flipped X\n", objectID );
+			//if( pSpriteInstance->flipY ) printf("Object ID %i Flipped Y\n", objectID );
 			pSpriteInstance->sort = _pRet->currentSortValue;
 			const XMLElement* pProperties = GetChildElement( "properties",child );
 			pSpriteInstance->ID = GetIntProperty( "id", pProperties, 0 );
@@ -578,7 +597,9 @@ void ExportSceneObjects( CScene* _pOutputScene, const char* _pszOutFileName )
 		pOutputObject->collisionIndex = pInputObject->pSpriteDefinition->collisionIndex;
 		pOutputObject->sort = pInputObject->sort;
 		pOutputObject->ID = pInputObject->ID;
-		
+		if( pInputObject->flipX ) pOutputObject->flags |= SPRITE_FLAG_FLIP_X;
+		if( pInputObject->flipY ) pOutputObject->flags |= SPRITE_FLAG_FLIP_Y;
+
 		if( pInputObject->pSpriteDefinition->pszAnimationName != NULL )
 		{
 			//
