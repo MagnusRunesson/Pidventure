@@ -18,6 +18,7 @@ class TextRenderer;
 #define MAX_TEXTS (1024)
 #define NUM_SPECIAL_IMAGES (128)
 #define TEXT_FLAG_ENABLED (1<<0)
+#define TEXT_FLAG_DROPSHADOW (1<<1)
 
 class Text
 {

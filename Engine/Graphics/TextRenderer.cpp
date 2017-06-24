@@ -25,6 +25,24 @@ Text::Text()
 	flags = TEXT_FLAG_ENABLED;
 }
 
+inline void blendPixel( int _x, int _y, float _r, float _g, float _b, float _a )
+{
+	if( _x<0 ) return;
+	if( _x>=SCREEN_WIDTH ) return;
+	if( _y<0 ) return;
+	if( _y>=SCREEN_HEIGHT ) return;
+	
+	int wrofs = (_y * SCREEN_WIDTH + _x) * 4;
+	
+	float dstA = 1.0f - _a;
+	float dstR = screenBuffer[ wrofs+0 ];
+	float dstG = screenBuffer[ wrofs+1 ];
+	float dstB = screenBuffer[ wrofs+2 ];
+	screenBuffer[ wrofs+0 ] = _r*_a + dstR*dstA;
+	screenBuffer[ wrofs+1 ] = _g*_a + dstG*dstA;
+	screenBuffer[ wrofs+2 ] = _b*_a + dstB*dstA;
+}
+
 void Text::Render()
 {
 	int carriageX = (int)x;
@@ -67,16 +85,6 @@ void Text::Render()
 			{
 				for( glyphX=0; glyphX<glyphW; glyphX++ )
 				{
-					int screenX = carriageX + glyphX;
-					int screenY = baselineY - glyphH + glyphY;
-					
-					if( screenX<0 ) continue;
-					if( screenX>=SCREEN_WIDTH ) continue;
-					if( screenY<0 ) continue;
-					if( screenY>=SCREEN_HEIGHT ) continue;
-					
-					int wrofs = (screenY * SCREEN_WIDTH + screenX) * 4;
-					
 					int rdx = glyphX;
 					int rdy = glyphY;
 					int rdofs = (rdy*glyphW) + rdx;
@@ -87,13 +95,20 @@ void Text::Render()
 					float srcB = specialImage->pixels[ rdofs+2 ];
 					float srcA = specialImage->pixels[ rdofs+3 ];
 					srcA *= a;
-					float dstA = 1.0f - srcA;
-					float dstR = screenBuffer[ wrofs+0 ];
-					float dstG = screenBuffer[ wrofs+1 ];
-					float dstB = screenBuffer[ wrofs+2 ];
-					screenBuffer[ wrofs+0 ] = srcR*srcA + dstR*dstA;
-					screenBuffer[ wrofs+1 ] = srcG*srcA + dstG*dstA;
-					screenBuffer[ wrofs+2 ] = srcB*srcA + dstB*dstA;
+
+					int screenX = carriageX + glyphX;
+					int screenY = baselineY - glyphH + glyphY;
+
+					blendPixel( screenX, screenY, srcR, srcG, srcB, srcA );
+					
+					if( flags & TEXT_FLAG_DROPSHADOW )
+					{
+						//blendPixel( screenX-1.0f, screenY, 0.0f, 0.0f, 0.0f, srcA );
+						//blendPixel( screenX+1.0f, screenY, 0.0f, 0.0f, 0.0f, srcA );
+						//blendPixel( screenX, screenY-1.0f, 0.0f, 0.0f, 0.0f, srcA );
+						//blendPixel( screenX, screenY+1.0f, 0.0f, 0.0f, 0.0f, srcA );
+						blendPixel( screenX+1.0f, screenY+1.0f, 0.0f, 0.0f, 0.0f, srcA );
+					}
 				}
 			}
 			
@@ -115,13 +130,6 @@ void Text::Render()
 					int screenX = carriageX + glyphX;
 					int screenY = baselineY - pGlyphData->baseline + glyphY;
 					
-					if( screenX<0 ) continue;
-					if( screenX>=SCREEN_WIDTH ) continue;
-					if( screenY<0 ) continue;
-					if( screenY>=SCREEN_HEIGHT ) continue;
-					
-					int wrofs = (screenY * SCREEN_WIDTH + screenX) * 4;
-					
 					int rdx = pGlyphData->rectLeft + glyphX;
 					int rdy = pGlyphData->rectTop + glyphY;
 					int rdofs = (rdy*m_pFont->pImage->w) + rdx;
@@ -132,13 +140,17 @@ void Text::Render()
 					float srcB = b;
 					float srcA = m_pFont->pImage->pixels[ rdofs+3 ];
 					srcA *= a;
-					float dstA = 1.0f - srcA;
-					float dstR = screenBuffer[ wrofs+0 ];
-					float dstG = screenBuffer[ wrofs+1 ];
-					float dstB = screenBuffer[ wrofs+2 ];
-					screenBuffer[ wrofs+0 ] = srcR*srcA + dstR*dstA;
-					screenBuffer[ wrofs+1 ] = srcG*srcA + dstG*dstA;
-					screenBuffer[ wrofs+2 ] = srcB*srcA + dstB*dstA;
+					
+					blendPixel( screenX, screenY, srcR, srcG, srcB, srcA );
+
+					if( flags & TEXT_FLAG_DROPSHADOW )
+					{
+						//blendPixel( screenX-1.0f, screenY, 0.0f, 0.0f, 0.0f, srcA );
+						//blendPixel( screenX+1.0f, screenY, 0.0f, 0.0f, 0.0f, srcA );
+						//blendPixel( screenX, screenY-1.0f, 0.0f, 0.0f, 0.0f, srcA );
+						//blendPixel( screenX, screenY+1.0f, 0.0f, 0.0f, 0.0f, srcA );
+						blendPixel( screenX+1.0f, screenY+1.0f, 0.0f, 0.0f, 0.0f, srcA );
+					}
 				}
 			}
 			
