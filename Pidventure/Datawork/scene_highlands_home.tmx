@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="120" height="18" tilewidth="4" tileheight="4" nextobjectid="18">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="120" height="18" tilewidth="4" tileheight="4" nextobjectid="29">
  <tileset firstgid="1" name="tilebank_highlands" tilewidth="4" tileheight="4">
   <image source="tilebank_highlands.png" width="256" height="256"/>
  </tileset>
- <tileset firstgid="4097" name="Objects" tilewidth="31" tileheight="18">
+ <tileset firstgid="4097" name="Objects" tilewidth="31" tileheight="43">
   <tile id="0">
    <image width="23" height="10" source="sprite_prop_bridge.png"/>
   </tile>
@@ -25,6 +25,9 @@
   </tile>
   <tile id="3">
    <image width="5" height="9" source="sprite_prop_signpost.png"/>
+  </tile>
+  <tile id="4">
+   <image width="27" height="43" source="sprite_highlands_tree_birch.png"/>
   </tile>
  </tileset>
  <layer name="Tile Layer 1" width="120" height="18">
@@ -63,11 +66,19 @@
   <object id="8" name="flower" gid="4098" x="23" y="60"/>
   <object id="9" name="flower" gid="4098" x="18" y="60"/>
   <object id="16" name="flower" gid="4098" x="12" y="60"/>
+  <object id="20" name="birch" gid="4101" x="-3" y="65"/>
+  <object id="21" name="birch" gid="2147487749" x="-14" y="60"/>
+  <object id="22" name="birch" gid="2147487749" x="383" y="60"/>
+  <object id="23" name="birch" gid="4101" x="371" y="67"/>
+  <object id="24" name="birch" gid="4101" x="395" y="64"/>
+  <object id="28" name="birch" gid="4101" x="93" y="63"/>
  </objectgroup>
  <objectgroup name="Infront of player">
   <properties>
    <property name="sort" value="10"/>
   </properties>
   <object id="17" name="flower" gid="4098" x="14" y="60"/>
+  <object id="19" name="birch" gid="2147487749" x="123" y="60"/>
+  <object id="25" name="birch" gid="4101" x="413" y="60"/>
  </objectgroup>
 </map>
