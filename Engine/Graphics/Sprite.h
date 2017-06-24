@@ -26,6 +26,7 @@ class Image;
 #define SPRITE_FLAG_FLIP_Y			(1<<4)
 #define SPRITE_FLAG_DRAWWHITE		(1<<5)
 #define SPRITE_FLAG_ENABLED			(1<<7)
+#define SPRITE_FLAG_USEDEPTH		(1<<8)
 
 class GameObject;
 
@@ -45,6 +46,7 @@ public:
 	sint16 boundsBottom;
 	
 	const Image* image;
+	const Image* imageDepth;
 	GameObject* owner;
 	
 	Sprite();
@@ -55,6 +57,7 @@ public:
 	void SetFlippedX( bool _flipped );
 	void SetFlippedY( bool _flipped );
 	void SetSort( float _newSort );
+	void SetDepthImage( const Image* _pDepthImage );
 
 	//
 	inline void SetFlags( int _flags ) { flags |= _flags; };

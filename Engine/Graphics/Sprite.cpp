@@ -24,6 +24,7 @@ void Sprite::Reboot()
 	sort = 0.0f;
 	flags = 0;
 	image = NULL;
+	imageDepth = NULL;
 	collisionIndex = 0;
 	ClrFlags( SPRITE_FLAG_ENABLED );
 }
@@ -56,6 +57,10 @@ void Sprite::SetSort( float _newSort )
 	spriteRenderer.SortAllSprites();
 }
 
+void Sprite::SetDepthImage( const Image* _pDepthImage )
+{
+	imageDepth = _pDepthImage;
+}
 
 
 

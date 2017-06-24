@@ -428,10 +428,15 @@ void SpriteRenderer::RenderScanline( float* _targetBuffer, uint8* _collisionBits
 	while( sprite != NULL )
 	{
 		const Image* image = sprite->image;
+		const Image* imageDepth = sprite->imageDepth;
 		
 		int drawLength = image->w;
 		
 		const float* color = &image->pixels[ sprite->readY*4 ];
+		const float* depth = NULL;
+		
+		if( sprite->flags & SPRITE_FLAG_USEDEPTH )
+			depth = &imageDepth->pixels[ sprite->readY*4 ];
 		
 		int drawx = sprite->boundsLeft;
 		if( drawx < 0 )
@@ -439,6 +444,7 @@ void SpriteRenderer::RenderScanline( float* _targetBuffer, uint8* _collisionBits
 			int skip = -drawx;
 			drawx = 0;
 			color += skip*4;
+			depth += skip*4;
 			drawLength -= skip;
 		}
 		
@@ -456,6 +462,7 @@ void SpriteRenderer::RenderScanline( float* _targetBuffer, uint8* _collisionBits
 		{
 			drawLength--;
 			
+			// Read color
 			float r = *color; color++;
 			float g = *color; color++;
 			float b = *color; color++;
@@ -468,6 +475,15 @@ void SpriteRenderer::RenderScanline( float* _targetBuffer, uint8* _collisionBits
 				b = 1.0f;
 			}
 			
+			// Read depth
+			float d = 0.0f;
+
+			if( sprite->flags & SPRITE_FLAG_USEDEPTH )
+			{
+				d = *depth;
+				depth+=4;
+			}
+			
 			if( a == 0.0f )
 			{
 				// Skip
@@ -478,12 +494,12 @@ void SpriteRenderer::RenderScanline( float* _targetBuffer, uint8* _collisionBits
 			{
 				// Full overdraw
 				float depth = outBuffer[ 3 ];
-				if( depth <= sprite->sort )
+				if( depth <= sprite->sort+d )
 				{
 					*outBuffer = r; outBuffer++;
 					*outBuffer = g; outBuffer++;
 					*outBuffer = b; outBuffer++;
-					*outBuffer = sprite->sort; outBuffer++;
+					*outBuffer = sprite->sort+d; outBuffer++;
 				} else {
 					outBuffer += 4;
 				}
@@ -529,7 +545,7 @@ void SpriteRenderer::RenderScanline( float* _targetBuffer, uint8* _collisionBits
 				float dstg = outBuffer[ 1 ];
 				float dstb = outBuffer[ 2 ];
 				float dstSort = outBuffer[ 3 ];
-				if( dstSort <= sprite->sort )
+				if( dstSort <= sprite->sort+d )
 				{
 					float dsta = 1.0f-a;
 
@@ -546,7 +562,7 @@ void SpriteRenderer::RenderScanline( float* _targetBuffer, uint8* _collisionBits
 					*outBuffer = (r*a) + (dstr*dsta); outBuffer++;
 					*outBuffer = (g*a) + (dstg*dsta); outBuffer++;
 					*outBuffer = (b*a) + (dstb*dsta); outBuffer++;
-					*outBuffer = sprite->sort; outBuffer++;
+					*outBuffer = sprite->sort+d; outBuffer++;
 
 				} else {
 					outBuffer += 4;
