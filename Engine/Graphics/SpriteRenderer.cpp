@@ -432,19 +432,38 @@ void SpriteRenderer::RenderScanline( float* _targetBuffer, uint8* _collisionBits
 		
 		int drawLength = image->w;
 		
-		const float* color = &image->pixels[ sprite->readY*4 ];
+		bool flipX = sprite->flags & SPRITE_FLAG_FLIP_X;
+		bool flipY = sprite->flags & SPRITE_FLAG_FLIP_Y;
+		
+		int readStart = sprite->readY;
+		
+		if( flipX )
+			readStart += sprite->image->w;
+		
+		readStart *= 4;
+		
+		const float* color = &image->pixels[ readStart ];
 		const float* depth = NULL;
 		
 		if( sprite->flags & SPRITE_FLAG_USEDEPTH )
-			depth = &imageDepth->pixels[ sprite->readY*4 ];
+			depth = &imageDepth->pixels[ readStart ];
 		
 		int drawx = sprite->boundsLeft;
 		if( drawx < 0 )
 		{
 			int skip = -drawx;
 			drawx = 0;
-			color += skip*4;
-			depth += skip*4;
+			if( flipX )
+			{
+				color -= skip*4;
+				depth -= skip*4;
+			}
+			else
+			{
+				color += skip*4;
+				depth += skip*4;
+			}
+		
 			drawLength -= skip;
 		}
 		
@@ -463,10 +482,20 @@ void SpriteRenderer::RenderScanline( float* _targetBuffer, uint8* _collisionBits
 			drawLength--;
 			
 			// Read color
-			float r = *color; color++;
-			float g = *color; color++;
-			float b = *color; color++;
-			float a = *color; color++;
+			float r,g,b,a;
+			if( flipX )
+			{
+				color--; a = *color;
+				color--; b = *color;
+				color--; g = *color;
+				color--; r = *color;
+			} else
+			{
+				r = *color; color++;
+				g = *color; color++;
+				b = *color; color++;
+				a = *color; color++;
+			}
 			
 			if( sprite->flags & SPRITE_FLAG_DRAWWHITE )
 			{
@@ -480,8 +509,9 @@ void SpriteRenderer::RenderScanline( float* _targetBuffer, uint8* _collisionBits
 
 			if( sprite->flags & SPRITE_FLAG_USEDEPTH )
 			{
+				if( flipX )	depth -= 4;
 				d = *depth;
-				depth+=4;
+				if( !flipX ) depth+=4;
 			}
 			
 			if( a == 0.0f )

@@ -98,9 +98,27 @@ void Sprite::PreRender()
 void Sprite::FrameStart()
 {
 	if( boundsTop < 0 )
-		readY = (-boundsTop)*image->w;
+	{
+		if( flags & SPRITE_FLAG_FLIP_Y )
+		{
+			readY = (image->h-1+boundsTop)*image->w;
+		}
+		else
+		{
+			readY = (-boundsTop)*image->w;
+		}
+	}
 	else
-		readY = 0;
+	{
+		if( flags & SPRITE_FLAG_FLIP_Y )
+		{
+			readY = (image->h-1)*image->w;
+		}
+		else
+		{
+			readY = 0;
+		}
+	}
 	
 	int xofs = -boundsLeft;
 	if( xofs<0) xofs=0;
@@ -112,7 +130,10 @@ void Sprite::FrameStart()
 
 void Sprite::NextScanLine()
 {
-	readY += image->w;
+	if( flags & SPRITE_FLAG_FLIP_Y )
+		readY -= image->w;
+	else
+		readY += image->w;
 	
 	int xofs = -boundsLeft;
 	if( xofs<0) xofs=0;

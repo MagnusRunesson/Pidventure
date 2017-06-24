@@ -23,6 +23,8 @@
 #include "Pidventure/DataManual/Data.h"
 
 #define SO_FLAG_ANIMATED		(1<<0)
+#define SO_FLAG_FLIP_X			(1<<1)
+#define SO_FLAG_FLIP_Y			(1<<2)
 
 class CSceneObject
 {
@@ -97,7 +99,7 @@ bool CScene::Load( const char* _pszName )
 	{
 		CSceneObject* pObj = &pScene->aObjects[ i ];
 		GameObject* pGO = NULL;
-		if( pObj->flags && SO_FLAG_ANIMATED )
+		if( pObj->flags & SO_FLAG_ANIMATED )
 		{
 			debugLog("Game object is animated, yay\n");
 			AnimationSequenceDefinition* pAnimation = dataGetAnimationSequenceDefinition( pObj->pszDefinitionName );
@@ -114,7 +116,9 @@ bool CScene::Load( const char* _pszName )
 		pGO->SetWorldPosition( pObj->x, pObj->y );
 		pSprite->SetSort( pObj->sort );
 		pSprite->collisionIndex = pObj->collisionIndex;
-		
+
+		pGO->GetSprite()->SetFlippedX( pObj->flags & SO_FLAG_FLIP_X );
+		pGO->GetSprite()->SetFlippedY( pObj->flags & SO_FLAG_FLIP_Y );
 	}
 	
 	pTileBank = tilebankLoad( "tilebank_highlands" );

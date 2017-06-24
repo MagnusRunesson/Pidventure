@@ -26,9 +26,8 @@ using namespace std;
  */
 
 #define OSO_FLAG_ANIMATED			(1<<0)
-
-#define SPRITE_FLAG_FLIP_X			(1<<3)
-#define SPRITE_FLAG_FLIP_Y			(1<<4)
+#define OSO_FLAG_FLIP_X				(1<<1)
+#define OSO_FLAG_FLIP_Y				(1<<2)
 
 class COutputSceneObject
 {
@@ -597,8 +596,8 @@ void ExportSceneObjects( CScene* _pOutputScene, const char* _pszOutFileName )
 		pOutputObject->collisionIndex = pInputObject->pSpriteDefinition->collisionIndex;
 		pOutputObject->sort = pInputObject->sort;
 		pOutputObject->ID = pInputObject->ID;
-		if( pInputObject->flipX ) pOutputObject->flags |= SPRITE_FLAG_FLIP_X;
-		if( pInputObject->flipY ) pOutputObject->flags |= SPRITE_FLAG_FLIP_Y;
+		if( pInputObject->flipX ) pOutputObject->flags |= OSO_FLAG_FLIP_X;
+		if( pInputObject->flipY ) pOutputObject->flags |= OSO_FLAG_FLIP_Y;
 
 		if( pInputObject->pSpriteDefinition->pszAnimationName != NULL )
 		{
