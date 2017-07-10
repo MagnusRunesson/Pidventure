@@ -64,14 +64,14 @@ CScene::~CScene()
 {
 }
 
-bool CScene::Load( const char* _pszName )
+bool CScene::Load( const char* _pszSceneName, const char* _pszTileBankName, const char* _pszCollisionTileBankName )
 {
 	CSceneObject* pSceneObjects;
 	int readBytes;
 
 	char objectFileName[ 1024 ];
-	sprintf( objectFileName, "%s.peso", _pszName );
-	debugLog("Loading scene '%s'\n", _pszName );
+	sprintf( objectFileName, "%s.peso", _pszSceneName );
+	debugLog("Loading scene '%s'\n", _pszSceneName );
 	if( !fileLoad( objectFileName, (void**)&pSceneObjects, &readBytes ))
 	{
 		debugLog("Failed to load scene '%s'\n", objectFileName );
@@ -121,11 +121,15 @@ bool CScene::Load( const char* _pszName )
 		pGO->GetSprite()->SetFlippedY( pObj->flags & SO_FLAG_FLIP_Y );
 	}
 	
-	pTileBank = tilebankLoad( "tilebank_highlands" );
+	pTileBank = tilebankLoad( _pszTileBankName );
 	debugLog("Gamesetup start 7a\n");
-	pTileBankCollision = tilebankLoad( "tilebank_highlands_collision" );
-	debugLog("Gamesetup start 7b\n");
-	pTileMap = tilemapLoad( _pszName );
+	pTileBankCollision = NULL;
+	if( _pszCollisionTileBankName != NULL )
+	{
+		pTileBankCollision = tilebankLoad( _pszCollisionTileBankName );
+		debugLog("Gamesetup start 7b\n");
+	}
+	pTileMap = tilemapLoad( _pszSceneName );
 	debugLog("Gamesetup start 8\n");
 	TileRenderer.m_pTileBank = pTileBank;
 	TileRenderer.m_pTileMap = pTileMap;
@@ -140,7 +144,11 @@ bool CScene::Load( const char* _pszName )
 void CScene::Unload()
 {
 	tilebankUnload( pTileBank );
-	tilebankUnload( pTileBankCollision );
+	if( pTileBankCollision != NULL )
+	{
+		tilebankUnload( pTileBankCollision );
+	}
+	
 	tilemapUnload( pTileMap );
 
 	int i;

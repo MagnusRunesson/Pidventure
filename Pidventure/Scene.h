@@ -32,7 +32,7 @@ public:
 	CScene();
 	~CScene();
 
-	bool Load( const char* _pszName );
+	bool Load( const char* _pszSceneName, const char* _pszTileBankName, const char* _pszCollisionTileBankName );
 	void Unload();
 
 	void SetWorldPosition( int _x, int _y );

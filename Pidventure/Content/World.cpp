@@ -143,7 +143,7 @@ void worldLoad(CWorldData* _pWorld)
 {
 	g_pCurrentWorld = _pWorld;
 	
-	g_MainScene.Load( g_pCurrentWorld->pszMainScene );
+	g_MainScene.Load( g_pCurrentWorld->pszMainScene, "tilebank_highlands", "tilebank_highlands_collision" );
 	g_MainScene.SetSort( -1.2f );
 
 	cameraSetBounds( &g_MainScene );
@@ -156,7 +156,7 @@ void worldLoad(CWorldData* _pWorld)
 		//
 		CWorldData::CSubScene* pSubSceneDefinition = &g_pCurrentWorld->aSubScene[ subScene ];
 		CScene* pSubScene = &g_aSubScene[ subScene ];
-		pSubScene->Load( pSubSceneDefinition->pszName );
+		pSubScene->Load( pSubSceneDefinition->pszName, "tilebank_highlands", "tilebank_highlands_collision" );
 		pSubScene->SetWorldPosition( pSubSceneDefinition->worldX, pSubSceneDefinition->worldY );
 		pSubScene->SetSort( -1.1f );
 		
