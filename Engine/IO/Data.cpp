@@ -10,31 +10,39 @@
 #include <string.h>
 #include "Engine/Graphics/Animation.h"
 #include "Engine/Core/Debug.h"
-#include "Pidventure/DataManual/Data.h"
 
-class AnimationSequenceDefinition;
+#define DATA_MAX_ANIMATIONS			(64)
+
+int dataNumAnimations;
+
+AnimationSequenceDefinition* dataAnimationSequenceDefinitions[ DATA_MAX_ANIMATIONS ];
 
 void dataInit()
 {
-	int i;
-	for( i=0; i<data_numAnimations; i++ )
-		data_animAll[ i ]->LoadImages();
+	dataNumAnimations = 0;
 }
 
 void dataExit()
 {
 	int i;
-	for( i=0; i<data_numAnimations; i++ )
-		data_animAll[ i ]->UnloadImages();
+	for( i=0; i<dataNumAnimations; i++ )
+		dataAnimationSequenceDefinitions[ i ]->UnloadImages();
+}
+
+void dataAddAnimationSequenceDefinition( AnimationSequenceDefinition* _pDefinition )
+{
+	dataAnimationSequenceDefinitions[ dataNumAnimations ] = _pDefinition;
+	_pDefinition->LoadImages();
+	dataNumAnimations++;
 }
 
 AnimationSequenceDefinition* dataGetAnimationSequenceDefinition( const char* _pszSpriteName )
 {
 	//debugLog("Looking for animation definition %s\n", _pszSpriteName );
 	int i;
-	for( i=0; i<data_numAnimations; i++ )
+	for( i=0; i<dataNumAnimations; i++ )
 	{
-		AnimationSequenceDefinition* pAnim = data_animAll[ i ];
+		AnimationSequenceDefinition* pAnim = dataAnimationSequenceDefinitions[ i ];
 		//debugLog("pAnim->name=%s\n", pAnim->name);
 		if(!strcmp( pAnim->name, _pszSpriteName ))
 		{

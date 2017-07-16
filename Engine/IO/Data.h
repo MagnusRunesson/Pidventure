@@ -13,6 +13,7 @@
 
 void dataInit();
 void dataExit();
+void dataAddAnimationSequenceDefinition( AnimationSequenceDefinition* _pDefinition );
 AnimationSequenceDefinition* dataGetAnimationSequenceDefinition( const char* _pszSpriteName );
 
 #endif /* Data_h */

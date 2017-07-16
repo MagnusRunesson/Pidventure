@@ -13,8 +13,8 @@
 #include "Engine/Graphics/Animation.h"
 #include "Engine/Graphics/Sprite.h"
 #include "Engine/Core/Debug.h"
+#include "Engine/IO/Data.h"
 #include "Pidventure/Gameplay/Door.h"
-#include "Pidventure/DataManual/Data.h"
 
 CDoorManager doorManager;
 

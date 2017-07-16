@@ -11,7 +11,7 @@
 #include "Engine/Graphics/TileMap.h"
 #include "Engine/Graphics/TileBank.h"
 #include "Engine/Core/Debug.h"
-#include "Pidventure/Scene.h"
+#include "Engine/Scene/Scene.h"
 #include "Pidventure/CameraController.h"
 #include "Pidventure/Player/PlayerAvatar.h"
 

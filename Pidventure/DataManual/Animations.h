@@ -17,7 +17,11 @@ extern AnimationSequenceDefinition animation_highlands_door_closed;
 extern AnimationSequenceDefinition animation_highlands_door_open;
 extern AnimationSequenceDefinition animation_highlands_door_close;
 
+/*
 extern AnimationSequenceDefinition* data_animAll[];
 extern int data_numAnimations;
+*/
+
+void animationDataInit();
 
 #endif /* Animations_h */

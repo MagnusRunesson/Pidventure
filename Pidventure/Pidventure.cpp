@@ -16,18 +16,18 @@
 #include "Engine/Scene/GameObjectManager.h"
 #include "Engine/IO/Joypad.h"
 #include "Engine/IO/FileCache.h"
+#include "Engine/IO/Data.h"
 #include "Engine/Graphics/Animation.h"
 #include "Engine/Graphics/TileBank.h"
 #include "Engine/Graphics/TileMap.h"
 #include "Engine/Graphics/TileRenderer.h"
+#include "Engine/Scene/Scene.h"
 #include "Pidventure/Pidventure.h"
 #include "Pidventure/background.h"
-#include "Pidventure/Scene.h"
 #include "Pidventure/CameraController.h"
 #include "Pidventure/Gameplay/Door.h"
 #include "Pidventure/Content/World.h"
 #include "Pidventure/Physics.h"
-#include "Pidventure/DataManual/Data.h"
 
 float t;
 
@@ -46,6 +46,7 @@ void game_setup()
 
 	debugLog("Gamesetup start 2\n");
 	dataInit();
+	animationDataInit();
 	debugLog("Gamesetup start 3\n");
 	cameraInit( &pPlayer->m_Avatar );
 	debugLog("Gamesetup start 4\n");

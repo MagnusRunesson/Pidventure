@@ -16,11 +16,11 @@
 #include "Engine/Graphics/TileBank.h"
 #include "Engine/Graphics/TileRenderer.h"
 #include "Engine/IO/File.h"
+#include "Engine/IO/Data.h"
 #include "Engine/Core/Debug.h"
 #include "Engine/Core/Memory.h"
-#include "Pidventure/Scene.h"
-#include "Pidventure/Physics.h"
-#include "Pidventure/DataManual/Data.h"
+#include "Engine/Scene/Scene.h"
+//#include "Pidventure/Physics.h"
 
 #define SO_FLAG_ANIMATED		(1<<0)
 #define SO_FLAG_FLIP_X			(1<<1)

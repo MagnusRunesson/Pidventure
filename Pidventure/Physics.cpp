@@ -13,8 +13,8 @@
 #include "Engine/Graphics/TileBank.h"
 #include "Engine/Graphics/TileMap.h"
 #include "Engine/Graphics/TileRenderer.h"
+#include "Engine/Scene/Scene.h"
 #include "Pidventure/Physics.h"
-#include "Pidventure/Scene.h"
 
 Image* physCollisionMap;
 Sprite* physCollisionDebugSprite;

@@ -8,6 +8,7 @@
 
 #include <stdlib.h>
 #include "Engine/Graphics/Animation.h"
+#include "Engine/IO/Data.h"
 #include "Pidventure/DataManual/Animations.h"
 
 /******************************************************************************************************************************************************************
@@ -172,12 +173,11 @@ DEFINE_ANIMATION( highlands_door_closed, false );
  *
  ******************************************************************************************************************************************************************/
 
-AnimationSequenceDefinition* data_animAll[] = {
-	&animation_prop_flower_red,
-	&animation_prop_house_highlands,
-	&animation_highlands_door_closed,
-	&animation_highlands_door_open,
-	&animation_highlands_door_close,
-};
-
-int data_numAnimations = sizeof( data_animAll ) / sizeof( AnimationSequenceDefinition* );
+void animationDataInit()
+{
+	dataAddAnimationSequenceDefinition( &animation_prop_flower_red );
+	dataAddAnimationSequenceDefinition( &animation_prop_house_highlands );
+	dataAddAnimationSequenceDefinition( &animation_highlands_door_closed );
+	dataAddAnimationSequenceDefinition( &animation_highlands_door_open );
+	dataAddAnimationSequenceDefinition( &animation_highlands_door_close );
+}
