@@ -56,12 +56,28 @@ public:
 
 CScene::CScene() : TileRenderer( NULL, NULL )
 {
-	m_worldX = 0;
-	m_worldY = 0;
+	Reset();
+}
+
+CScene::CScene( const char* _pszSceneName, const char* _pszTileBankName, const char* _pszCollisionTileBankName ) : TileRenderer( NULL, NULL )
+{
+	Reset();
+	Load( _pszSceneName, _pszTileBankName, _pszCollisionTileBankName );
 }
 
 CScene::~CScene()
 {
+	Unload();
+}
+
+void CScene::Reset()
+{
+	SetViewportTopLeft( 0, 0 );
+	SetWorldPosition( 0, 0 );
+	SetSort( 0.0f );
+	pTileBank = NULL;
+	pTileBankCollision = NULL;
+	pTileMap = NULL;
 }
 
 bool CScene::Load( const char* _pszSceneName, const char* _pszTileBankName, const char* _pszCollisionTileBankName )
@@ -143,13 +159,22 @@ bool CScene::Load( const char* _pszSceneName, const char* _pszTileBankName, cons
 
 void CScene::Unload()
 {
+	if( pTileBank == NULL )
+	{
+		// The scene have already been unloaded
+		return;
+	}
+	
 	tilebankUnload( pTileBank );
+	pTileBank = NULL;
 	if( pTileBankCollision != NULL )
 	{
 		tilebankUnload( pTileBankCollision );
+		pTileBankCollision = NULL;
 	}
 	
 	tilemapUnload( pTileMap );
+	pTileMap = NULL;
 
 	int i;
 	for( i=0; i<MAX_GAMEOBJECTS; i++ )

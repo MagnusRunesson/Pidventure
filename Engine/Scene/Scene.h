@@ -30,6 +30,7 @@ public:
 	int m_worldY;
 	
 	CScene();
+	CScene( const char* _pszSceneName, const char* _pszTileBankName, const char* _pszCollisionTileBankName );
 	~CScene();
 
 	bool Load( const char* _pszSceneName, const char* _pszTileBankName, const char* _pszCollisionTileBankName );
@@ -44,6 +45,9 @@ public:
 	int GetWorldBottom();
 	int GetWorldLeft();
 	int GetWorldRight();
+	
+private:
+	void Reset();
 };
 
 /*
