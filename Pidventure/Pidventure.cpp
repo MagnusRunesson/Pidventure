@@ -28,6 +28,7 @@
 #include "Pidventure/Gameplay/Door.h"
 #include "Pidventure/Content/World.h"
 #include "Pidventure/Physics.h"
+#include "Pidventure/DataManual/Animations.h"
 
 float t;
 
