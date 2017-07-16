@@ -9,8 +9,6 @@
 #ifndef Data_h
 #define Data_h
 
-#include "Pidventure/DataManual/Animations.h"
-
 void dataInit();
 void dataExit();
 void dataAddAnimationSequenceDefinition( AnimationSequenceDefinition* _pDefinition );
