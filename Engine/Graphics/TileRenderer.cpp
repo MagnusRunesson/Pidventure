@@ -263,6 +263,7 @@ void CTileRenderer::PrepareScanlineRenderTiles( bool _debug )
 		pTile->TixelIncrementY = advY[ flipFlags ];
 		pTile->StartTixelOffset = startOfs[ flipFlags ];
 		pTile->TixelOffset = startOfs[ flipFlags ];
+		pTile->TixelOffset += m_scanlineTixelY * pTile->TixelIncrementY;
 
 		if( _debug )
 		{
