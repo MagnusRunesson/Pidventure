@@ -25,10 +25,10 @@ const int PAD_KEYMASK_SECONDARY		= PAD_KEYMASK_ACTION_LM;
 const int PAD_KEYMASK_SELECT		= PAD_KEYMASK_PGM_L;
 const int PAD_KEYMASK_START			= PAD_KEYMASK_PGM_R;
 
-const int PAD_KEYMASK_DPAD_UP		= (1<<16);
-const int PAD_KEYMASK_DPAD_DOWN		= (1<<17);
-const int PAD_KEYMASK_DPAD_LEFT		= (1<<18);
-const int PAD_KEYMASK_DPAD_RIGHT	= (1<<19);
+const int PAD_KEYMASK_DPAD_UP		= (1<<12);
+const int PAD_KEYMASK_DPAD_DOWN		= (1<<13);
+const int PAD_KEYMASK_DPAD_LEFT		= (1<<14);
+const int PAD_KEYMASK_DPAD_RIGHT	= (1<<15);
 
 //
 //
@@ -39,7 +39,7 @@ uint8 padGet( float* _x, float* _y );
 uint8 padGetKeys();
 float padGetX();
 float padGetY();
-uint8 padGetPressed();
-uint8 padGetReleased();
+uint16 padGetPressed();
+uint16 padGetReleased();
 
 #endif /* Joypad_hpp */

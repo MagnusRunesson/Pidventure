@@ -38,7 +38,7 @@ const int RPI_GPIO_BTN7		= 21;
 #define BUFFER_SWITCH_MASK		((1<<BUFFER_SWITCH_LENGTH)-1)
 
 uint32 gkeys;
-int gKeyBuff;
+uint32 gKeyBuff;
 
 void padInit()
 {
@@ -62,35 +62,36 @@ void padInit()
 void padUpdate()
 {
 #ifdef ENGINE_TARGET_RPI
+	gKeyBuff = 0;
+
 	if( !digitalRead( RPI_GPIO_UP ))
 	{
-		gKeyDPadBuff |= PAD_KEYMASK_DPAD_UP;
+		gKeyBuff |= PAD_KEYMASK_DPAD_UP;
 	} else {
-		gKeyDPadBuff &= ~PAD_KEYMASK_DPAD_UP;
+		gKeyBuff &= ~PAD_KEYMASK_DPAD_UP;
 	}
 	
 	if( !digitalRead( RPI_GPIO_DOWN ))
 	{
-		gKeyDPadBuff |= PAD_KEYMASK_DPAD_DOWN;
+		gKeyBuff |= PAD_KEYMASK_DPAD_DOWN;
 	} else {
-		gKeyDPadBuff &= ~PAD_KEYMASK_DPAD_DOWN;
+		gKeyBuff &= ~PAD_KEYMASK_DPAD_DOWN;
 	}
 
 	if( !digitalRead( RPI_GPIO_LEFT ))
 	{
-		gKeyDPadBuff |= PAD_KEYMASK_DPAD_LEFT;
+		gKeyBuff |= PAD_KEYMASK_DPAD_LEFT;
 	} else {
-		gKeyDPadBuff &= ~PAD_KEYMASK_DPAD_LEFT;
+		gKeyBuff &= ~PAD_KEYMASK_DPAD_LEFT;
 	}
 
 	if( !digitalRead( RPI_GPIO_RIGHT ))
 	{
-		gKeyDPadBuff |= PAD_KEYMASK_DPAD_RIGHT;
+		gKeyBuff |= PAD_KEYMASK_DPAD_RIGHT;
 	} else {
-		gKeyDPadBuff &= ~PAD_KEYMASK_DPAD_RIGHT;
+		gKeyBuff &= ~PAD_KEYMASK_DPAD_RIGHT;
 	}
 
-	gKeyBuff = 0;
 	if( !digitalRead( RPI_GPIO_BTN0 )) gKeyBuff |= PAD_KEYMASK_ACTION_UL;
 	if( !digitalRead( RPI_GPIO_BTN1 )) gKeyBuff |= PAD_KEYMASK_ACTION_UM;
 	if( !digitalRead( RPI_GPIO_BTN2 )) gKeyBuff |= PAD_KEYMASK_ACTION_UR;
@@ -120,8 +121,8 @@ uint8 padGetKeys()
 float padGetX()
 {
 	float ret = 0;
-	if( HasBit( gKeyDPadBuff, PAD_KEYMASK_DPAD_LEFT ))	ret -= 1.0f;
-	if( HasBit( gKeyDPadBuff, PAD_KEYMASK_DPAD_RIGHT ))	ret += 1.0f;
+	if( HasBit( gkeys, PAD_KEYMASK_DPAD_LEFT ))	ret -= 1.0f;
+	if( HasBit( gkeys, PAD_KEYMASK_DPAD_RIGHT ))	ret += 1.0f;
 	
 	return ret;
 }
@@ -129,25 +130,25 @@ float padGetX()
 float padGetY()
 {
 	float ret = 0;
-	if( HasBit( gKeyDPadBuff, PAD_KEYMASK_DPAD_UP ))	ret -= 1.0f;
-	if( HasBit( gKeyDPadBuff, PAD_KEYMASK_DPAD_DOWN ))	ret += 1.0f;
+	if( HasBit( gkeys, PAD_KEYMASK_DPAD_UP ))	ret -= 1.0f;
+	if( HasBit( gkeys, PAD_KEYMASK_DPAD_DOWN ))	ret += 1.0f;
 	
 	return ret;
 }
 
-uint8 padGetPressed()
+uint16 padGetPressed()
 {
-	uint8 prev = (gkeys>>BUFFER_SWITCH_LENGTH) & BUFFER_SWITCH_MASK;
-	uint8 curr = (gkeys) & BUFFER_SWITCH_MASK;
-	uint8 ret = (prev ^ curr) & curr;
+	uint16 prev = (gkeys>>BUFFER_SWITCH_LENGTH) & BUFFER_SWITCH_MASK;
+	uint16 curr = (gkeys) & BUFFER_SWITCH_MASK;
+	uint16 ret = (prev ^ curr) & curr;
 	return ret;
 }
 
-uint8 padGetReleased()
+uint16 padGetReleased()
 {
-	uint8 prev = (gkeys>>BUFFER_SWITCH_LENGTH) & BUFFER_SWITCH_MASK;
-	uint8 curr = (gkeys) & BUFFER_SWITCH_MASK;
-	uint8 ret = (prev ^ curr) & prev;
+	uint16 prev = (gkeys>>BUFFER_SWITCH_LENGTH) & BUFFER_SWITCH_MASK;
+	uint16 curr = (gkeys) & BUFFER_SWITCH_MASK;
+	uint16 ret = (prev ^ curr) & prev;
 	return ret;
 }
 
