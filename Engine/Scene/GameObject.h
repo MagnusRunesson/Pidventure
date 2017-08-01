@@ -63,8 +63,8 @@ public:
 	//
 protected:
 	//
-	int m_worldPositionX;
-	int m_worldPositionY;
+	float m_worldPositionX;
+	float m_worldPositionY;
 
 	//
 	//Image* m_image;
