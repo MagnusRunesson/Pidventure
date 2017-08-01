@@ -250,6 +250,7 @@ void SpriteRenderer::debugPrintStats()
 		{
 			numUsed++;
 			//debugLog(" - Image: %s", sprite->image->DEBUG_name );
+			debugLog( " - X: %.2f, Y: %.2f  - Image W: %i, H: %i", sprite->x, sprite->y, sprite->image->w, sprite->image->h );
 		}
 		debugLog("\n");
 	}
