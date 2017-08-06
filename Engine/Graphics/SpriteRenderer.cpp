@@ -84,7 +84,7 @@ void SpriteRenderer::RemoveSpriteFromSortList( Sprite* _pSprite )
 			for( j=i+1; j<MAX_SPRITES; j++ )
 			{
 				m_sortedSprites[ j-1 ] = m_sortedSprites[ j ];
-				if( m_sortedSprites[ j ] == NULL )
+				if( m_sortedSprites[ j ] == NULL )
 					return;
 			}
 			

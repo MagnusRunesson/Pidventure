@@ -46,6 +46,7 @@ SRCS+=\
 	Engine/Graphics/TextRenderer.cpp \
 	Engine/IO/Joypad.cpp \
 	Engine/IO/FileCache.cpp \
+	Engine/IO/Data.cpp \
 	Engine/Platform/RPi/file_rpi.cpp \
 	Engine/Platform/RPi/audio_rpi.cpp \
 	Engine/Platform/RPi/sinewave.cpp \
@@ -55,7 +56,8 @@ SRCS+=\
 	Engine/Scene/Camera.cpp \
 	Engine/Scene/GameObject.cpp \
 	Engine/Scene/GameObjectManager.cpp \
-	Engine/Scene/GameObjectTemplate.cpp
+	Engine/Scene/GameObjectTemplate.cpp \
+	Engine/Scene/Scene.cpp
 
 OBJS:=$(addprefix build/,$(SRCS:.cpp=.o))
 # SRCS:=$(addprefix src/,$(SRCS))
