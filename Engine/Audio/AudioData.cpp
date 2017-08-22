@@ -8,8 +8,8 @@
 
 #include "Engine/Audio/AudioData.h"
 
-#include <stdlib.h>
-#include <stdio.h>
+#include "Engine/stdc/stdlib.h"
+#include "Engine/Util/String.h"
 #include "Engine/Graphics/Image.h"
 #include "Engine/IO/File.h"
 #include "Engine/Core/Debug.h"
@@ -19,7 +19,7 @@ static char g_pszAudioDataFullName[ 1024 ];
 
 AudioData* audioDataLoad( const char* _pszFileName, bool _looping )
 {
-	snprintf( g_pszAudioDataFullName, 1024, "%s.raw", _pszFileName );
+	stringCombine( g_pszAudioDataFullName, 1024, _pszFileName, ".raw" );
 	void* pData;
 	int readBytes;
 	if( fileLoad( g_pszAudioDataFullName, &pData, &readBytes ) == false)

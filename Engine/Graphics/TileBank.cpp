@@ -6,7 +6,7 @@
 //  Copyright © 2015 Magnus Runesson. All rights reserved.
 //
 
-#include <stdio.h>
+#include "Engine/Util/String.h"
 #include "Engine/Graphics/TileBank.h"
 #include "Engine/IO/File.h"
 #include "Engine/Core/Debug.h"
@@ -16,7 +16,7 @@ static char g_pszImageFullFileName[ 1024 ];
 
 CTileBank* tilebankLoad(const char* _pszFileName)
 {
-	snprintf( g_pszImageFullFileName, 1024, "%s.petb", _pszFileName );
+	stringCombine( g_pszImageFullFileName, 1024, _pszFileName, ".petb" );
 	void* pData;
 	int readBytes;
 	if( fileLoad( g_pszImageFullFileName, &pData, &readBytes ) == false)

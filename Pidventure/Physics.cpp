@@ -6,7 +6,7 @@
 //  Copyright © 2016 Magnus Runesson. All rights reserved.
 //
 
-#include <stdlib.h>
+#include "Engine/stdc/stdlib.h"
 #include "Engine/Core/Memory.h"
 #include "Engine/Graphics/Image.h"
 #include "Engine/Graphics/SpriteRenderer.h"

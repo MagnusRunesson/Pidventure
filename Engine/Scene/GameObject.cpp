@@ -6,7 +6,7 @@
 //  Copyright © 2015 Magnus Runesson. All rights reserved.
 //
 
-#include <stdlib.h>
+#include "Engine/stdc/stdlib.h"
 #include "Engine/Scene/GameObject.h"
 #include "Engine/Scene/Camera.h"
 #include "Engine/Graphics/Image.h"

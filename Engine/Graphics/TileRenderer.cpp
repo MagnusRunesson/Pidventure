@@ -6,7 +6,7 @@
 //  Copyright © 2016 Magnus Runesson. All rights reserved.
 //
 
-#include <stdlib.h>
+#include "Engine/stdc/stdlib.h"
 #include "Engine/Graphics/TileBank.h"
 #include "Engine/Graphics/TileMap.h"
 #include "Engine/Graphics/TileRenderer.h"

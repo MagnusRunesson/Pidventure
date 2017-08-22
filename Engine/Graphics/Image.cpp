@@ -6,8 +6,8 @@
 //  Copyright © 2015 Magnus Runesson. All rights reserved.
 //
 
-#include <stdlib.h>
-#include <stdio.h>
+#include "Engine/stdc/stdlib.h"
+#include "Engine/Util/String.h"
 #include "Engine/Graphics/Image.h"
 #include "Engine/IO/File.h"
 #include "Engine/Core/Debug.h"
@@ -17,7 +17,7 @@ static char g_pszImageFullFileName[ 1024 ];
 
 Image* imageLoad(const char* _pszFileName)
 {
-	snprintf( g_pszImageFullFileName, 1024, "%s.pei", _pszFileName );
+	stringCombine( g_pszImageFullFileName, 1024, _pszFileName, ".pei" );
 	void* pData;
 	int readBytes;
 	if( fileLoad( g_pszImageFullFileName, &pData, &readBytes ) == false)

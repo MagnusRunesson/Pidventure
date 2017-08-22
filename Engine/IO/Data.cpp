@@ -6,8 +6,8 @@
 //  Copyright © 2016 Magnus Runesson. All rights reserved.
 //
 
-#include <stdlib.h>
-#include <string.h>
+#include "Engine/stdc/stdlib.h"
+#include "Engine/Util/String.h"
 #include "Engine/Graphics/Animation.h"
 #include "Engine/Core/Debug.h"
 
@@ -44,7 +44,7 @@ AnimationSequenceDefinition* dataGetAnimationSequenceDefinition( const char* _ps
 	{
 		AnimationSequenceDefinition* pAnim = dataAnimationSequenceDefinitions[ i ];
 		//debugLog("pAnim->name=%s\n", pAnim->name);
-		if(!strcmp( pAnim->name, _pszSpriteName ))
+		if( !stringCompare( pAnim->name, _pszSpriteName ))
 		{
 			//debugLog("Found, yay!\n");
 			return pAnim;

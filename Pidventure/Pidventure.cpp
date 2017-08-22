@@ -6,8 +6,7 @@
 //  Copyright © 2016 Magnus Runesson. All rights reserved.
 //
 
-#include <stdlib.h>
-#include <stdio.h>
+#include "Engine/stdc/stdlib.h"
 #include "Engine/Core/Debug.h"
 #include "Engine/Core/Memory.h"
 #include "Engine/Graphics/Screen.h"

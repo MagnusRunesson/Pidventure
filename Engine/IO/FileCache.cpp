@@ -6,9 +6,8 @@
 //  Copyright © 2016 Magnus Runesson. All rights reserved.
 //
 
-#include <stdlib.h>
-#include <string.h>
-#include <memory.h>
+#include "Engine/stdc/stdlib.h"
+#include "Engine/Util/String.h"
 #include "Engine/IO/File.h"
 #include "Engine/IO/FileCache.h"
 #include "Engine/Core/Debug.h"
@@ -47,7 +46,7 @@ CCachedFile* fileCacheGetCachedFileData( const char* _pszFileName )
 		if( pFile->pszFileName == NULL )
 			continue;
 		
-		if( strcmp( pFile->pszFileName, _pszFileName ) == 0 )
+		if( stringCompare( pFile->pszFileName, _pszFileName ) == 0 )
 		{
 			debugLog("FILE CACHE: Found file '%s'\n", pFile->pszFileName );
 			return pFile;
@@ -125,7 +124,7 @@ void fileCacheAddFile( const char* _pszFileName, void* _pFileData, int _fileSize
 		return;
 	
 	pFile->NumReferences = 1;
-	pFile->pszFileName = strdup( _pszFileName );
+	pFile->pszFileName = stringDuplicate( _pszFileName );
 	pFile->pFileData = _pFileData;
 	pFile->FileSize = _fileSize;
 }

@@ -6,7 +6,7 @@
 //  Copyright © 2016 Magnus Runesson. All rights reserved.
 //
 
-#include <stdio.h>
+#include "Engine/Util/String.h"
 #include "Engine/Graphics/TileMap.h"
 #include "Engine/IO/File.h"
 #include "Engine/Core/Debug.h"
@@ -16,7 +16,7 @@ static char g_pszImageFullFileName[ 1024 ];
 
 CTileMap* tilemapLoad( const char* _pszFileName )
 {
-	snprintf( g_pszImageFullFileName, 1024, "%s.petm", _pszFileName );
+	stringCombine( g_pszImageFullFileName, 1024, _pszFileName, ".petm" );
 	void* pData;
 	int readBytes;
 	if( fileLoad( g_pszImageFullFileName, &pData, &readBytes ) == false)

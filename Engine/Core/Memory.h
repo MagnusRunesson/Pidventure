@@ -9,14 +9,18 @@
 #ifndef Memory_h
 #define Memory_h
 
-#include <stdlib.h>
+#include "Engine/stdc/stdlib.h"
 
 void memInit();
 void memExit();
+
+#ifndef ENGINE_TARGET_RPI_CIRCLE
 
 void* operator new(size_t size, const char* _pszFile, int _line);
 void* operator new[](size_t size, const char* _pszFile, int _line);
 
 #define new new(__FILE__, __LINE__)
+
+#endif
 
 #endif /* Memory_h */

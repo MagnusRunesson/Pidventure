@@ -7,7 +7,9 @@
 //
 
 //#include "SDL2/SDL.h"
+#ifndef ENGINE_TARGET_RPI_CIRCLE
 #include <chrono>
+#endif
 
 #include "Engine/Core/Timer.h"
 #include "Engine/Core/Types.h"
@@ -22,23 +24,35 @@ float timeDelta()
 
 uint32 micros()
 {
+#ifdef ENGINE_TARGET_RPI_CIRCLE
+	return 0;
+#else
 	auto now = std::chrono::high_resolution_clock::now().time_since_epoch();
 	uint32 ret = (uint32)std::chrono::duration_cast<std::chrono::microseconds>(now).count();
 	return ret - timerStartMicros;
+#endif
 }
 
 uint32 millis()
 {
+#ifdef ENGINE_TARGET_RPI_CIRCLE
+	return 0;
+#else
 	auto now = std::chrono::high_resolution_clock::now().time_since_epoch();
 	uint32 ret = (uint32)std::chrono::duration_cast<std::chrono::milliseconds>(now).count();
 	return ret - timerStartMillis;
+#endif
 }
 
 uint32 nanos()
 {
+#ifdef ENGINE_TARGET_RPI_CIRCLE
+	return 0;
+#else
 	auto now = std::chrono::high_resolution_clock::now().time_since_epoch();
 	uint32 ret = (uint32)std::chrono::duration_cast<std::chrono::nanoseconds>( now ).count();
 	return ret;
+#endif
 }
 
 /*

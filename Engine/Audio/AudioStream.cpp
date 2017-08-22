@@ -52,6 +52,8 @@ void AudioStream::OpenStream( const char *_pszFileName )
 
 #elif ENGINE_TARGET_RPI
 	
+#elif ENGINE_TARGET_RPI_CIRCLE
+	
 #else
 	// Initialize SD lib
 	sd.begin( 10, SPI_FULL_SPEED );
@@ -91,6 +93,8 @@ void AudioStream::CloseStream()
 	
 #elif ENGINE_TARGET_RPI
 	
+#elif ENGINE_TARGET_RPI_CIRCLE
+	
 #else
 	file.close();
 #endif
@@ -111,6 +115,8 @@ void AudioStream::Update()
 #ifdef ENGINE_TARGET_MACOSX
 	
 #elif ENGINE_TARGET_RPI
+	
+#elif ENGINE_TARGET_RPI_CIRCLE
 	
 #else
 	// Wait until we started streaming from the last page we read

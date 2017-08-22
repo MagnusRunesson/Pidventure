@@ -6,9 +6,9 @@
 //  Copyright © 2015 Magnus Runesson. All rights reserved.
 //
 
-#include <memory.h>
-#include <stdio.h>
 #include <math.h>
+#include "Engine/stdc/stdlib.h"
+#include "Engine/Util/Memory.h"
 #include "Engine/Graphics/SpriteRenderer.h"
 #include "Engine/Graphics/Screen.h"
 #include "Engine/Graphics/Image.h"
@@ -224,8 +224,8 @@ void SpriteRenderer::Render()
 	int x, y;
 	for( y=0; y<SCREEN_HEIGHT; y++)
 	{
-		memset( collisionBits, 0, sizeof(collisionBits));
-		memset( collisionIndices, 0, sizeof(collisionIndices));
+		memorySet( collisionBits, 0, sizeof(collisionBits));
+		memorySet( collisionIndices, 0, sizeof(collisionIndices));
 		RenderScanline( &screenBuffer[((y*SCREEN_WIDTH)*4)], collisionBits, collisionIndices );
 		NextScanline( false );
 		

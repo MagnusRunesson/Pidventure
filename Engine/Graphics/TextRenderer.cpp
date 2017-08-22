@@ -6,8 +6,8 @@
 //  Copyright © 2017 Magnus Runesson. All rights reserved.
 //
 
-#include <stdlib.h>
-#include <string.h>
+#include "Engine/stdc/stdlib.h"
+#include "Engine/Util/String.h"
 #include "Engine/Core/Debug.h"
 #include "Engine/Graphics/TextRenderer.h"
 #include "Engine/Graphics/Font.h"
@@ -48,7 +48,7 @@ void Text::Render()
 	int carriageX = (int)x;
 	int baselineY = (int)y;
 	
-	int nChars = (int)strlen( m_pszText );
+	int nChars = (int)stringLength( m_pszText );
 	int i;
 	for( i=0; i<nChars; i++ )
 	{
@@ -197,8 +197,8 @@ Text* TextRenderer::AllocatedText( const Font *_pFont, const char *_pszText )
 	}
 	
 	pRet->m_pFont = _pFont;
-	pRet->m_pszText = new char[ strlen( _pszText )];
-	strcpy( pRet->m_pszText, _pszText );
+	pRet->m_pszText = new char[ stringLength( _pszText )];
+	stringCopy( pRet->m_pszText, _pszText );
 	
 	return pRet;
 }

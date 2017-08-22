@@ -11,6 +11,8 @@
 		2504273C1EE54BE500409835 /* TextRenderer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 250427391EE54BE500409835 /* TextRenderer.cpp */; settings = {ASSET_TAGS = (); }; };
 		250427521F168FEC00409835 /* Scene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 250427511F168FEC00409835 /* Scene.cpp */; settings = {ASSET_TAGS = (); }; };
 		250427551F1BE1C100409835 /* Data.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 250427531F1BE1C100409835 /* Data.cpp */; settings = {ASSET_TAGS = (); }; };
+		254D83361F4ACD4A00B1A2FC /* String.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 254D83341F4ACD4A00B1A2FC /* String.cpp */; settings = {ASSET_TAGS = (); }; };
+		254D83391F4AF28700B1A2FC /* Memory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 254D83371F4AF28700B1A2FC /* Memory.cpp */; settings = {ASSET_TAGS = (); }; };
 		257AE69A1D6B507700CACB74 /* Animation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 257AE68A1D6B507700CACB74 /* Animation.cpp */; settings = {ASSET_TAGS = (); }; };
 		257AE69C1D6B507700CACB74 /* Screen.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 257AE68E1D6B507700CACB74 /* Screen.cpp */; settings = {ASSET_TAGS = (); }; };
 		257AE69D1D6B507700CACB74 /* Sprite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 257AE6901D6B507700CACB74 /* Sprite.cpp */; settings = {ASSET_TAGS = (); }; };
@@ -70,6 +72,10 @@
 		250427531F1BE1C100409835 /* Data.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Data.cpp; path = Engine/IO/Data.cpp; sourceTree = "<group>"; };
 		250427541F1BE1C100409835 /* Data.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Data.h; path = Engine/IO/Data.h; sourceTree = "<group>"; };
 		252E53F61D6AC32100E833F6 /* pidventure */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = pidventure; sourceTree = BUILT_PRODUCTS_DIR; };
+		254D83341F4ACD4A00B1A2FC /* String.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = String.cpp; path = Engine/Util/String.cpp; sourceTree = "<group>"; };
+		254D83351F4ACD4A00B1A2FC /* String.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = String.h; path = Engine/Util/String.h; sourceTree = "<group>"; };
+		254D83371F4AF28700B1A2FC /* Memory.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Memory.cpp; path = Engine/Util/Memory.cpp; sourceTree = "<group>"; };
+		254D83381F4AF28700B1A2FC /* Memory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Memory.h; path = Engine/Util/Memory.h; sourceTree = "<group>"; };
 		257AE68A1D6B507700CACB74 /* Animation.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Animation.cpp; path = Engine/Graphics/Animation.cpp; sourceTree = "<group>"; };
 		257AE68B1D6B507700CACB74 /* Animation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Animation.h; path = Engine/Graphics/Animation.h; sourceTree = "<group>"; };
 		257AE68D1D6B507700CACB74 /* Image.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Image.h; path = Engine/Graphics/Image.h; sourceTree = "<group>"; };
@@ -179,6 +185,17 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		254D83331F4ACD3000B1A2FC /* Util */ = {
+			isa = PBXGroup;
+			children = (
+				254D83341F4ACD4A00B1A2FC /* String.cpp */,
+				254D83351F4ACD4A00B1A2FC /* String.h */,
+				254D83371F4AF28700B1A2FC /* Memory.cpp */,
+				254D83381F4AF28700B1A2FC /* Memory.h */,
+			);
+			name = Util;
+			sourceTree = "<group>";
+		};
 		257AE67F1D6B4E8000CACB74 /* Source */ = {
 			isa = PBXGroup;
 			children = (
@@ -191,6 +208,7 @@
 		257AE6841D6B4FF900CACB74 /* Engine */ = {
 			isa = PBXGroup;
 			children = (
+				254D83331F4ACD3000B1A2FC /* Util */,
 				25F930901D7E88250026DA4C /* Engine.h */,
 				257AE6CC1D7800B600CACB74 /* Audio */,
 				257AE6C81D77FF8A00CACB74 /* IO */,
@@ -416,6 +434,7 @@
 			files = (
 				257AE6B41D6B548100CACB74 /* BitHelpers.cpp in Sources */,
 				258A2EF81DC0F8EC005915CD /* World.cpp in Sources */,
+				254D83361F4ACD4A00B1A2FC /* String.cpp in Sources */,
 				257D92541D794A03006B6512 /* PlayerAvatar.cpp in Sources */,
 				25F9308E1D7E83640026DA4C /* file_osx.cpp in Sources */,
 				257AE6A01D6B507700CACB74 /* TileMap.cpp in Sources */,
@@ -429,6 +448,7 @@
 				257AE6AC1D6B507E00CACB74 /* GameObjectManager.cpp in Sources */,
 				258A2EFB1DC71BAD005915CD /* Memory.cpp in Sources */,
 				257D92591D794A63006B6512 /* Player.cpp in Sources */,
+				254D83391F4AF28700B1A2FC /* Memory.cpp in Sources */,
 				257AE6B51D6B548100CACB74 /* Debug.cpp in Sources */,
 				257AE6AB1D6B507E00CACB74 /* GameObject.cpp in Sources */,
 				257AE6C71D77FF4900CACB74 /* main.cpp in Sources */,

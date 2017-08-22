@@ -6,8 +6,8 @@
 //  Copyright © 2016 Magnus Runesson. All rights reserved.
 //
 
-#include <stdlib.h>
-#include <stdio.h>
+#include "Engine/stdc/stdlib.h"
+#include "Engine/Util/String.h"
 #include "Engine/Scene/GameObjectManager.h"
 #include "Engine/Graphics/Image.h"
 #include "Engine/Graphics/Sprite.h"
@@ -20,7 +20,6 @@
 #include "Engine/Core/Debug.h"
 #include "Engine/Core/Memory.h"
 #include "Engine/Scene/Scene.h"
-//#include "Pidventure/Physics.h"
 
 #define SO_FLAG_ANIMATED		(1<<0)
 #define SO_FLAG_FLIP_X			(1<<1)
@@ -86,7 +85,8 @@ bool CScene::Load( const char* _pszSceneName, const char* _pszTileBankName, cons
 	int readBytes;
 
 	char objectFileName[ 1024 ];
-	sprintf( objectFileName, "%s.peso", _pszSceneName );
+	stringCombine( objectFileName, 1024, _pszSceneName, ".peso" );
+	
 	debugLog("Loading scene '%s'\n", _pszSceneName );
 	if( !fileLoad( objectFileName, (void**)&pSceneObjects, &readBytes ))
 	{

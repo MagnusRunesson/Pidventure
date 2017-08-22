@@ -8,8 +8,11 @@
 //  Copyright © 2016 Magnus Runesson. All rights reserved.
 //
 
+#if MEMORY_TRACKING == 1
 #include <thread>
 #include <stdio.h>
+#endif
+
 #include "Engine/Core/Memory.h"
 #include "Engine/Core/Debug.h"
 
@@ -72,6 +75,8 @@ void memExit()
 	memTrackExit();
 }
 
+#ifndef ENGINE_TARGET_RPI_CIRCLE
+
 void* operator new(size_t size)
 {
 	void* ptr = malloc(size);
@@ -111,3 +116,5 @@ void operator delete[](void* ptr) throw()
 	memTrackDelete(ptr);
 	free(ptr);
 }
+
+#endif

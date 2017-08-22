@@ -32,7 +32,13 @@ void Audio_Handler (void)
 {
 }
 
-#else
+#elif ENGINE_TARGET_RPI_CIRCLE
+
+void Audio_Handler (void)
+{
+}
+
+#elif ENGINE_TARGET_TINYARCADE
 
 #ifdef __cplusplus
 extern "C" {
