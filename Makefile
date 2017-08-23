@@ -51,6 +51,8 @@ SRCS=\
 
 INCLUDE = -I .
 
+OPTIMIZE = -Ofast
+
 CFLAGS	= -DENGINE_TARGET_RPI_CIRCLE -fpermissive
 LIBS	= $(CIRCLEHOME)/addon/SDCard/libsdcard.a \
 		$(CIRCLEHOME)/lib/fs/fat/libfatfs.a \

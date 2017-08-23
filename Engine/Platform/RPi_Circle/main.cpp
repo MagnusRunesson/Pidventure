@@ -118,18 +118,22 @@ void CApp::Update()
 
 	int x, y;
 	int px, py;
+
+	float* pSrc = screenBuffer;
+	uint32* pDst = m_pScreenBufferParty;
+	
 	for( y=0; y<SCREEN_HEIGHT; y++ )
 	{
 		for( x=0; x<SCREEN_WIDTH; x++ )
 		{
-   			int rdofs = ((y*SCREEN_WIDTH)+x)*4;
-   			float sr = screenBuffer[ rdofs+0 ];
-   			float sg = screenBuffer[ rdofs+1 ];
-   			float sb = screenBuffer[ rdofs+2 ];
+   			float sr = *pSrc++;
+   			float sg = *pSrc++;
+   			float sb = *pSrc++;
+   			pSrc++; // Alpha channel
    			unsigned char r = (unsigned char)(sr*255.0f);
    			unsigned char g = (unsigned char)(sg*255.0f);
    			unsigned char b = (unsigned char)(sb*255.0f);
-   			unsigned char a = 255;
+   			uint32 c = (r<<16) + (g<<8) + b;
 
 			/*
    			for( py=0; py<4; py++ )
@@ -144,11 +148,10 @@ void CApp::Update()
    				}
    				*/
 
-			int wrofs = ((y*w)+x)*4;
-			m_pScreenBufferPartyUInt8[ wrofs+0 ] = b;
-			m_pScreenBufferPartyUInt8[ wrofs+1 ] = g;
-			m_pScreenBufferPartyUInt8[ wrofs+2 ] = r;
+   			*pDst++ = c;
 		}
+
+		pDst += (800-SCREEN_WIDTH);	// Stride
 	}
 
 	unsigned t1 = CTimer::GetClockTicks();
