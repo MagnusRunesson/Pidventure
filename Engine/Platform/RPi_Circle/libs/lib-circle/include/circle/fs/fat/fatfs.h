@@ -154,6 +154,14 @@ public:
 	*/
 	int FileDelete (const char *pTitle);
 
+	/*
+	* Added by Magnus
+	*
+	* Get the size of a file
+	*
+	*/
+	unsigned FileSize (unsigned hFile);
+
 private:
 	CFATCache	m_Cache;
 	CFATInfo	m_FATInfo;

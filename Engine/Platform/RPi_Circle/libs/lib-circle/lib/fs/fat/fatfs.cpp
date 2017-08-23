@@ -478,3 +478,27 @@ int CFATFileSystem::FileDelete (const char *pTitle)
 
 	return 1;
 }
+
+//
+// Function added by Magnus
+//
+unsigned CFATFileSystem::FileSize (unsigned hFile)
+{
+	TFile *pFile;
+
+	if (!(   1 <= hFile
+	      && hFile <= FAT_FILES))
+	{
+		return FS_ERROR;
+	}
+
+	m_FileTableLock.Acquire ();
+
+	pFile = &FILE (hFile);
+
+	unsigned ret = pFile->nSize;
+
+	m_FileTableLock.Release ();
+
+	return ret;
+}
