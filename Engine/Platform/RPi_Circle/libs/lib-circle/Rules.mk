@@ -22,9 +22,13 @@ ifeq ($(strip $(CIRCLEHOME)),)
 CIRCLEHOME = ..
 endif
 
+ifeq ($(strip $(OUTPUT_DIR)),)
+OUTPUT_DIR = ./
+endif
+
 -include $(CIRCLEHOME)/Config.mk
 
-RASPPI	?= 1
+RASPPI	?= 3
 PREFIX	?= arm-none-eabi-
 
 CC	= $(PREFIX)gcc
@@ -34,14 +38,14 @@ LD	= $(PREFIX)ld
 AR	= $(PREFIX)ar
 
 ifeq ($(strip $(RASPPI)),1)
-ARCH	?= -march=armv6k -mtune=arm1176jzf-s -mfloat-abi=hard
-TARGET	?= kernel
+ARCH		?= -march=armv6k -mtune=arm1176jzf-s -mfloat-abi=hard
+TARGET_IMG	?= kernel
 else ifeq ($(strip $(RASPPI)),2)
-ARCH	?= -march=armv7-a -mfpu=neon-vfpv4 -mfloat-abi=hard
-TARGET	?= kernel7
+ARCH		?= -march=armv7-a -mfpu=neon-vfpv4 -mfloat-abi=hard
+TARGET_IMG	?= kernel7
 else
-ARCH	?= -march=armv8-a -mtune=cortex-a53 -mfpu=neon-fp-armv8 -mfloat-abi=hard
-TARGET	?= kernel8-32
+ARCH		?= -march=armv8-a -mtune=cortex-a53 -mfpu=neon-fp-armv8 -mfloat-abi=hard
+TARGET_IMG	?= kernel8-32
 endif
 
 OPTIMIZE ?= -O2
@@ -53,13 +57,19 @@ CFLAGS	+= $(ARCH) -Wall -fsigned-char -fno-builtin -nostdinc -nostdlib \
 	   -D__circle__ -DRASPPI=$(RASPPI) $(INCLUDE) $(OPTIMIZE) -g #-DNDEBUG
 CPPFLAGS+= $(CFLAGS) -fno-exceptions -fno-rtti -std=c++14
 
+ifeq ($(strip $(OBJS)),)
+OBJS	= $(addprefix $(OUTPUT_DIR),$(SRCS:.cpp=.o))
+endif
+TARGET 	= $(addprefix $(OUTPUT_DIR),$(TARGET_IMG))
+
 %.o: %.S
 	$(AS) $(AFLAGS) -c -o $@ $<
 
 %.o: %.c
 	$(CC) $(CFLAGS) -c -o $@ $<
 
-%.o: %.cpp
+$(OUTPUT_DIR)%.o: %.cpp
+	mkdir -p $(dir $@ )
 	$(CPP) $(CPPFLAGS) -c -o $@ $<
 
 $(TARGET).img: $(OBJS) $(LIBS) $(CIRCLEHOME)/lib/startup.o $(CIRCLEHOME)/circle.ld
