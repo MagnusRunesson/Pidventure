@@ -2,7 +2,7 @@
 # Makefile
 #
 
-CIRCLEHOME = /Users/magnusrunesson/Projects/ROS/lib-circle
+CIRCLEHOME = Engine/Platform/RPi_Circle/libs/lib-circle
 OUTPUT_DIR	= build/
 
 SRCS=\
