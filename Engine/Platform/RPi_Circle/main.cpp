@@ -100,7 +100,31 @@ void CApp::Exit()
 	delete[] screenBuffer;
 }
 
-const uint32 DST_STRIDE = (800*5)+(800-(SCREEN_WIDTH*6));
+const uint32 DST_SCALING = 6; // While it may look like this can be changed it is in fact hardcoded in a few places that the scaling is 6x
+const uint32 DST_PHYSICAL_WIDTH = 800;
+const uint32 DST_PHYSICAL_HEIGHT = 480;
+const uint32 DST_STRIDE = (DST_PHYSICAL_WIDTH*(DST_SCALING-1))+(DST_PHYSICAL_WIDTH-(SCREEN_WIDTH*DST_SCALING));
+const uint32 DST_SCREEN_CENTER_OFFSET =
+
+(
+	(
+		(
+			DST_PHYSICAL_HEIGHT - 
+			(
+				SCREEN_HEIGHT * DST_SCALING
+			)
+		) / 2
+	) * DST_PHYSICAL_WIDTH
+) +
+(
+	(
+		DST_PHYSICAL_WIDTH -
+		(
+			SCREEN_WIDTH * DST_SCALING
+		)
+	) / 2
+);
+
 
 void CApp::Update()
 {
@@ -123,14 +147,13 @@ void CApp::Update()
 	int x, y;
 	int px, py;
 
-	const uint32 screenCenterOffset = (24*800)+112;
 	float* pSrc = screenBuffer;
-	uint32* pDst0 = m_pScreenBufferParty + screenCenterOffset + (800*0);
-	uint32* pDst1 = m_pScreenBufferParty + screenCenterOffset + (800*1);
-	uint32* pDst2 = m_pScreenBufferParty + screenCenterOffset + (800*2);
-	uint32* pDst3 = m_pScreenBufferParty + screenCenterOffset + (800*3);
-	uint32* pDst4 = m_pScreenBufferParty + screenCenterOffset + (800*4);
-	uint32* pDst5 = m_pScreenBufferParty + screenCenterOffset + (800*5);
+	uint32* pDst0 = m_pScreenBufferParty + DST_SCREEN_CENTER_OFFSET + (DST_PHYSICAL_WIDTH*0);
+	uint32* pDst1 = m_pScreenBufferParty + DST_SCREEN_CENTER_OFFSET + (DST_PHYSICAL_WIDTH*1);
+	uint32* pDst2 = m_pScreenBufferParty + DST_SCREEN_CENTER_OFFSET + (DST_PHYSICAL_WIDTH*2);
+	uint32* pDst3 = m_pScreenBufferParty + DST_SCREEN_CENTER_OFFSET + (DST_PHYSICAL_WIDTH*3);
+	uint32* pDst4 = m_pScreenBufferParty + DST_SCREEN_CENTER_OFFSET + (DST_PHYSICAL_WIDTH*4);
+	uint32* pDst5 = m_pScreenBufferParty + DST_SCREEN_CENTER_OFFSET + (DST_PHYSICAL_WIDTH*5);
 	
 	for( y=0; y<SCREEN_HEIGHT; y++ )
 	{
