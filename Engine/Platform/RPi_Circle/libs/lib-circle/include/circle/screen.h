@@ -143,7 +143,7 @@ private:
 	void EraseChar (unsigned nPosX, unsigned nPosY);
 	void InvertCursor (void);
 
-private:
+public:
 	unsigned	 m_nInitWidth;
 	unsigned	 m_nInitHeight;
 	boolean		 m_bVirtual;
