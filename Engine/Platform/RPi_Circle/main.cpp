@@ -100,6 +100,8 @@ void CApp::Exit()
 	delete[] screenBuffer;
 }
 
+const uint32 DST_STRIDE = (800*5)+(800-(SCREEN_WIDTH*6));
+
 void CApp::Update()
 {
 	//circleLog( "Test button: %i, all buttons: 0x%08x", m_testButton.Read(), CGPIOPin::ReadAll());
@@ -111,16 +113,24 @@ void CApp::Update()
 	int w = m_Screen.m_pFrameBuffer->GetWidth();
 	int h = m_Screen.m_pFrameBuffer->GetHeight();
 
+#ifdef PROFILE_SCREEN_BLITTER
 	static uint32 numIterations = 0;
 	static uint32 timeCount = 0;
 
 	unsigned t0 = CTimer::GetClockTicks();
+#endif // PROFILE_SCREEN_BLITTER
 
 	int x, y;
 	int px, py;
 
+	const uint32 screenCenterOffset = (24*800)+112;
 	float* pSrc = screenBuffer;
-	uint32* pDst = m_pScreenBufferParty;
+	uint32* pDst0 = m_pScreenBufferParty + screenCenterOffset + (800*0);
+	uint32* pDst1 = m_pScreenBufferParty + screenCenterOffset + (800*1);
+	uint32* pDst2 = m_pScreenBufferParty + screenCenterOffset + (800*2);
+	uint32* pDst3 = m_pScreenBufferParty + screenCenterOffset + (800*3);
+	uint32* pDst4 = m_pScreenBufferParty + screenCenterOffset + (800*4);
+	uint32* pDst5 = m_pScreenBufferParty + screenCenterOffset + (800*5);
 	
 	for( y=0; y<SCREEN_HEIGHT; y++ )
 	{
@@ -148,12 +158,53 @@ void CApp::Update()
    				}
    				*/
 
-   			*pDst++ = c;
+   			*pDst0++ = c;
+   			*pDst0++ = c;
+   			*pDst0++ = c;
+   			*pDst0++ = c;
+   			*pDst0++ = c;
+   			*pDst0++ = c;
+   			*pDst1++ = c;
+   			*pDst1++ = c;
+   			*pDst1++ = c;
+   			*pDst1++ = c;
+   			*pDst1++ = c;
+   			*pDst1++ = c;
+   			*pDst2++ = c;
+   			*pDst2++ = c;
+   			*pDst2++ = c;
+   			*pDst2++ = c;
+   			*pDst2++ = c;
+   			*pDst2++ = c;
+   			*pDst3++ = c;
+   			*pDst3++ = c;
+   			*pDst3++ = c;
+   			*pDst3++ = c;
+   			*pDst3++ = c;
+   			*pDst3++ = c;
+   			*pDst4++ = c;
+   			*pDst4++ = c;
+   			*pDst4++ = c;
+   			*pDst4++ = c;
+   			*pDst4++ = c;
+   			*pDst4++ = c;
+   			*pDst5++ = c;
+   			*pDst5++ = c;
+   			*pDst5++ = c;
+   			*pDst5++ = c;
+   			*pDst5++ = c;
+   			*pDst5++ = c;
 		}
 
-		pDst += (800-SCREEN_WIDTH);	// Stride
+		pDst0 += DST_STRIDE;
+		pDst1 += DST_STRIDE;
+		pDst2 += DST_STRIDE;
+		pDst3 += DST_STRIDE;
+		pDst4 += DST_STRIDE;
+		pDst5 += DST_STRIDE;
 	}
 
+#ifdef PROFILE_SCREEN_BLITTER
 	unsigned t1 = CTimer::GetClockTicks();
 
 	timeCount += (t1-t0);
@@ -164,6 +215,7 @@ void CApp::Update()
 		numIterations = 0;
 		timeCount = 0;
 	}
+#endif // PROFILE_SCREEN_BLITTER
 
 	//m_Logger.Write( FromKernel, LogNotice, "Compile time: " __DATE__ " " __TIME__ );
 
