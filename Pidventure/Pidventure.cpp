@@ -16,6 +16,7 @@
 #include "Engine/IO/Joypad.h"
 #include "Engine/IO/FileCache.h"
 #include "Engine/IO/Data.h"
+#include "Engine/IO/File.h"
 #include "Engine/Graphics/Animation.h"
 #include "Engine/Graphics/TileBank.h"
 #include "Engine/Graphics/TileMap.h"
@@ -37,9 +38,12 @@ Image* pImageOverlay;
 
 void game_setup()
 {
+	fileInit();
+	
 	debugLog("Gamesetup start - banankontakt\n");	// This was printed
 	char* papa = (char*)malloc(10);
 	debugLog("Gamesetup start - kossa\n");			// And this was printed
+	
 	pPlayer = new CPlayer();
 	debugLog("Gamesetup start - apa\n");			// But this was never printed. Added a bunch of prints in between, that should help find out what is going on.
 	pPlayer->SetWorldPosition( 40.0f, 62.0f );
@@ -61,6 +65,8 @@ void game_setup()
 	pImageOverlay = imageLoad( "sprite_overlaytest" );
 	
 	free(papa);
+	
+	debugLog("Gamesetup end");
 }
 
 void game_exit()
@@ -70,6 +76,7 @@ void game_exit()
 	imageUnload( pImageOverlay );
 	
 	worldExit();
+
 	bgExit();
 	dataExit();
 	
@@ -83,7 +90,7 @@ void game_loop()
 	pPlayer->Update();
 
 	t += dt * 0.5f;
-	
+
 	int x, y;
 	for(y=0; y<SCREEN_HEIGHT; y++)
 	{

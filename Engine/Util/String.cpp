@@ -61,6 +61,8 @@ void stringCopy( char* _pszDest, const char* _pszSource )
 		_pszDest++;
 		_pszSource++;
 	}
+	
+	*_pszDest = 0;
 }
 
 int stringCompare( const char* _pszA, const char* _pszB )
@@ -87,7 +89,7 @@ int stringCompare( const char* _pszA, const char* _pszB )
 
 char* stringDuplicate( const char* _pszSource )
 {
-	char* pszRet = new char[ stringLength( _pszSource )];
+	char* pszRet = new char[ stringLength( _pszSource )+1 ];
 	stringCopy( pszRet, _pszSource );
 	return pszRet;
 }

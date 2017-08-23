@@ -60,7 +60,7 @@ char g_pszFileName[ 1024 ];
 
 char* fileGetFullName(const char* _pszFileName)
 {
-	snprintf(g_pszFileName, 1024, "%s%s", pszBasePath, _pszFileName);
+	snprintf(g_pszFileName, 1024, "%s%s", pszBasePath, fileTranslatorGetCrunchedName( _pszFileName ));
 	return g_pszFileName;
 }
 
@@ -75,7 +75,7 @@ bool fileLoad(const char* _pszFileName, void** _ppReadData, int* _pReadBytes)
 	debugLog( "Loading file '%s'\n", _pszFileName );
 	const char* pszFullFileName = fileGetFullName( _pszFileName );
 	FILE* f = fopen(pszFullFileName, "rb");
-	debugLog( "Opened file: 0x%08x\n", f );
+	//debugLog( "Opened file: 0x%08x by name '%s'\n", f, pszFullFileName );
 	if(f == NULL)
 		return false;
 
@@ -83,15 +83,15 @@ bool fileLoad(const char* _pszFileName, void** _ppReadData, int* _pReadBytes)
 	fseek( f, 0, SEEK_END );
 	long fileSize = ftell( f );
 	fseek( f, 0, SEEK_SET );
-	debugLog( "File size: %i\n", fileSize );
+	//debugLog( "File size: %i\n", fileSize );
 	
 	*_ppReadData = new char[ fileSize ];
-	debugLog( "Allocated data: 0x%08x\n", *_ppReadData );
+	//debugLog( "Allocated data: 0x%08x\n", *_ppReadData );
 	*_pReadBytes = (int)fread( *_ppReadData, 1, fileSize, f );
-	debugLog( "Read %i bytes\n", *_pReadBytes );
+	//debugLog( "Read %i bytes\n", *_pReadBytes );
 	
 	fclose( f );
-	debugLog("Done\n");
+	//debugLog("Done\n");
 	
 	fileTrackOpen( *_ppReadData, _pszFileName, *_pReadBytes );
 	fileCacheAddFile( _pszFileName, *_ppReadData, *_pReadBytes );

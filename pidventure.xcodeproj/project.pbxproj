@@ -13,6 +13,7 @@
 		250427551F1BE1C100409835 /* Data.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 250427531F1BE1C100409835 /* Data.cpp */; settings = {ASSET_TAGS = (); }; };
 		254D83361F4ACD4A00B1A2FC /* String.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 254D83341F4ACD4A00B1A2FC /* String.cpp */; settings = {ASSET_TAGS = (); }; };
 		254D83391F4AF28700B1A2FC /* Memory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 254D83371F4AF28700B1A2FC /* Memory.cpp */; settings = {ASSET_TAGS = (); }; };
+		254D83421F4C3D4F00B1A2FC /* File.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 254D83411F4C3D4F00B1A2FC /* File.cpp */; settings = {ASSET_TAGS = (); }; };
 		257AE69A1D6B507700CACB74 /* Animation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 257AE68A1D6B507700CACB74 /* Animation.cpp */; settings = {ASSET_TAGS = (); }; };
 		257AE69C1D6B507700CACB74 /* Screen.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 257AE68E1D6B507700CACB74 /* Screen.cpp */; settings = {ASSET_TAGS = (); }; };
 		257AE69D1D6B507700CACB74 /* Sprite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 257AE6901D6B507700CACB74 /* Sprite.cpp */; settings = {ASSET_TAGS = (); }; };
@@ -76,6 +77,7 @@
 		254D83351F4ACD4A00B1A2FC /* String.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = String.h; path = Engine/Util/String.h; sourceTree = "<group>"; };
 		254D83371F4AF28700B1A2FC /* Memory.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Memory.cpp; path = Engine/Util/Memory.cpp; sourceTree = "<group>"; };
 		254D83381F4AF28700B1A2FC /* Memory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Memory.h; path = Engine/Util/Memory.h; sourceTree = "<group>"; };
+		254D83411F4C3D4F00B1A2FC /* File.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = File.cpp; path = Engine/IO/File.cpp; sourceTree = "<group>"; };
 		257AE68A1D6B507700CACB74 /* Animation.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Animation.cpp; path = Engine/Graphics/Animation.cpp; sourceTree = "<group>"; };
 		257AE68B1D6B507700CACB74 /* Animation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Animation.h; path = Engine/Graphics/Animation.h; sourceTree = "<group>"; };
 		257AE68D1D6B507700CACB74 /* Image.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Image.h; path = Engine/Graphics/Image.h; sourceTree = "<group>"; };
@@ -299,6 +301,7 @@
 				25F930921D7E88D80026DA4C /* IO.h */,
 				257AE6C91D77FF9400CACB74 /* Joypad.cpp */,
 				257AE6CA1D77FF9400CACB74 /* Joypad.h */,
+				254D83411F4C3D4F00B1A2FC /* File.cpp */,
 				25F9308F1D7E87D80026DA4C /* File.h */,
 				258A2F0F1DCC5C4D005915CD /* FileCache.cpp */,
 				258A2F101DCC5C4D005915CD /* FileCache.h */,
@@ -459,6 +462,7 @@
 				257AE6AA1D6B507E00CACB74 /* Camera.cpp in Sources */,
 				257AE69A1D6B507700CACB74 /* Animation.cpp in Sources */,
 				25F9309A1D81BBD70026DA4C /* background.cpp in Sources */,
+				254D83421F4C3D4F00B1A2FC /* File.cpp in Sources */,
 				257AE6CF1D7800BF00CACB74 /* AudioHandler.cpp in Sources */,
 				257AE69D1D6B507700CACB74 /* Sprite.cpp in Sources */,
 				250427551F1BE1C100409835 /* Data.cpp in Sources */,

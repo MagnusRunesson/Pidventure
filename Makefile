@@ -38,6 +38,7 @@ SRCS=\
 	Engine/Graphics/Font.cpp \
 	Engine/Graphics/TextRenderer.cpp \
 	Engine/IO/Joypad.cpp \
+	Engine/IO/File.cpp \
 	Engine/IO/FileCache.cpp \
 	Engine/IO/Data.cpp \
 	Engine/Platform/RPi_Circle/file_rpi_circle.cpp \
@@ -51,6 +52,9 @@ SRCS=\
 INCLUDE = -I .
 
 CFLAGS	= -DENGINE_TARGET_RPI_CIRCLE -fpermissive
-LIBS	= $(CIRCLEHOME)/lib/libcircle.a
+LIBS	= $(CIRCLEHOME)/addon/SDCard/libsdcard.a \
+		$(CIRCLEHOME)/lib/fs/fat/libfatfs.a \
+		$(CIRCLEHOME)/lib/fs/libfs.a \
+		$(CIRCLEHOME)/lib/libcircle.a
 
 include Rules.mk
