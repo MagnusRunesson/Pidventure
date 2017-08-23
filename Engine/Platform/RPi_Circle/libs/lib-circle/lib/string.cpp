@@ -239,6 +239,7 @@ void CString::FormatV (const char *pFormat, va_list Args)
 				}
 				break;
 
+			case 'i':
 			case 'd':
 				if (bLong)
 				{
