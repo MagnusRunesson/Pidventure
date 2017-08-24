@@ -16,17 +16,55 @@ extern void game_loop();
 extern void game_exit();
 extern void game_debugTrigger( int );
 
+extern uint32 gKeyBuff;
+
 void circleLog( char* _pszMessage, ... );
 
 CApp* g_pApp;
+
+typedef struct GPIOPinMapEntry
+{
+	uint32 hardwareMask;
+	uint32 virtualMask;
+};
+
+const int NUM_GPIO_PINS = 12;
+GPIOPinMapEntry g_GPIOPinMap[ NUM_GPIO_PINS ];
+
+const int RPI_GPIO_UP		= 19;
+const int RPI_GPIO_DOWN		= 26;
+const int RPI_GPIO_LEFT		= 13;
+const int RPI_GPIO_RIGHT	= 18; // 6;
+const int RPI_GPIO_BTN0		= 20;
+const int RPI_GPIO_BTN1		= 16;
+const int RPI_GPIO_BTN2		= 12;
+const int RPI_GPIO_BTN3		= 22;
+const int RPI_GPIO_BTN4		= 23;
+const int RPI_GPIO_BTN5		= 24;
+const int RPI_GPIO_BTN6		= 27;
+const int RPI_GPIO_BTN7		= 21;
 
 CApp::CApp( void )
 :	m_Screen( m_Options.GetWidth(), m_Options.GetHeight()),
 	m_Timer( &m_Interrupt ),
 	m_Logger( m_Options.GetLogLevel (), &m_Timer ),
 	m_EMMC( &m_Interrupt, &m_Timer, &m_ActLED ),
-	m_testButton( 18, GPIOModeInputPullUp )
+	m_GPIO_PadUp( RPI_GPIO_UP, GPIOModeInputPullUp ),
+	m_GPIO_PadDown( RPI_GPIO_DOWN, GPIOModeInputPullUp ),
+	m_GPIO_PadLeft( RPI_GPIO_LEFT, GPIOModeInputPullUp ),
+	m_GPIO_PadRight( RPI_GPIO_RIGHT, GPIOModeInputPullUp ),
+	m_GPIO_PadBtn0( RPI_GPIO_BTN0, GPIOModeInputPullUp ),
+	m_GPIO_PadBtn1( RPI_GPIO_BTN1, GPIOModeInputPullUp ),
+	m_GPIO_PadBtn2( RPI_GPIO_BTN2, GPIOModeInputPullUp ),
+	m_GPIO_PadBtn3( RPI_GPIO_BTN3, GPIOModeInputPullUp ),
+	m_GPIO_PadBtn4( RPI_GPIO_BTN4, GPIOModeInputPullUp ),
+	m_GPIO_PadBtn5( RPI_GPIO_BTN5, GPIOModeInputPullUp ),
+	m_GPIO_PadBtn6( RPI_GPIO_BTN6, GPIOModeInputPullUp ),
+	m_GPIO_PadBtn7( RPI_GPIO_BTN7, GPIOModeInputPullUp )
 {
+	// DPad Up
+	g_GPIOPinMap[ 0 ].virtualMask = PAD_KEYMASK_DPAD_UP;
+	g_GPIOPinMap[ 0 ].hardwareMask = 0x40000;
 }
 
 CApp::~CApp()
@@ -282,6 +320,14 @@ bool CApp::FileLoad( const char* _pszFileName, void** _ppReadData, int* _pReadBy
 	return true;
 }
 
+void CApp::PadHardwareUpdate()
+{
+	unsigned pins = CGPIOPin::ReadAll();
+	if( pins & 0x40000 )
+		gKeyBuff &= ~PAD_KEYMASK_DPAD_RIGHT;
+	else
+		gKeyBuff |= PAD_KEYMASK_DPAD_RIGHT;
+}
 
 
 float* screenBuffer;
@@ -318,6 +364,15 @@ void circleLog( const char* _pszMessage, ... )
 bool circleFileLoad(const char* _pszFileName, void** _ppReadData, int* _pReadBytes)
 {
 	return g_pApp->FileLoad( _pszFileName, _ppReadData, _pReadBytes );
+}
+
+void circlePadHardwareInit()
+{
+}
+
+void circlePadHardwareUpdate()
+{
+	g_pApp->PadHardwareUpdate();
 }
 
 void audioInit( int _frequency )

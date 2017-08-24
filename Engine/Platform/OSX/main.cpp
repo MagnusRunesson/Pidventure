@@ -54,7 +54,6 @@ const Uint16 shiftMask[] =
 
 int gx;
 int gy;
-int gKeyDPadBuff;
 
 extern uint32 gKeyBuff;
 
@@ -99,8 +98,6 @@ bool init()
 		screenBuffer[ i ] = i*10;
 	 */
 	
-	gKeyBuff = 0;
-	gKeyDPadBuff = 0;
 	gx = 10;
 	gy = 10;
 	

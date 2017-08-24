@@ -33,11 +33,23 @@ public:
 
 	void Log( char* _pszMessage );
 	bool FileLoad( const char* _pszFileName, void** _ppReadData, int* _pReadBytes );
+	void PadHardwareUpdate();
 
 	uint32* m_pScreenBufferParty;
 	uint8* m_pScreenBufferPartyUInt8;
 
-	CGPIOPin m_testButton;
+	CGPIOPin m_GPIO_PadUp;
+	CGPIOPin m_GPIO_PadDown;
+	CGPIOPin m_GPIO_PadLeft;
+	CGPIOPin m_GPIO_PadRight;
+	CGPIOPin m_GPIO_PadBtn0;
+	CGPIOPin m_GPIO_PadBtn1;
+	CGPIOPin m_GPIO_PadBtn2;
+	CGPIOPin m_GPIO_PadBtn3;
+	CGPIOPin m_GPIO_PadBtn4;
+	CGPIOPin m_GPIO_PadBtn5;
+	CGPIOPin m_GPIO_PadBtn6;
+	CGPIOPin m_GPIO_PadBtn7;
 
 private:
 	// do not change this order

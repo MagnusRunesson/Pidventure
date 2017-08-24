@@ -14,6 +14,7 @@
 		254D83361F4ACD4A00B1A2FC /* String.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 254D83341F4ACD4A00B1A2FC /* String.cpp */; settings = {ASSET_TAGS = (); }; };
 		254D83391F4AF28700B1A2FC /* Memory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 254D83371F4AF28700B1A2FC /* Memory.cpp */; settings = {ASSET_TAGS = (); }; };
 		254D83421F4C3D4F00B1A2FC /* File.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 254D83411F4C3D4F00B1A2FC /* File.cpp */; settings = {ASSET_TAGS = (); }; };
+		254D83441F4EB66200B1A2FC /* joypad_osx.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 254D83431F4EB66100B1A2FC /* joypad_osx.cpp */; settings = {ASSET_TAGS = (); }; };
 		257AE69A1D6B507700CACB74 /* Animation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 257AE68A1D6B507700CACB74 /* Animation.cpp */; settings = {ASSET_TAGS = (); }; };
 		257AE69C1D6B507700CACB74 /* Screen.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 257AE68E1D6B507700CACB74 /* Screen.cpp */; settings = {ASSET_TAGS = (); }; };
 		257AE69D1D6B507700CACB74 /* Sprite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 257AE6901D6B507700CACB74 /* Sprite.cpp */; settings = {ASSET_TAGS = (); }; };
@@ -78,6 +79,7 @@
 		254D83371F4AF28700B1A2FC /* Memory.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Memory.cpp; path = Engine/Util/Memory.cpp; sourceTree = "<group>"; };
 		254D83381F4AF28700B1A2FC /* Memory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Memory.h; path = Engine/Util/Memory.h; sourceTree = "<group>"; };
 		254D83411F4C3D4F00B1A2FC /* File.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = File.cpp; path = Engine/IO/File.cpp; sourceTree = "<group>"; };
+		254D83431F4EB66100B1A2FC /* joypad_osx.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = joypad_osx.cpp; path = Engine/Platform/OSX/joypad_osx.cpp; sourceTree = "<group>"; };
 		257AE68A1D6B507700CACB74 /* Animation.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Animation.cpp; path = Engine/Graphics/Animation.cpp; sourceTree = "<group>"; };
 		257AE68B1D6B507700CACB74 /* Animation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Animation.h; path = Engine/Graphics/Animation.h; sourceTree = "<group>"; };
 		257AE68D1D6B507700CACB74 /* Image.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Image.h; path = Engine/Graphics/Image.h; sourceTree = "<group>"; };
@@ -289,6 +291,7 @@
 			children = (
 				257AE6C61D77FF4900CACB74 /* main.cpp */,
 				25F9308C1D7E83640026DA4C /* file_osx.cpp */,
+				254D83431F4EB66100B1A2FC /* joypad_osx.cpp */,
 			);
 			name = Platform/OSX;
 			sourceTree = "<group>";
@@ -472,6 +475,7 @@
 				2504273B1EE54BE500409835 /* Font.cpp in Sources */,
 				2504273C1EE54BE500409835 /* TextRenderer.cpp in Sources */,
 				25A44AE71DAFD8E900C6CE0C /* Door.cpp in Sources */,
+				254D83441F4EB66200B1A2FC /* joypad_osx.cpp in Sources */,
 				257AE69C1D6B507700CACB74 /* Screen.cpp in Sources */,
 				257AE6DF1D78023D00CACB74 /* Pidventure.cpp in Sources */,
 				25F930A01D87B8670026DA4C /* Physics.cpp in Sources */,
