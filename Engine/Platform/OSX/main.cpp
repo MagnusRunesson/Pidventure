@@ -55,7 +55,7 @@ const Uint16 shiftMask[] =
 int gx;
 int gy;
 
-extern uint32 gKeyBuff;
+extern uint32 g_JoypadHardwareBuffer;
 
 SDL_AudioDeviceID dev;
 
@@ -288,18 +288,18 @@ bool DoSDL()
 					quit = true;
 					break;
 					
-				case SDL_KEYCODE_ACTION_UL:		SetBit( gKeyBuff, PAD_KEYMASK_ACTION_UL );			break;
-				case SDL_KEYCODE_ACTION_UM:		SetBit( gKeyBuff, PAD_KEYMASK_ACTION_UM );			break;
-				case SDL_KEYCODE_ACTION_UR:		SetBit( gKeyBuff, PAD_KEYMASK_ACTION_UR );			break;
-				case SDL_KEYCODE_ACTION_LL:		SetBit( gKeyBuff, PAD_KEYMASK_ACTION_LL );			break;
-				case SDL_KEYCODE_ACTION_LM:		SetBit( gKeyBuff, PAD_KEYMASK_ACTION_LM );			break;
-				case SDL_KEYCODE_ACTION_LR:		SetBit( gKeyBuff, PAD_KEYMASK_ACTION_LR );			break;
-				case SDL_KEYCODE_PGM_L:			SetBit( gKeyBuff, PAD_KEYMASK_PGM_L );				break;
-				case SDL_KEYCODE_PGM_R:			SetBit( gKeyBuff, PAD_KEYMASK_PGM_R );				break;
-				case SDL_KEYCODE_DPAD_UP:		SetBit( gKeyBuff, PAD_KEYMASK_DPAD_UP );			break;
-				case SDL_KEYCODE_DPAD_DOWN:		SetBit( gKeyBuff, PAD_KEYMASK_DPAD_DOWN );			break;
-				case SDL_KEYCODE_DPAD_LEFT:		SetBit( gKeyBuff, PAD_KEYMASK_DPAD_LEFT );			break;
-				case SDL_KEYCODE_DPAD_RIGHT:	SetBit( gKeyBuff, PAD_KEYMASK_DPAD_RIGHT );			break;
+				case SDL_KEYCODE_ACTION_UL:		SetBit( g_JoypadHardwareBuffer, PAD_KEYMASK_ACTION_UL );			break;
+				case SDL_KEYCODE_ACTION_UM:		SetBit( g_JoypadHardwareBuffer, PAD_KEYMASK_ACTION_UM );			break;
+				case SDL_KEYCODE_ACTION_UR:		SetBit( g_JoypadHardwareBuffer, PAD_KEYMASK_ACTION_UR );			break;
+				case SDL_KEYCODE_ACTION_LL:		SetBit( g_JoypadHardwareBuffer, PAD_KEYMASK_ACTION_LL );			break;
+				case SDL_KEYCODE_ACTION_LM:		SetBit( g_JoypadHardwareBuffer, PAD_KEYMASK_ACTION_LM );			break;
+				case SDL_KEYCODE_ACTION_LR:		SetBit( g_JoypadHardwareBuffer, PAD_KEYMASK_ACTION_LR );			break;
+				case SDL_KEYCODE_PGM_L:			SetBit( g_JoypadHardwareBuffer, PAD_KEYMASK_PGM_L );				break;
+				case SDL_KEYCODE_PGM_R:			SetBit( g_JoypadHardwareBuffer, PAD_KEYMASK_PGM_R );				break;
+				case SDL_KEYCODE_DPAD_UP:		SetBit( g_JoypadHardwareBuffer, PAD_KEYMASK_DPAD_UP );			break;
+				case SDL_KEYCODE_DPAD_DOWN:		SetBit( g_JoypadHardwareBuffer, PAD_KEYMASK_DPAD_DOWN );			break;
+				case SDL_KEYCODE_DPAD_LEFT:		SetBit( g_JoypadHardwareBuffer, PAD_KEYMASK_DPAD_LEFT );			break;
+				case SDL_KEYCODE_DPAD_RIGHT:	SetBit( g_JoypadHardwareBuffer, PAD_KEYMASK_DPAD_RIGHT );			break;
 				case SDLK_0: game_debugTrigger( 0 ); break;
 				case SDLK_1: game_debugTrigger( 1 ); break;
 				case SDLK_2: game_debugTrigger( 2 ); break;
@@ -316,18 +316,18 @@ bool DoSDL()
 		{
 			switch( e.key.keysym.sym )
 			{
-				case SDL_KEYCODE_ACTION_UL:		ClrBit( gKeyBuff, PAD_KEYMASK_ACTION_UL );			break;
-				case SDL_KEYCODE_ACTION_UM:		ClrBit( gKeyBuff, PAD_KEYMASK_ACTION_UM );			break;
-				case SDL_KEYCODE_ACTION_UR:		ClrBit( gKeyBuff, PAD_KEYMASK_ACTION_UR );			break;
-				case SDL_KEYCODE_ACTION_LL:		ClrBit( gKeyBuff, PAD_KEYMASK_ACTION_LL );			break;
-				case SDL_KEYCODE_ACTION_LM:		ClrBit( gKeyBuff, PAD_KEYMASK_ACTION_LM );			break;
-				case SDL_KEYCODE_ACTION_LR:		ClrBit( gKeyBuff, PAD_KEYMASK_ACTION_LR );			break;
-				case SDL_KEYCODE_PGM_L:			ClrBit( gKeyBuff, PAD_KEYMASK_PGM_L );				break;
-				case SDL_KEYCODE_PGM_R:			ClrBit( gKeyBuff, PAD_KEYMASK_PGM_R );				break;
-				case SDL_KEYCODE_DPAD_UP:		ClrBit( gKeyBuff, PAD_KEYMASK_DPAD_UP );			break;
-				case SDL_KEYCODE_DPAD_DOWN:		ClrBit( gKeyBuff, PAD_KEYMASK_DPAD_DOWN );			break;
-				case SDL_KEYCODE_DPAD_LEFT:		ClrBit( gKeyBuff, PAD_KEYMASK_DPAD_LEFT );			break;
-				case SDL_KEYCODE_DPAD_RIGHT:	ClrBit( gKeyBuff, PAD_KEYMASK_DPAD_RIGHT );			break;
+				case SDL_KEYCODE_ACTION_UL:		ClrBit( g_JoypadHardwareBuffer, PAD_KEYMASK_ACTION_UL );			break;
+				case SDL_KEYCODE_ACTION_UM:		ClrBit( g_JoypadHardwareBuffer, PAD_KEYMASK_ACTION_UM );			break;
+				case SDL_KEYCODE_ACTION_UR:		ClrBit( g_JoypadHardwareBuffer, PAD_KEYMASK_ACTION_UR );			break;
+				case SDL_KEYCODE_ACTION_LL:		ClrBit( g_JoypadHardwareBuffer, PAD_KEYMASK_ACTION_LL );			break;
+				case SDL_KEYCODE_ACTION_LM:		ClrBit( g_JoypadHardwareBuffer, PAD_KEYMASK_ACTION_LM );			break;
+				case SDL_KEYCODE_ACTION_LR:		ClrBit( g_JoypadHardwareBuffer, PAD_KEYMASK_ACTION_LR );			break;
+				case SDL_KEYCODE_PGM_L:			ClrBit( g_JoypadHardwareBuffer, PAD_KEYMASK_PGM_L );				break;
+				case SDL_KEYCODE_PGM_R:			ClrBit( g_JoypadHardwareBuffer, PAD_KEYMASK_PGM_R );				break;
+				case SDL_KEYCODE_DPAD_UP:		ClrBit( g_JoypadHardwareBuffer, PAD_KEYMASK_DPAD_UP );			break;
+				case SDL_KEYCODE_DPAD_DOWN:		ClrBit( g_JoypadHardwareBuffer, PAD_KEYMASK_DPAD_DOWN );			break;
+				case SDL_KEYCODE_DPAD_LEFT:		ClrBit( g_JoypadHardwareBuffer, PAD_KEYMASK_DPAD_LEFT );			break;
+				case SDL_KEYCODE_DPAD_RIGHT:	ClrBit( g_JoypadHardwareBuffer, PAD_KEYMASK_DPAD_RIGHT );			break;
 			}
 		}
 	}

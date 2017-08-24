@@ -16,7 +16,7 @@ extern void game_loop();
 extern void game_exit();
 extern void game_debugTrigger( int );
 
-extern uint32 gKeyBuff;
+extern uint32 g_JoypadHardwareBuffer;
 
 void circleLog( char* _pszMessage, ... );
 
@@ -324,9 +324,9 @@ void CApp::PadHardwareUpdate()
 {
 	unsigned pins = CGPIOPin::ReadAll();
 	if( pins & 0x40000 )
-		gKeyBuff &= ~PAD_KEYMASK_DPAD_RIGHT;
+		g_JoypadHardwareBuffer &= ~PAD_KEYMASK_DPAD_RIGHT;
 	else
-		gKeyBuff |= PAD_KEYMASK_DPAD_RIGHT;
+		g_JoypadHardwareBuffer |= PAD_KEYMASK_DPAD_RIGHT;
 }
 
 

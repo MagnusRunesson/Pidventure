@@ -17,13 +17,13 @@ extern void padHardwareUpdate();
 #define BUFFER_SWITCH_LENGTH	(16)
 #define BUFFER_SWITCH_MASK		((1<<BUFFER_SWITCH_LENGTH)-1)
 
-uint32 gkeys;
-uint32 gKeyBuff;
+uint32 g_JoypadVirtualKeysBuffer;
+uint32 g_JoypadHardwareBuffer;
 
 void padInit()
 {
-	gkeys = 0;
-	gKeyBuff = 0;
+	g_JoypadVirtualKeysBuffer = 0;
+	g_JoypadHardwareBuffer = 0;
 
 	padHardwareInit();
 }
@@ -32,8 +32,8 @@ void padUpdate()
 {
 	padHardwareUpdate();
 	
-	gkeys <<= BUFFER_SWITCH_LENGTH;
-	gkeys |= gKeyBuff;
+	g_JoypadVirtualKeysBuffer <<= BUFFER_SWITCH_LENGTH;
+	g_JoypadVirtualKeysBuffer |= g_JoypadHardwareBuffer;
 }
 
 uint8 padGet( float* _x, float* _y )
@@ -41,19 +41,19 @@ uint8 padGet( float* _x, float* _y )
 	*_x = padGetX();
 	*_y = padGetY();
 
-	return gkeys;
+	return g_JoypadVirtualKeysBuffer;
 }
 
 uint8 padGetKeys()
 {
-	return gkeys;
+	return g_JoypadVirtualKeysBuffer;
 }
 
 float padGetX()
 {
 	float ret = 0;
-	if( HasBit( gkeys, PAD_KEYMASK_DPAD_LEFT ))	ret -= 1.0f;
-	if( HasBit( gkeys, PAD_KEYMASK_DPAD_RIGHT ))	ret += 1.0f;
+	if( HasBit( g_JoypadVirtualKeysBuffer, PAD_KEYMASK_DPAD_LEFT ))	ret -= 1.0f;
+	if( HasBit( g_JoypadVirtualKeysBuffer, PAD_KEYMASK_DPAD_RIGHT ))	ret += 1.0f;
 	
 	return ret;
 }
@@ -61,24 +61,24 @@ float padGetX()
 float padGetY()
 {
 	float ret = 0;
-	if( HasBit( gkeys, PAD_KEYMASK_DPAD_UP ))	ret -= 1.0f;
-	if( HasBit( gkeys, PAD_KEYMASK_DPAD_DOWN ))	ret += 1.0f;
+	if( HasBit( g_JoypadVirtualKeysBuffer, PAD_KEYMASK_DPAD_UP ))	ret -= 1.0f;
+	if( HasBit( g_JoypadVirtualKeysBuffer, PAD_KEYMASK_DPAD_DOWN ))	ret += 1.0f;
 	
 	return ret;
 }
 
 uint16 padGetPressed()
 {
-	uint16 prev = (gkeys>>BUFFER_SWITCH_LENGTH) & BUFFER_SWITCH_MASK;
-	uint16 curr = (gkeys) & BUFFER_SWITCH_MASK;
+	uint16 prev = (g_JoypadVirtualKeysBuffer>>BUFFER_SWITCH_LENGTH) & BUFFER_SWITCH_MASK;
+	uint16 curr = (g_JoypadVirtualKeysBuffer) & BUFFER_SWITCH_MASK;
 	uint16 ret = (prev ^ curr) & curr;
 	return ret;
 }
 
 uint16 padGetReleased()
 {
-	uint16 prev = (gkeys>>BUFFER_SWITCH_LENGTH) & BUFFER_SWITCH_MASK;
-	uint16 curr = (gkeys) & BUFFER_SWITCH_MASK;
+	uint16 prev = (g_JoypadVirtualKeysBuffer>>BUFFER_SWITCH_LENGTH) & BUFFER_SWITCH_MASK;
+	uint16 curr = (g_JoypadVirtualKeysBuffer) & BUFFER_SWITCH_MASK;
 	uint16 ret = (prev ^ curr) & prev;
 	return ret;
 }
