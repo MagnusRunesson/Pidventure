@@ -11,6 +11,8 @@
 static const char FromKernel[] = "kernel";
 #define PARTITION	"emmc1-1"
 
+//#define FILENAME "kernel7.img"
+
 extern void game_setup();
 extern void game_loop();
 extern void game_exit();
@@ -131,6 +133,33 @@ void CApp::Init()
 	}
 
 	game_setup();
+
+
+	/*
+	// Create file and write to it
+	unsigned hFile = m_FileSystem.FileCreate( FILENAME);
+	if (hFile == 0)
+	{
+		m_Logger.Write (FromKernel, LogPanic, "Cannot create file: %s", FILENAME);
+	}
+
+	for (unsigned nLine = 1; nLine <= 5; nLine++)
+	{
+		CString Msg;
+		Msg.Format ("Hello File! (Line %u)\n", nLine);
+
+		if (m_FileSystem.FileWrite (hFile, (const char *) Msg, Msg.GetLength ()) != Msg.GetLength ())
+		{
+			m_Logger.Write (FromKernel, LogError, "Write error");
+			break;
+		}
+	}
+
+	if (!m_FileSystem.FileClose (hFile))
+	{
+		m_Logger.Write (FromKernel, LogPanic, "Cannot close file");
+	}
+	*/
 }
 
 void CApp::Exit()
