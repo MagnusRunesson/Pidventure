@@ -13,5 +13,6 @@ bool fileCacheGetFile( const char* _pszFileName, void** _ppData, int* _pSize );
 void fileCacheUnreferenceFile( void* _pData );
 void fileCacheAddFile( const char* _pszFileName, void* _pFileData, int _fileSize );
 void fileCacheReset();
+void fileCacheDebugPrintStats();
 
 #endif /* FileCache_h */

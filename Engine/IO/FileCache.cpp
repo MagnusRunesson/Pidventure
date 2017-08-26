@@ -148,3 +148,16 @@ void fileCacheReset()
 		pFile->pszFileName = NULL;
 	}
 }
+
+void fileCacheDebugPrintStats()
+{
+	int i;
+	for( i=0; i<FILE_CACHE_SIZE; i++ )
+	{
+		CCachedFile* pFile = &fileCache[ i ];
+		if( pFile->pszFileName == NULL )
+			continue;
+		
+		debugLog( "File '%s' have %i references\n", pFile->pszFileName, pFile->NumReferences );
+	}
+}
