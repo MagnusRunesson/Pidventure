@@ -96,6 +96,7 @@ void SpriteRenderer::RemoveSpriteFromSortList( Sprite* _pSprite )
 void SpriteRenderer::FreeSprite( Sprite* _spriteInstance )
 {
 	//printf("freeing sprite from image %s\n", _spriteInstance->image->DEBUG_name );
+	_spriteInstance->Reboot();
 	_spriteInstance->image = NULL;
 	_spriteInstance->owner = NULL;
 	_spriteInstance->rendererIndex = INVALID_SPRITE_RENDERER_INDEX;
