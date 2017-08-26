@@ -145,5 +145,6 @@ void fileCacheReset()
 		delete[] pFile->pszFileName;
 		pFile->FileSize = 0;
 		pFile->NumReferences = 0;
+		pFile->pszFileName = NULL;
 	}
 }
