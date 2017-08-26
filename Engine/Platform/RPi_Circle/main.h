@@ -18,6 +18,8 @@
 #include <circle/types.h>
 #include <circle/fs/fat/fatfs.h>
 #include <circle/gpiopin.h>
+#include <circle/usb/dwhcidevice.h>
+#include <circle/usb/usbkeyboard.h>
 #include <SDCard/emmc.h>
 #include "Engine/Core/Types.h"
 
@@ -34,6 +36,7 @@ public:
 	void Log( char* _pszMessage );
 	bool FileLoad( const char* _pszFileName, void** _ppReadData, int* _pReadBytes );
 	void PadHardwareUpdate();
+	static void KeyStatusHandlerRaw( unsigned char ucModifiers, const unsigned char RawKeys[ 6 ]);
 
 	uint32* m_pScreenBufferParty;
 	uint8* m_pScreenBufferPartyUInt8;
@@ -51,6 +54,8 @@ public:
 	CGPIOPin m_GPIO_PadBtn6;
 	CGPIOPin m_GPIO_PadBtn7;
 
+	CUSBKeyboardDevice* m_pKeyboard;
+
 private:
 	// do not change this order
 	CMemorySystem		m_Memory;
@@ -64,8 +69,13 @@ private:
 	CTimer				m_Timer;
 	CLogger				m_Logger;
 
+	// SD Card
 	CEMMCDevice			m_EMMC;
 	CFATFileSystem		m_FileSystem;
+
+	// Keyboard
+	CDWHCIDevice		m_DWHCI;
+
 };
 
 #endif // __main_h

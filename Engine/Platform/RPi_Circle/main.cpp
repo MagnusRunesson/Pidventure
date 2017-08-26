@@ -51,6 +51,11 @@ CApp::CApp( void )
 	m_Timer( &m_Interrupt ),
 	m_Logger( m_Options.GetLogLevel (), &m_Timer ),
 	m_EMMC( &m_Interrupt, &m_Timer, &m_ActLED ),
+
+	//
+	m_DWHCI( &m_Interrupt, &m_Timer ),
+
+	// GPIO pins for joypad
 	m_GPIO_PadUp( RPI_GPIO_UP, GPIOModeInputPullUp ),
 	m_GPIO_PadDown( RPI_GPIO_DOWN, GPIOModeInputPullUp ),
 	m_GPIO_PadLeft( RPI_GPIO_LEFT, GPIOModeInputPullUp ),
@@ -113,6 +118,20 @@ void CApp::Init()
 		bOK = m_EMMC.Initialize ();
 	}
 
+	if (bOK)
+	{
+		bOK = m_DWHCI.Initialize ();
+	}
+
+	// Initialize keyboard
+	m_pKeyboard = (CUSBKeyboardDevice *) m_DeviceNameService.GetDevice ("ukbd1", FALSE);
+	if( m_pKeyboard == 0 )
+	{
+		m_Logger.Write (FromKernel, LogError, "Keyboard not found");
+	}
+
+	m_pKeyboard->RegisterKeyStatusHandlerRaw (KeyStatusHandlerRaw);
+
 	//
 	// Initialize screen stuff
 	//
@@ -165,6 +184,28 @@ void CApp::Init()
 void CApp::Exit()
 {
 	delete[] screenBuffer;
+}
+
+void CApp::KeyStatusHandlerRaw( unsigned char ucModifiers, const unsigned char RawKeys[ 6 ])
+{
+//	assert( s_pThis != 0 );
+
+	CString Message;
+	Message.Format ("Key status (modifiers %02X)", (unsigned) ucModifiers);
+
+	for (unsigned i = 0; i < 6; i++)
+	{
+		if (RawKeys[i] != 0)
+		{
+			CString KeyCode;
+			KeyCode.Format (" %02X", (unsigned) RawKeys[i]);
+
+			Message.Append (KeyCode);
+		}
+	}
+
+//	s_pThis->m_Logger.Write (FromKernel, LogNotice, Message);
+	circleLog( Message );
 }
 
 const uint32 DST_SCALING = 6; // While it may look like this can be changed it is in fact hardcoded in a few places that the scaling is 6x

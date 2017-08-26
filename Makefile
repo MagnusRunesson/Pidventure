@@ -58,6 +58,8 @@ CFLAGS	= -DENGINE_TARGET_RPI_CIRCLE -fpermissive
 LIBS	= $(CIRCLEHOME)/addon/SDCard/libsdcard.a \
 		$(CIRCLEHOME)/lib/fs/fat/libfatfs.a \
 		$(CIRCLEHOME)/lib/fs/libfs.a \
+		$(CIRCLEHOME)/lib/usb/libusb.a \
+		$(CIRCLEHOME)/lib/input/libinput.a \
 		$(CIRCLEHOME)/lib/libcircle.a
 
 include Rules.mk
