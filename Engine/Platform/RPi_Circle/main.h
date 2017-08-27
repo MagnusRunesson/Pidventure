@@ -56,6 +56,9 @@ public:
 
 	CUSBKeyboardDevice* m_pKeyboard;
 
+	static uint32 m_keyboardJoypadEmulationRaise;
+	static uint32 m_keyboardJoypadEmulationLower;
+
 private:
 	// do not change this order
 	CMemorySystem		m_Memory;

@@ -22,29 +22,35 @@ extern uint32 g_JoypadHardwareBuffer;
 
 void circleLog( char* _pszMessage, ... );
 
+uint32 CApp::m_keyboardJoypadEmulationRaise;
+uint32 CApp::m_keyboardJoypadEmulationLower;
+
 CApp* g_pApp;
 
-typedef struct GPIOPinMapEntry
-{
-	uint32 hardwareMask;
-	uint32 virtualMask;
-};
-
-const int NUM_GPIO_PINS = 12;
-GPIOPinMapEntry g_GPIOPinMap[ NUM_GPIO_PINS ];
-
-const int RPI_GPIO_UP		= 19;
-const int RPI_GPIO_DOWN		= 26;
-const int RPI_GPIO_LEFT		= 13;
-const int RPI_GPIO_RIGHT	= 18; // 6;
-const int RPI_GPIO_BTN0		= 20;
-const int RPI_GPIO_BTN1		= 16;
-const int RPI_GPIO_BTN2		= 12;
-const int RPI_GPIO_BTN3		= 22;
-const int RPI_GPIO_BTN4		= 23;
-const int RPI_GPIO_BTN5		= 24;
-const int RPI_GPIO_BTN6		= 27;
-const int RPI_GPIO_BTN7		= 21;
+const int RPI_GPIO_DPAD_UP			= 19;
+const int RPI_GPIO_DPAD_DOWN		= 26;
+const int RPI_GPIO_DPAD_LEFT		= 13;
+const int RPI_GPIO_DPAD_RIGHT		= 6;
+const int RPI_GPIO_ACTION_UL		= 20;
+const int RPI_GPIO_ACTION_UM		= 16;
+const int RPI_GPIO_ACTION_UR		= 12;
+const int RPI_GPIO_ACTION_LL		= 22;
+const int RPI_GPIO_ACTION_LM		= 23;
+const int RPI_GPIO_ACTION_LR		= 24;
+const int RPI_GPIO_PGM_L			= 27;
+const int RPI_GPIO_PGM_R			= 21;
+const int RPI_GPIO_MASK_DPAD_UP		= 1 << RPI_GPIO_DPAD_UP;
+const int RPI_GPIO_MASK_DPAD_DOWN	= 1 << RPI_GPIO_DPAD_DOWN;
+const int RPI_GPIO_MASK_DPAD_LEFT	= 1 << RPI_GPIO_DPAD_LEFT;
+const int RPI_GPIO_MASK_DPAD_RIGHT	= 1 << RPI_GPIO_DPAD_RIGHT;
+const int RPI_GPIO_MASK_ACTION_UL	= 1 << RPI_GPIO_ACTION_UL;
+const int RPI_GPIO_MASK_ACTION_UM	= 1 << RPI_GPIO_ACTION_UM;
+const int RPI_GPIO_MASK_ACTION_UR	= 1 << RPI_GPIO_ACTION_UR;
+const int RPI_GPIO_MASK_ACTION_LL	= 1 << RPI_GPIO_ACTION_LL;
+const int RPI_GPIO_MASK_ACTION_LM	= 1 << RPI_GPIO_ACTION_LM;
+const int RPI_GPIO_MASK_ACTION_LR	= 1 << RPI_GPIO_ACTION_LR;
+const int RPI_GPIO_MASK_PGM_L		= 1 << RPI_GPIO_PGM_L;
+const int RPI_GPIO_MASK_PGM_R		= 1 << RPI_GPIO_PGM_R;
 
 CApp::CApp( void )
 :	m_Screen( m_Options.GetWidth(), m_Options.GetHeight()),
@@ -56,22 +62,19 @@ CApp::CApp( void )
 	m_DWHCI( &m_Interrupt, &m_Timer ),
 
 	// GPIO pins for joypad
-	m_GPIO_PadUp( RPI_GPIO_UP, GPIOModeInputPullUp ),
-	m_GPIO_PadDown( RPI_GPIO_DOWN, GPIOModeInputPullUp ),
-	m_GPIO_PadLeft( RPI_GPIO_LEFT, GPIOModeInputPullUp ),
-	m_GPIO_PadRight( RPI_GPIO_RIGHT, GPIOModeInputPullUp ),
-	m_GPIO_PadBtn0( RPI_GPIO_BTN0, GPIOModeInputPullUp ),
-	m_GPIO_PadBtn1( RPI_GPIO_BTN1, GPIOModeInputPullUp ),
-	m_GPIO_PadBtn2( RPI_GPIO_BTN2, GPIOModeInputPullUp ),
-	m_GPIO_PadBtn3( RPI_GPIO_BTN3, GPIOModeInputPullUp ),
-	m_GPIO_PadBtn4( RPI_GPIO_BTN4, GPIOModeInputPullUp ),
-	m_GPIO_PadBtn5( RPI_GPIO_BTN5, GPIOModeInputPullUp ),
-	m_GPIO_PadBtn6( RPI_GPIO_BTN6, GPIOModeInputPullUp ),
-	m_GPIO_PadBtn7( RPI_GPIO_BTN7, GPIOModeInputPullUp )
+	m_GPIO_PadUp( RPI_GPIO_DPAD_UP, GPIOModeInputPullUp ),
+	m_GPIO_PadDown( RPI_GPIO_DPAD_DOWN, GPIOModeInputPullUp ),
+	m_GPIO_PadLeft( RPI_GPIO_DPAD_LEFT, GPIOModeInputPullUp ),
+	m_GPIO_PadRight( RPI_GPIO_DPAD_RIGHT, GPIOModeInputPullUp ),
+	m_GPIO_PadBtn0( RPI_GPIO_ACTION_UL, GPIOModeInputPullUp ),
+	m_GPIO_PadBtn1( RPI_GPIO_ACTION_UM, GPIOModeInputPullUp ),
+	m_GPIO_PadBtn2( RPI_GPIO_ACTION_UR, GPIOModeInputPullUp ),
+	m_GPIO_PadBtn3( RPI_GPIO_ACTION_LL, GPIOModeInputPullUp ),
+	m_GPIO_PadBtn4( RPI_GPIO_ACTION_LM, GPIOModeInputPullUp ),
+	m_GPIO_PadBtn5( RPI_GPIO_ACTION_LR, GPIOModeInputPullUp ),
+	m_GPIO_PadBtn6( RPI_GPIO_PGM_L, GPIOModeInputPullUp ),
+	m_GPIO_PadBtn7( RPI_GPIO_PGM_R, GPIOModeInputPullUp )
 {
-	// DPad Up
-	g_GPIOPinMap[ 0 ].virtualMask = PAD_KEYMASK_DPAD_UP;
-	g_GPIOPinMap[ 0 ].hardwareMask = 0x40000;
 }
 
 CApp::~CApp()
@@ -190,17 +193,51 @@ void CApp::KeyStatusHandlerRaw( unsigned char ucModifiers, const unsigned char R
 {
 //	assert( s_pThis != 0 );
 
+	m_keyboardJoypadEmulationLower = m_keyboardJoypadEmulationRaise;	// Assume all have been released
+	m_keyboardJoypadEmulationRaise = 0;
+
 	CString Message;
 	Message.Format ("Key status (modifiers %02X)", (unsigned) ucModifiers);
 
 	for (unsigned i = 0; i < 6; i++)
 	{
-		if (RawKeys[i] != 0)
+		uint8 rawKey = RawKeys[ i ];
+		if( rawKey != 0 )
 		{
 			CString KeyCode;
-			KeyCode.Format (" %02X", (unsigned) RawKeys[i]);
+			KeyCode.Format( " %02X", (unsigned)rawKey );
+			Message.Append( KeyCode );
 
-			Message.Append (KeyCode);
+			switch( rawKey )
+			{
+				case 0x52:	// Up
+					m_keyboardJoypadEmulationRaise |= PAD_KEYMASK_DPAD_UP;
+					break;
+
+				case 0x51:	// Down
+					m_keyboardJoypadEmulationRaise |= PAD_KEYMASK_DPAD_DOWN;
+					break;
+
+				case 0x50:	// Left
+					m_keyboardJoypadEmulationRaise |= PAD_KEYMASK_DPAD_LEFT;
+					break;
+
+				case 0x4f:	// Right
+					m_keyboardJoypadEmulationRaise |= PAD_KEYMASK_DPAD_RIGHT;
+					break;
+
+				// Action buttons
+				case 0x04:	m_keyboardJoypadEmulationRaise |= PAD_KEYMASK_ACTION_UL;	break;
+				case 0x16:	m_keyboardJoypadEmulationRaise |= PAD_KEYMASK_ACTION_UM;	break;
+				case 0x07:	m_keyboardJoypadEmulationRaise |= PAD_KEYMASK_ACTION_UR;	break;
+				case 0x1d:	m_keyboardJoypadEmulationRaise |= PAD_KEYMASK_ACTION_LL;	break;
+				case 0x1b:	m_keyboardJoypadEmulationRaise |= PAD_KEYMASK_ACTION_LM;	break;
+				case 0x06:	m_keyboardJoypadEmulationRaise |= PAD_KEYMASK_ACTION_LR;	break;
+
+				// Program buttons
+				case 0x2c:	m_keyboardJoypadEmulationRaise |= PAD_KEYMASK_PGM_L;		break;
+				case 0x28:	m_keyboardJoypadEmulationRaise |= PAD_KEYMASK_PGM_R;		break;
+			}
 		}
 	}
 
@@ -390,13 +427,32 @@ bool CApp::FileLoad( const char* _pszFileName, void** _ppReadData, int* _pReadBy
 	return true;
 }
 
+#define CHECK_BUTTON( _buttonName ) \
+	if( !(pins & RPI_GPIO_MASK_##_buttonName) ) \
+	{ \
+		/*circleLog(#_buttonName); */ \
+		g_JoypadHardwareBuffer |= PAD_KEYMASK_##_buttonName; \
+	} \
+
 void CApp::PadHardwareUpdate()
 {
+	g_JoypadHardwareBuffer = 0;
+
 	unsigned pins = CGPIOPin::ReadAll();
-	if( pins & 0x40000 )
-		g_JoypadHardwareBuffer &= ~PAD_KEYMASK_DPAD_RIGHT;
-	else
-		g_JoypadHardwareBuffer |= PAD_KEYMASK_DPAD_RIGHT;
+	CHECK_BUTTON( DPAD_RIGHT );
+	CHECK_BUTTON( DPAD_LEFT );
+	CHECK_BUTTON( DPAD_UP );
+	CHECK_BUTTON( DPAD_DOWN );
+	CHECK_BUTTON( ACTION_UL );
+	CHECK_BUTTON( ACTION_UM );
+	CHECK_BUTTON( ACTION_UR );
+	CHECK_BUTTON( ACTION_LL );
+	CHECK_BUTTON( ACTION_LM );
+	CHECK_BUTTON( ACTION_LR );
+	CHECK_BUTTON( PGM_L );
+	CHECK_BUTTON( PGM_R );
+
+	g_JoypadHardwareBuffer |= m_keyboardJoypadEmulationRaise;
 }
 
 
