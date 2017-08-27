@@ -296,7 +296,7 @@ bool DoSDL()
 				case SDL_KEYCODE_ACTION_LR:		SetBit( g_JoypadHardwareBuffer, PAD_KEYMASK_ACTION_LR );			break;
 				case SDL_KEYCODE_PGM_L:			SetBit( g_JoypadHardwareBuffer, PAD_KEYMASK_PGM_L );				break;
 				case SDL_KEYCODE_PGM_R:			SetBit( g_JoypadHardwareBuffer, PAD_KEYMASK_PGM_R );				break;
-				case SDL_KEYCODE_DPAD_UP:		SetBit( g_JoypadHardwareBuffer, PAD_KEYMASK_DPAD_UP );			break;
+				case SDL_KEYCODE_DPAD_UP:		SetBit( g_JoypadHardwareBuffer, PAD_KEYMASK_DPAD_UP );				break;
 				case SDL_KEYCODE_DPAD_DOWN:		SetBit( g_JoypadHardwareBuffer, PAD_KEYMASK_DPAD_DOWN );			break;
 				case SDL_KEYCODE_DPAD_LEFT:		SetBit( g_JoypadHardwareBuffer, PAD_KEYMASK_DPAD_LEFT );			break;
 				case SDL_KEYCODE_DPAD_RIGHT:	SetBit( g_JoypadHardwareBuffer, PAD_KEYMASK_DPAD_RIGHT );			break;
