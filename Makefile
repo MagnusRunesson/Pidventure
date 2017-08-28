@@ -43,6 +43,7 @@ SRCS=\
 	Engine/IO/Data.cpp \
 	Engine/Platform/RPi_Circle/file_rpi_circle.cpp \
 	Engine/Platform/RPi_Circle/joypad_rpi_circle.cpp \
+	Engine/Platform/RPi_Circle/audio_rpi_circle.cpp \
 	Engine/Platform/RPi_Circle/main.cpp \
 	Engine/Scene/Camera.cpp \
 	Engine/Scene/GameObject.cpp \

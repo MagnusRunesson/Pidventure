@@ -22,6 +22,7 @@
 #include <circle/usb/usbkeyboard.h>
 #include <SDCard/emmc.h>
 #include "Engine/Core/Types.h"
+#include "Engine/Platform/RPi_Circle/audio_rpi_circle.h"
 
 class CApp
 {
@@ -55,6 +56,8 @@ public:
 	CGPIOPin m_GPIO_PadBtn7;
 
 	CUSBKeyboardDevice* m_pKeyboard;
+
+	CAudioRPiCircle m_audio;
 
 	static uint32 m_keyboardJoypadEmulationRaise;
 	static uint32 m_keyboardJoypadEmulationLower;

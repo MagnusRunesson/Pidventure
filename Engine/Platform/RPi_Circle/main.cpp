@@ -73,7 +73,9 @@ CApp::CApp( void )
 	m_GPIO_PadBtn4( RPI_GPIO_ACTION_LM, GPIOModeInputPullUp ),
 	m_GPIO_PadBtn5( RPI_GPIO_ACTION_LR, GPIOModeInputPullUp ),
 	m_GPIO_PadBtn6( RPI_GPIO_PGM_L, GPIOModeInputPullUp ),
-	m_GPIO_PadBtn7( RPI_GPIO_PGM_R, GPIOModeInputPullUp )
+	m_GPIO_PadBtn7( RPI_GPIO_PGM_R, GPIOModeInputPullUp ),
+
+	m_audio( &m_Interrupt )
 {
 }
 
