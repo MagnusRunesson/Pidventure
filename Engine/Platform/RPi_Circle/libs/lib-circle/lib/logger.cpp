@@ -115,7 +115,7 @@ void CLogger::WriteV (const char *pSource, TLogSeverity Severity, const char *pM
 		Buffer.Append ("\x1b[0m");
 	}
 
-	Buffer.Append ("\n");
+	// Line endings will be included in the message, yo!    Buffer.Append ("\n");
 
 	Write (Buffer);
 
