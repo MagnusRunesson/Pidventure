@@ -248,30 +248,54 @@ void CApp::KeyStatusHandlerRaw( unsigned char ucModifiers, const unsigned char R
 }
 
 const uint32 DST_SCALING = 6; // While it may look like this can be changed it is in fact hardcoded in a few places that the scaling is 6x
-const uint32 DST_PHYSICAL_WIDTH = 800;
-const uint32 DST_PHYSICAL_HEIGHT = 480;
-const uint32 DST_STRIDE = (DST_PHYSICAL_WIDTH*(DST_SCALING-1))+(DST_PHYSICAL_WIDTH-(SCREEN_WIDTH*DST_SCALING));
-const uint32 DST_SCREEN_CENTER_OFFSET =
+
+const uint32 DST_PHYSICAL_WIDTH_x800 = 800;
+const uint32 DST_PHYSICAL_HEIGHT_x800 = 480;
+const uint32 DST_STRIDE_x800 = (DST_PHYSICAL_WIDTH_x800*(DST_SCALING-1))+(DST_PHYSICAL_WIDTH_x800-(SCREEN_WIDTH*DST_SCALING));
+const uint32 DST_SCREEN_CENTER_OFFSET_x800 =
 
 (
 	(
 		(
-			DST_PHYSICAL_HEIGHT - 
+			DST_PHYSICAL_HEIGHT_x800 - 
 			(
 				SCREEN_HEIGHT * DST_SCALING
 			)
 		) / 2
-	) * DST_PHYSICAL_WIDTH
+	) * DST_PHYSICAL_WIDTH_x800
 ) +
 (
 	(
-		DST_PHYSICAL_WIDTH -
+		DST_PHYSICAL_WIDTH_x800 -
 		(
 			SCREEN_WIDTH * DST_SCALING
 		)
 	) / 2
 );
 
+const uint32 DST_PHYSICAL_WIDTH_x640 = 640;
+const uint32 DST_PHYSICAL_HEIGHT_x640 = 480;
+const uint32 DST_STRIDE_x640 = (DST_PHYSICAL_WIDTH_x640*(DST_SCALING-1))+(DST_PHYSICAL_WIDTH_x640-(SCREEN_WIDTH*DST_SCALING));
+const uint32 DST_SCREEN_CENTER_OFFSET_x640 =
+
+(
+	(
+		(
+			DST_PHYSICAL_HEIGHT_x640 - 
+			(
+				SCREEN_HEIGHT * DST_SCALING
+			)
+		) / 2
+	) * DST_PHYSICAL_WIDTH_x640
+) +
+(
+	(
+		DST_PHYSICAL_WIDTH_x640 -
+		(
+			SCREEN_WIDTH * DST_SCALING
+		)
+	) / 2
+);
 
 void CApp::Update()
 {
@@ -295,12 +319,33 @@ void CApp::Update()
 	int px, py;
 
 	float* pSrc = screenBuffer;
-	uint32* pDst0 = m_pScreenBufferParty + DST_SCREEN_CENTER_OFFSET + (DST_PHYSICAL_WIDTH*0);
-	uint32* pDst1 = m_pScreenBufferParty + DST_SCREEN_CENTER_OFFSET + (DST_PHYSICAL_WIDTH*1);
-	uint32* pDst2 = m_pScreenBufferParty + DST_SCREEN_CENTER_OFFSET + (DST_PHYSICAL_WIDTH*2);
-	uint32* pDst3 = m_pScreenBufferParty + DST_SCREEN_CENTER_OFFSET + (DST_PHYSICAL_WIDTH*3);
-	uint32* pDst4 = m_pScreenBufferParty + DST_SCREEN_CENTER_OFFSET + (DST_PHYSICAL_WIDTH*4);
-	uint32* pDst5 = m_pScreenBufferParty + DST_SCREEN_CENTER_OFFSET + (DST_PHYSICAL_WIDTH*5);
+	uint32* pDst0 = m_pScreenBufferParty;
+	uint32* pDst1 = m_pScreenBufferParty;
+	uint32* pDst2 = m_pScreenBufferParty;
+	uint32* pDst3 = m_pScreenBufferParty;
+	uint32* pDst4 = m_pScreenBufferParty;
+	uint32* pDst5 = m_pScreenBufferParty;
+	uint32 stride = 0;
+
+	if( w == 800 )
+	{
+		pDst0 += DST_SCREEN_CENTER_OFFSET_x800 + (DST_PHYSICAL_WIDTH_x800*0);
+		pDst1 += DST_SCREEN_CENTER_OFFSET_x800 + (DST_PHYSICAL_WIDTH_x800*1);
+		pDst2 += DST_SCREEN_CENTER_OFFSET_x800 + (DST_PHYSICAL_WIDTH_x800*2);
+		pDst3 += DST_SCREEN_CENTER_OFFSET_x800 + (DST_PHYSICAL_WIDTH_x800*3);
+		pDst4 += DST_SCREEN_CENTER_OFFSET_x800 + (DST_PHYSICAL_WIDTH_x800*4);
+		pDst5 += DST_SCREEN_CENTER_OFFSET_x800 + (DST_PHYSICAL_WIDTH_x800*5);
+		stride = DST_STRIDE_x800;
+	} else if( w == 640 )
+	{
+		pDst0 += DST_SCREEN_CENTER_OFFSET_x640 + (DST_PHYSICAL_WIDTH_x640*0);
+		pDst1 += DST_SCREEN_CENTER_OFFSET_x640 + (DST_PHYSICAL_WIDTH_x640*1);
+		pDst2 += DST_SCREEN_CENTER_OFFSET_x640 + (DST_PHYSICAL_WIDTH_x640*2);
+		pDst3 += DST_SCREEN_CENTER_OFFSET_x640 + (DST_PHYSICAL_WIDTH_x640*3);
+		pDst4 += DST_SCREEN_CENTER_OFFSET_x640 + (DST_PHYSICAL_WIDTH_x640*4);
+		pDst5 += DST_SCREEN_CENTER_OFFSET_x640 + (DST_PHYSICAL_WIDTH_x640*5);
+		stride = DST_STRIDE_x640;
+	}
 	
 	for( y=0; y<SCREEN_HEIGHT; y++ )
 	{
@@ -366,12 +411,12 @@ void CApp::Update()
    			*pDst5++ = c;
 		}
 
-		pDst0 += DST_STRIDE;
-		pDst1 += DST_STRIDE;
-		pDst2 += DST_STRIDE;
-		pDst3 += DST_STRIDE;
-		pDst4 += DST_STRIDE;
-		pDst5 += DST_STRIDE;
+		pDst0 += stride;
+		pDst1 += stride;
+		pDst2 += stride;
+		pDst3 += stride;
+		pDst4 += stride;
+		pDst5 += stride;
 	}
 
 #ifdef PROFILE_SCREEN_BLITTER
