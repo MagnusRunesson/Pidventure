@@ -61,9 +61,12 @@ bool fileLoad(const char* _pszFileName, void** _ppReadData, int* _pReadBytes)
 	debugLog("Done\n");
 	*/
 	
-	fileCacheAddFile( _pszFileName, *_ppReadData, *_pReadBytes );
+	if( bSuccess )
+	{
+		fileCacheAddFile( _pszFileName, *_ppReadData, *_pReadBytes );
+	}
 
-	return true;
+	return bSuccess;
 }
 
 void fileUnload( void* _ptr )

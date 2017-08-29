@@ -6,7 +6,6 @@
 //  Copyright © 2016 Magnus Runesson. All rights reserved.
 //
 
-#include <math.h>
 #include "Engine/Graphics/Image.h"
 #include "Engine/Graphics/Sprite.h"
 #include "Engine/Scene/GameObjectManager.h"

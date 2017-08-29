@@ -21,6 +21,7 @@ extern void game_debugTrigger( int );
 extern uint32 g_JoypadHardwareBuffer;
 
 void circleLog( char* _pszMessage, ... );
+void circleLog( const char* _pszMessage, ... );
 
 uint32 CApp::m_keyboardJoypadEmulationRaise;
 uint32 CApp::m_keyboardJoypadEmulationLower;
@@ -56,6 +57,8 @@ CApp::CApp( void )
 :	m_Screen( m_Options.GetWidth(), m_Options.GetHeight()),
 	m_Timer( &m_Interrupt ),
 	m_Logger( m_Options.GetLogLevel (), &m_Timer ),
+
+	m_audio( &m_Interrupt ),
 	m_EMMC( &m_Interrupt, &m_Timer, &m_ActLED ),
 
 	//
@@ -73,9 +76,7 @@ CApp::CApp( void )
 	m_GPIO_PadBtn4( RPI_GPIO_ACTION_LM, GPIOModeInputPullUp ),
 	m_GPIO_PadBtn5( RPI_GPIO_ACTION_LR, GPIOModeInputPullUp ),
 	m_GPIO_PadBtn6( RPI_GPIO_PGM_L, GPIOModeInputPullUp ),
-	m_GPIO_PadBtn7( RPI_GPIO_PGM_R, GPIOModeInputPullUp ),
-
-	m_audio( &m_Interrupt )
+	m_GPIO_PadBtn7( RPI_GPIO_PGM_R, GPIOModeInputPullUp )
 {
 }
 
@@ -244,7 +245,7 @@ void CApp::KeyStatusHandlerRaw( unsigned char ucModifiers, const unsigned char R
 	}
 
 //	s_pThis->m_Logger.Write (FromKernel, LogNotice, Message);
-	circleLog( Message );
+	circleLog( (const char*)Message );
 }
 
 const uint32 DST_SCALING = 6; // While it may look like this can be changed it is in fact hardcoded in a few places that the scaling is 6x
@@ -304,9 +305,7 @@ void CApp::Update()
 	padUpdate();
 	game_loop();
 
-	int i;
 	int w = m_Screen.m_pFrameBuffer->GetWidth();
-	int h = m_Screen.m_pFrameBuffer->GetHeight();
 
 #ifdef PROFILE_SCREEN_BLITTER
 	static uint32 numIterations = 0;
@@ -316,7 +315,6 @@ void CApp::Update()
 #endif // PROFILE_SCREEN_BLITTER
 
 	int x, y;
-	int px, py;
 
 	float* pSrc = screenBuffer;
 	uint32* pDst0 = m_pScreenBufferParty;
@@ -437,6 +435,11 @@ void CApp::Update()
 	// TODO: add your code here
 
 	//return ShutdownHalt;
+}
+
+void CApp::Log( const char* _pszMessage )
+{
+	m_Logger.Write( "debugLog", LogNotice, _pszMessage );
 }
 
 void CApp::Log( char* _pszMessage )

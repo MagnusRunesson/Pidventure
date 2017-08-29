@@ -17,7 +17,7 @@ class AudioStream;
 class AudioMixer
 {
 public:
-	uint32 outputBufferSize;
+	sint32 outputBufferSize;
 	sint8* pOutputBuffer;
 
 	uint8 numChannels;

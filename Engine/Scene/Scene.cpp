@@ -100,7 +100,7 @@ bool CScene::Load( const char* _pszSceneName, const char* _pszTileBankName, cons
 	pScene->aObjects = pSceneObjects;
 
 	debugLog( "num objects: %i\n", pScene->NumObjects );
-	int i;
+	unsigned int i;
 	
 	for( i=0; i<pScene->NumObjects; i++ )
 	{

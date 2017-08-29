@@ -28,4 +28,7 @@ unsigned CAudioRPiCircle::GetChunk( u32 *pBuffer, unsigned nChunkSize )
          m_sawTooth -= (1<<12);
       }
    }
+
+   // The entire buffer was filled, yay!
+   return nChunkSize;
 }

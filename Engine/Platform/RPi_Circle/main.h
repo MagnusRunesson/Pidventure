@@ -34,6 +34,7 @@ public:
 	void Exit();
 	void Update();
 
+	void Log( const char* _pszMessage );
 	void Log( char* _pszMessage );
 	bool FileLoad( const char* _pszFileName, void** _ppReadData, int* _pReadBytes );
 	void PadHardwareUpdate();
@@ -42,22 +43,7 @@ public:
 	uint32* m_pScreenBufferParty;
 	uint8* m_pScreenBufferPartyUInt8;
 
-	CGPIOPin m_GPIO_PadUp;
-	CGPIOPin m_GPIO_PadDown;
-	CGPIOPin m_GPIO_PadLeft;
-	CGPIOPin m_GPIO_PadRight;
-	CGPIOPin m_GPIO_PadBtn0;
-	CGPIOPin m_GPIO_PadBtn1;
-	CGPIOPin m_GPIO_PadBtn2;
-	CGPIOPin m_GPIO_PadBtn3;
-	CGPIOPin m_GPIO_PadBtn4;
-	CGPIOPin m_GPIO_PadBtn5;
-	CGPIOPin m_GPIO_PadBtn6;
-	CGPIOPin m_GPIO_PadBtn7;
-
 	CUSBKeyboardDevice* m_pKeyboard;
-
-	CAudioRPiCircle m_audio;
 
 	static uint32 m_keyboardJoypadEmulationRaise;
 	static uint32 m_keyboardJoypadEmulationLower;
@@ -74,6 +60,7 @@ private:
 	CInterruptSystem	m_Interrupt;
 	CTimer				m_Timer;
 	CLogger				m_Logger;
+	CAudioRPiCircle		m_audio;
 
 	// SD Card
 	CEMMCDevice			m_EMMC;
@@ -82,6 +69,19 @@ private:
 	// Keyboard
 	CDWHCIDevice		m_DWHCI;
 
+
+	CGPIOPin m_GPIO_PadUp;
+	CGPIOPin m_GPIO_PadDown;
+	CGPIOPin m_GPIO_PadLeft;
+	CGPIOPin m_GPIO_PadRight;
+	CGPIOPin m_GPIO_PadBtn0;
+	CGPIOPin m_GPIO_PadBtn1;
+	CGPIOPin m_GPIO_PadBtn2;
+	CGPIOPin m_GPIO_PadBtn3;
+	CGPIOPin m_GPIO_PadBtn4;
+	CGPIOPin m_GPIO_PadBtn5;
+	CGPIOPin m_GPIO_PadBtn6;
+	CGPIOPin m_GPIO_PadBtn7;
 };
 
 #endif // __main_h

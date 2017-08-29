@@ -13,6 +13,7 @@ void debugInit();
 
 #ifdef ENGINE_TARGET_RPI_CIRCLE
 
+extern void circleLog( char* _pszFormat, ... );
 extern void circleLog( const char* _pszFormat, ... );
 
 #define debugLog circleLog

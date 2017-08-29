@@ -6,7 +6,6 @@
 //  Copyright © 2015 Magnus Runesson. All rights reserved.
 //
 
-#include <math.h>
 #include "Engine/stdc/stdlib.h"
 #include "Engine/Util/Memory.h"
 #include "Engine/Graphics/SpriteRenderer.h"
@@ -444,7 +443,6 @@ void SpriteRenderer::RenderScanline( float* _targetBuffer, uint8* _collisionBits
 		int drawLength = image->w;
 		
 		bool flipX = sprite->flags & SPRITE_FLAG_FLIP_X;
-		bool flipY = sprite->flags & SPRITE_FLAG_FLIP_Y;
 		
 		int readStart = sprite->readY;
 		

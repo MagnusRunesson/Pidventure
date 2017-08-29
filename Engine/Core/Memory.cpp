@@ -57,10 +57,10 @@ void memTrackDelete(void* _ptr)
 }
 #else
 
-#define memTrackInit(x)
-#define memTrackExit(x)
-#define memTrackAlloc
-#define memTrackDelete
+#define memTrackInit(a)
+#define memTrackExit(a)
+#define memTrackAlloc(a,b,c,d)
+#define memTrackDelete(a)
 
 #endif
 
