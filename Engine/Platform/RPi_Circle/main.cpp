@@ -250,8 +250,8 @@ void CApp::KeyStatusHandlerRaw( unsigned char ucModifiers, const unsigned char R
 
 const uint32 DST_SCALING = 6; // While it may look like this can be changed it is in fact hardcoded in a few places that the scaling is 6x
 
-const uint32 DST_PHYSICAL_WIDTH_x800 = 800;
-const uint32 DST_PHYSICAL_HEIGHT_x800 = 480;
+const uint32 DST_PHYSICAL_WIDTH_x800 = 656;
+const uint32 DST_PHYSICAL_HEIGHT_x800 = 512;
 const uint32 DST_STRIDE_x800 = (DST_PHYSICAL_WIDTH_x800*(DST_SCALING-1))+(DST_PHYSICAL_WIDTH_x800-(SCREEN_WIDTH*DST_SCALING));
 const uint32 DST_SCREEN_CENTER_OFFSET_x800 =
 
@@ -306,6 +306,7 @@ void CApp::Update()
 	game_loop();
 
 	int w = m_Screen.m_pFrameBuffer->GetWidth();
+	int h = m_Screen.m_pFrameBuffer->GetHeight();
 
 #ifdef PROFILE_SCREEN_BLITTER
 	static uint32 numIterations = 0;
@@ -316,34 +317,34 @@ void CApp::Update()
 
 	int x, y;
 
-	float* pSrc = screenBuffer;
-	uint32* pDst0 = m_pScreenBufferParty;
-	uint32* pDst1 = m_pScreenBufferParty;
-	uint32* pDst2 = m_pScreenBufferParty;
-	uint32* pDst3 = m_pScreenBufferParty;
-	uint32* pDst4 = m_pScreenBufferParty;
-	uint32* pDst5 = m_pScreenBufferParty;
-	uint32 stride = 0;
+	int o = (
+		(
+			(
+				h - 
+				(
+					SCREEN_HEIGHT * DST_SCALING
+				)
+			) / 2
+		) * w
+	) +
+	(
+		(
+			w -
+			(
+				SCREEN_WIDTH * DST_SCALING
+			)
+		) / 2
+	);
 
-	if( w == 800 )
-	{
-		pDst0 += DST_SCREEN_CENTER_OFFSET_x800 + (DST_PHYSICAL_WIDTH_x800*0);
-		pDst1 += DST_SCREEN_CENTER_OFFSET_x800 + (DST_PHYSICAL_WIDTH_x800*1);
-		pDst2 += DST_SCREEN_CENTER_OFFSET_x800 + (DST_PHYSICAL_WIDTH_x800*2);
-		pDst3 += DST_SCREEN_CENTER_OFFSET_x800 + (DST_PHYSICAL_WIDTH_x800*3);
-		pDst4 += DST_SCREEN_CENTER_OFFSET_x800 + (DST_PHYSICAL_WIDTH_x800*4);
-		pDst5 += DST_SCREEN_CENTER_OFFSET_x800 + (DST_PHYSICAL_WIDTH_x800*5);
-		stride = DST_STRIDE_x800;
-	} else if( w == 640 )
-	{
-		pDst0 += DST_SCREEN_CENTER_OFFSET_x640 + (DST_PHYSICAL_WIDTH_x640*0);
-		pDst1 += DST_SCREEN_CENTER_OFFSET_x640 + (DST_PHYSICAL_WIDTH_x640*1);
-		pDst2 += DST_SCREEN_CENTER_OFFSET_x640 + (DST_PHYSICAL_WIDTH_x640*2);
-		pDst3 += DST_SCREEN_CENTER_OFFSET_x640 + (DST_PHYSICAL_WIDTH_x640*3);
-		pDst4 += DST_SCREEN_CENTER_OFFSET_x640 + (DST_PHYSICAL_WIDTH_x640*4);
-		pDst5 += DST_SCREEN_CENTER_OFFSET_x640 + (DST_PHYSICAL_WIDTH_x640*5);
-		stride = DST_STRIDE_x640;
-	}
+
+	float* pSrc = screenBuffer;
+	uint32* pDst0 = m_pScreenBufferParty + o + (w*0);
+	uint32* pDst1 = m_pScreenBufferParty + o + (w*1);
+	uint32* pDst2 = m_pScreenBufferParty + o + (w*2);
+	uint32* pDst3 = m_pScreenBufferParty + o + (w*3);
+	uint32* pDst4 = m_pScreenBufferParty + o + (w*4);
+	uint32* pDst5 = m_pScreenBufferParty + o + (w*5);
+	uint32 stride = (w * (DST_SCALING - 1)) + (w - (SCREEN_WIDTH * DST_SCALING));
 	
 	for( y=0; y<SCREEN_HEIGHT; y++ )
 	{
@@ -429,12 +430,6 @@ void CApp::Update()
 		timeCount = 0;
 	}
 #endif // PROFILE_SCREEN_BLITTER
-
-	//m_Logger.Write( FromKernel, LogNotice, "Compile time: " __DATE__ " " __TIME__ );
-
-	// TODO: add your code here
-
-	//return ShutdownHalt;
 }
 
 void CApp::Log( const char* _pszMessage )
