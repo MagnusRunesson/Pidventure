@@ -63,20 +63,26 @@ endif
 TARGET 	= $(addprefix $(OUTPUT_DIR),$(TARGET_IMG))
 
 %.o: %.S
-	$(AS) $(AFLAGS) -c -o $@ $<
+	@mkdir -p $(dir $@ )
+	@echo Assembling $<
+	@$(AS) $(AFLAGS) -c -o $@ $<
 
 %.o: %.c
-	$(CC) $(CFLAGS) -c -o $@ $<
+	@mkdir -p $(dir $@ )
+	@echo Compiling $<
+	@$(CC) $(CFLAGS) -c -o $@ $<
 
 $(OUTPUT_DIR)%.o: %.cpp
-	mkdir -p $(dir $@ )
-	$(CPP) $(CPPFLAGS) -c -o $@ $<
+	@mkdir -p $(dir $@ )
+	@echo Compiling $<
+	@$(CPP) $(CPPFLAGS) -c -o $@ $<
 
 $(TARGET).img: $(OBJS) $(LIBS) $(CIRCLEHOME)/lib/startup.o $(CIRCLEHOME)/circle.ld
-	$(LD) -o $(TARGET).elf -Map $(TARGET).map -T $(CIRCLEHOME)/circle.ld $(CIRCLEHOME)/lib/startup.o $(OBJS) $(LIBS)
-	$(PREFIX)objdump -d $(TARGET).elf | $(PREFIX)c++filt > $(TARGET).lst
-	$(PREFIX)objcopy $(TARGET).elf -O binary $(TARGET).img
-	wc -c $(TARGET).img
+	@echo Linking $@
+	@$(LD) -o $(TARGET).elf -Map $(TARGET).map -T $(CIRCLEHOME)/circle.ld $(CIRCLEHOME)/lib/startup.o $(OBJS) $(LIBS)
+	@$(PREFIX)objdump -d $(TARGET).elf | $(PREFIX)c++filt > $(TARGET).lst
+	@$(PREFIX)objcopy $(TARGET).elf -O binary $(TARGET).img
+	@wc -c $(TARGET).img > /dev/null
 
 clean:
 	rm -f *.o *.a *.elf *.lst *.img *.cir *.map *~ $(EXTRACLEAN)
