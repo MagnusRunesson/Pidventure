@@ -35,6 +35,7 @@ public:
 	void Init();
 	void Exit();
 	void Update();
+	void BlitScreen();
 
 	void Log( const char* _pszMessage );
 	void Log( char* _pszMessage );

@@ -315,6 +315,11 @@ void CApp::Update()
 	padUpdate();
 	game_loop();
 
+	BlitScreen();
+}
+
+void CApp::BlitScreen()
+{
 	int w = m_Screen.m_pFrameBuffer->GetWidth();
 	int h = m_Screen.m_pFrameBuffer->GetHeight();
 
