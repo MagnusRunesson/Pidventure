@@ -7,7 +7,7 @@
 #include <assert.h>
 #include "Engine/Core/Types.h"
 
-class CAudioRPiCircle : private CPWMSoundBaseDevice
+class CAudioRPiCircle : public CPWMSoundBaseDevice
 {
 public:
    CAudioRPiCircle( CInterruptSystem *pInterrupt );

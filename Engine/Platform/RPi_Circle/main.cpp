@@ -88,6 +88,8 @@ void CApp::Init()
 {
 	bool bOK = TRUE;
 
+	m_audio.Start();
+	
 	if( bOK )
 	{
 		bOK = m_Screen.Initialize();
