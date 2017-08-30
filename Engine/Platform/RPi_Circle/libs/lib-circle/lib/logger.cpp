@@ -60,8 +60,8 @@ boolean CLogger::Initialize (CDevice *pTarget)
 {
 	m_pTarget = pTarget;
 
-	Write ("logger", LogNotice, CIRCLE_NAME " " CIRCLE_VERSION_STRING " started on %s",
-	       CMachineInfo::Get ()->GetMachineName ());
+//	Write ("logger", LogNotice, CIRCLE_NAME " " CIRCLE_VERSION_STRING " started on %s",
+//	       CMachineInfo::Get ()->GetMachineName ());
 
 	return TRUE;
 }
