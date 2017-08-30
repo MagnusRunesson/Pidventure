@@ -86,10 +86,11 @@ CApp::~CApp()
 
 void CApp::Init()
 {
+	m_isLoggingActive = false;
 	bool bOK = TRUE;
 
 	m_audio.Start();
-	
+
 	if( bOK )
 	{
 		bOK = m_Screen.Initialize();
@@ -138,7 +139,7 @@ void CApp::Init()
 		m_Logger.Write (FromKernel, LogError, "Keyboard not found");
 	}
 
-	m_pKeyboard->RegisterKeyStatusHandlerRaw (KeyStatusHandlerRaw);
+	m_pKeyboard->RegisterKeyStatusHandlerRaw( AppKeyStatusHandlerRaw );
 
 	//
 	// Initialize screen stuff
@@ -194,6 +195,11 @@ void CApp::Exit()
 	delete[] screenBuffer;
 }
 
+void AppKeyStatusHandlerRaw( unsigned char ucModifiers, const unsigned char RawKeys[ 6 ])
+{
+	g_pApp->KeyStatusHandlerRaw( ucModifiers, RawKeys );
+}
+
 void CApp::KeyStatusHandlerRaw( unsigned char ucModifiers, const unsigned char RawKeys[ 6 ])
 {
 //	assert( s_pThis != 0 );
@@ -241,13 +247,16 @@ void CApp::KeyStatusHandlerRaw( unsigned char ucModifiers, const unsigned char R
 
 				// Program buttons
 				case 0x2c:	m_keyboardJoypadEmulationRaise |= PAD_KEYMASK_PGM_L;		break;
-				case 0x28:	m_keyboardJoypadEmulationRaise |= PAD_KEYMASK_PGM_R;		break;
+				case 0x28:
+					m_isLoggingActive = !m_isLoggingActive;
+					m_keyboardJoypadEmulationRaise |= PAD_KEYMASK_PGM_R;
+					break;
 			}
 		}
 	}
 
 //	s_pThis->m_Logger.Write (FromKernel, LogNotice, Message);
-	circleLog( (const char*)Message );
+	//circleLog( (const char*)Message );
 }
 
 const uint32 DST_SCALING = 6; // While it may look like this can be changed it is in fact hardcoded in a few places that the scaling is 6x
@@ -280,7 +289,6 @@ const uint32 DST_PHYSICAL_WIDTH_x640 = 640;
 const uint32 DST_PHYSICAL_HEIGHT_x640 = 480;
 const uint32 DST_STRIDE_x640 = (DST_PHYSICAL_WIDTH_x640*(DST_SCALING-1))+(DST_PHYSICAL_WIDTH_x640-(SCREEN_WIDTH*DST_SCALING));
 const uint32 DST_SCREEN_CENTER_OFFSET_x640 =
-
 (
 	(
 		(
@@ -436,11 +444,17 @@ void CApp::Update()
 
 void CApp::Log( const char* _pszMessage )
 {
+	if( m_isLoggingActive == false )
+		return;
+
 	m_Logger.Write( "debugLog", LogNotice, _pszMessage );
 }
 
 void CApp::Log( char* _pszMessage )
 {
+	if( m_isLoggingActive == false )
+		return;
+	
 	m_Logger.Write( "debugLog", LogNotice, _pszMessage );
 }
 

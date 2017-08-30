@@ -24,6 +24,8 @@
 #include "Engine/Core/Types.h"
 #include "Engine/Platform/RPi_Circle/audio_rpi_circle.h"
 
+void AppKeyStatusHandlerRaw( unsigned char ucModifiers, const unsigned char RawKeys[ 6 ]);
+
 class CApp
 {
 public:
@@ -38,10 +40,11 @@ public:
 	void Log( char* _pszMessage );
 	bool FileLoad( const char* _pszFileName, void** _ppReadData, int* _pReadBytes );
 	void PadHardwareUpdate();
-	static void KeyStatusHandlerRaw( unsigned char ucModifiers, const unsigned char RawKeys[ 6 ]);
+	void KeyStatusHandlerRaw( unsigned char ucModifiers, const unsigned char RawKeys[ 6 ]);
 
 	uint32* m_pScreenBufferParty;
 	uint8* m_pScreenBufferPartyUInt8;
+	bool m_isLoggingActive;
 
 	CUSBKeyboardDevice* m_pKeyboard;
 
