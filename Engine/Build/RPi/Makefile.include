@@ -27,6 +27,7 @@ SRCS+=\
 	Engine/Graphics/TileRenderer.cpp \
 	Engine/Graphics/Font.cpp \
 	Engine/Graphics/TextRenderer.cpp \
+	Engine/Graphics/Splash.cpp \
 	Engine/IO/Joypad.cpp \
 	Engine/IO/File.cpp \
 	Engine/IO/FileCache.cpp \

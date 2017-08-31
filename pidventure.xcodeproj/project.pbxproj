@@ -11,6 +11,7 @@
 		2504273C1EE54BE500409835 /* TextRenderer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 250427391EE54BE500409835 /* TextRenderer.cpp */; settings = {ASSET_TAGS = (); }; };
 		250427521F168FEC00409835 /* Scene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 250427511F168FEC00409835 /* Scene.cpp */; settings = {ASSET_TAGS = (); }; };
 		250427551F1BE1C100409835 /* Data.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 250427531F1BE1C100409835 /* Data.cpp */; settings = {ASSET_TAGS = (); }; };
+		251E41871F57CF6A00D083DB /* Splash.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 251E41851F57CF6A00D083DB /* Splash.cpp */; settings = {ASSET_TAGS = (); }; };
 		254D83361F4ACD4A00B1A2FC /* String.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 254D83341F4ACD4A00B1A2FC /* String.cpp */; settings = {ASSET_TAGS = (); }; };
 		254D83391F4AF28700B1A2FC /* Memory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 254D83371F4AF28700B1A2FC /* Memory.cpp */; settings = {ASSET_TAGS = (); }; };
 		254D83421F4C3D4F00B1A2FC /* File.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 254D83411F4C3D4F00B1A2FC /* File.cpp */; settings = {ASSET_TAGS = (); }; };
@@ -73,6 +74,8 @@
 		250427511F168FEC00409835 /* Scene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Scene.cpp; path = Engine/Scene/Scene.cpp; sourceTree = "<group>"; };
 		250427531F1BE1C100409835 /* Data.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Data.cpp; path = Engine/IO/Data.cpp; sourceTree = "<group>"; };
 		250427541F1BE1C100409835 /* Data.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Data.h; path = Engine/IO/Data.h; sourceTree = "<group>"; };
+		251E41851F57CF6A00D083DB /* Splash.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Splash.cpp; path = Engine/Graphics/Splash.cpp; sourceTree = "<group>"; };
+		251E41861F57CF6A00D083DB /* Splash.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Splash.h; path = Engine/Graphics/Splash.h; sourceTree = "<group>"; };
 		252E53F61D6AC32100E833F6 /* pidventure */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = pidventure; sourceTree = BUILT_PRODUCTS_DIR; };
 		254D83341F4ACD4A00B1A2FC /* String.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = String.cpp; path = Engine/Util/String.cpp; sourceTree = "<group>"; };
 		254D83351F4ACD4A00B1A2FC /* String.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = String.h; path = Engine/Util/String.h; sourceTree = "<group>"; };
@@ -259,6 +262,8 @@
 				257AE68D1D6B507700CACB74 /* Image.h */,
 				257AE68E1D6B507700CACB74 /* Screen.cpp */,
 				257AE68F1D6B507700CACB74 /* Screen.h */,
+				251E41851F57CF6A00D083DB /* Splash.cpp */,
+				251E41861F57CF6A00D083DB /* Splash.h */,
 				257AE6901D6B507700CACB74 /* Sprite.cpp */,
 				257AE6911D6B507700CACB74 /* Sprite.h */,
 				257AE6941D6B507700CACB74 /* TileBank.cpp */,
@@ -472,6 +477,7 @@
 				250427521F168FEC00409835 /* Scene.cpp in Sources */,
 				257D925A1D794A63006B6512 /* PlayerInventory.cpp in Sources */,
 				257AE6DB1D7800E300CACB74 /* AudioStream.cpp in Sources */,
+				251E41871F57CF6A00D083DB /* Splash.cpp in Sources */,
 				2504273B1EE54BE500409835 /* Font.cpp in Sources */,
 				2504273C1EE54BE500409835 /* TextRenderer.cpp in Sources */,
 				25A44AE71DAFD8E900C6CE0C /* Door.cpp in Sources */,
