@@ -64,6 +64,7 @@ private:
 	CInterruptSystem	m_Interrupt;
 	CTimer				m_Timer;
 	CLogger				m_Logger;
+	CLogger				m_LoggerKernel;
 	CAudioRPiCircle		m_audio;
 
 	// SD Card

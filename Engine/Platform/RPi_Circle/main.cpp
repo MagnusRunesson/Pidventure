@@ -56,7 +56,8 @@ const int RPI_GPIO_MASK_PGM_R		= 1 << RPI_GPIO_PGM_R;
 CApp::CApp( void )
 :	m_Screen( m_Options.GetWidth(), m_Options.GetHeight()),
 	m_Timer( &m_Interrupt ),
-	m_Logger( m_Options.GetLogLevel (), &m_Timer ),
+	m_Logger( LogDebug, &m_Timer ),
+	m_LoggerKernel( LogPanic, &m_Timer ),
 
 	m_audio( &m_Interrupt ),
 	m_EMMC( &m_Interrupt, &m_Timer, &m_ActLED ),
