@@ -1,3 +1,4 @@
+#include "Engine/Audio/AudioMixer.h"
 #include "Engine/Platform/RPi_Circle/audio_rpi_circle.h"
 
 #define SAMPLE_RATE     44100
@@ -19,6 +20,15 @@ unsigned CAudioRPiCircle::GetChunk( u32 *pBuffer, unsigned nChunkSize )
    uint32 sample = 0;
    while( sample < nChunkSize )
    {
+      audioMixer.outputReadPosition++;
+      if( audioMixer.outputReadPosition >= audioMixer.outputBufferSize )
+         audioMixer.outputReadPosition = 0;
+
+      u32 data = (127 + audioMixer.pOutputBuffer[ audioMixer.outputReadPosition ]) << 3;
+      pBuffer[ sample++ ] = data;   // Left
+      pBuffer[ sample++ ] = data;   // Right
+
+      /*
       pBuffer[ sample++ ] = m_sawTooth;   // Left
       pBuffer[ sample++ ] = m_sawTooth;   // Right
 
@@ -27,6 +37,7 @@ unsigned CAudioRPiCircle::GetChunk( u32 *pBuffer, unsigned nChunkSize )
       {
          m_sawTooth -= (1<<12);
       }
+      */
    }
 
    // The entire buffer was filled, yay!
