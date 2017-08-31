@@ -6,6 +6,7 @@
 
 #include "Engine/Platform/RPi_Circle/main.h"
 #include "Engine/Graphics/Screen.h"
+#include "Engine/Graphics/Splash.h"
 #include "Engine/IO/Joypad.h"
 
 static const char FromKernel[] = "kernel";
@@ -97,6 +98,17 @@ void CApp::Init()
 		bOK = m_Screen.Initialize();
 	}
 
+	//
+	// Initialize screen stuff
+	//
+	screenBuffer = new float[ SCREEN_WIDTH*SCREEN_HEIGHT * 4 ];		// WxH, 4 channels (RGB, Depth)
+	m_pScreenBufferParty = (uint32*)m_Screen.m_pFrameBuffer->GetBuffer();
+	m_pScreenBufferPartyUInt8 = (uint8*)m_pScreenBufferParty;
+
+	// Start by showing the splash screen, yay!
+	splashRender();
+	BlitScreen();
+
 	if( bOK )
 	{
 		bOK = m_Serial.Initialize( 115200 );
@@ -142,12 +154,6 @@ void CApp::Init()
 
 	m_pKeyboard->RegisterKeyStatusHandlerRaw( AppKeyStatusHandlerRaw );
 
-	//
-	// Initialize screen stuff
-	//
-	screenBuffer = new float[ SCREEN_WIDTH*SCREEN_HEIGHT * 4 ];		// WxH, 4 channels (RGB, Depth)
-	m_pScreenBufferParty = (uint32*)m_Screen.m_pFrameBuffer->GetBuffer();
-	m_pScreenBufferPartyUInt8 = (uint8*)m_pScreenBufferParty;
 	//return bOK;
 
 	CDevice *pPartition = m_DeviceNameService.GetDevice (PARTITION, TRUE);
