@@ -91,8 +91,6 @@ void CApp::Init()
 	m_isLoggingActive = false;
 	bool bOK = TRUE;
 
-	m_audio.Start();
-
 	if( bOK )
 	{
 		bOK = m_Screen.Initialize();
@@ -134,6 +132,8 @@ void CApp::Init()
 	{
 		bOK = m_Timer.Initialize();
 	}
+
+	m_audio.Start();
 
 	if (bOK)
 	{
