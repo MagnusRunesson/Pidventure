@@ -27,17 +27,6 @@ unsigned CAudioRPiCircle::GetChunk( u32 *pBuffer, unsigned nChunkSize )
       u32 data = (127 + audioMixer.pOutputBuffer[ audioMixer.outputReadPosition ]) << 3;
       pBuffer[ sample++ ] = data;   // Left
       pBuffer[ sample++ ] = data;   // Right
-
-      /*
-      pBuffer[ sample++ ] = m_sawTooth;   // Left
-      pBuffer[ sample++ ] = m_sawTooth;   // Right
-
-      m_sawTooth += (1<<8);
-      if( m_sawTooth >= (1<<11))
-      {
-         m_sawTooth -= (1<<12);
-      }
-      */
    }
 
    // The entire buffer was filled, yay!
