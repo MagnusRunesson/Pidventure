@@ -16,4 +16,6 @@ typedef unsigned short uint16;
 typedef signed int sint32;
 typedef unsigned int uint32;
 
+typedef void(*pfn)(void*);
+
 #endif /* types_h */
