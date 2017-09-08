@@ -11,6 +11,7 @@
 #include "Engine/Graphics/Image.h"
 #include "Engine/Core/BitHelpers.h"
 #include "Engine/Core/Debug.h"
+#include "Engine/Core/Math.h"
 
 Sprite::Sprite()
 {
@@ -88,10 +89,12 @@ void Sprite::PreRender()
 		h = image->h;
 	}
 	
-	boundsLeft = x;
-	boundsTop = y;
-	boundsRight = x+w;
-	boundsBottom = y+h;
+	int ix = round( x );
+	int iy = round( y );
+	boundsLeft = ix;
+	boundsTop = iy;
+	boundsRight = ix+w;
+	boundsBottom = iy+h;
 }
 
 
