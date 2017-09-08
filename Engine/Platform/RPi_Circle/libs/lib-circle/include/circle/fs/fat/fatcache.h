@@ -98,13 +98,13 @@ public:
 	 */
 	void MarkDirty (TFATBuffer *pBuffer);
 
-private:
+//private:
 	void MoveBufferFirst (TFATBuffer *pBuffer);
 	void MoveBufferLast (TFATBuffer *pBuffer);
 
 	void Fault (unsigned nCode);
 
-private:
+//private:
 	CDevice		*m_pPartition;
 	void		*m_pBufferMem;
 	TFATBufferList	 m_BufferList;

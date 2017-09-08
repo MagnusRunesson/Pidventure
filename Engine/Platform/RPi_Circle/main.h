@@ -52,7 +52,7 @@ public:
 	static uint32 m_keyboardJoypadEmulationRaise;
 	static uint32 m_keyboardJoypadEmulationLower;
 
-private:
+//private:
 	// do not change this order
 	CMemorySystem		m_Memory;
 	CActLED				m_ActLED;
@@ -64,7 +64,7 @@ private:
 	CInterruptSystem	m_Interrupt;
 	CTimer				m_Timer;
 	CLogger				m_Logger;
-	CLogger				m_LoggerKernel;
+	//CLogger				m_LoggerKernel;
 	CAudioRPiCircle		m_audio;
 
 	// SD Card

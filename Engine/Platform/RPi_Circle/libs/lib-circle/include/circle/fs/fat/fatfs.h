@@ -162,7 +162,8 @@ public:
 	*/
 	unsigned FileSize (unsigned hFile);
 
-private:
+// I want access to the member variables.  / Magnus
+//private:
 	CFATCache	m_Cache;
 	CFATInfo	m_FATInfo;
 	CFAT		m_FAT;

@@ -475,6 +475,9 @@
 		25901A3F1F5FB3E0004F5621 /* version.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = version.h; sourceTree = "<group>"; };
 		25901A401F5FB3E0004F5621 /* virtualgpiopin.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = virtualgpiopin.h; sourceTree = "<group>"; };
 		25901A411F5FB3E0004F5621 /* stdint.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = stdint.h; sourceTree = "<group>"; };
+		25901A421F5FB750004F5621 /* filestream_rpi_circle.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = filestream_rpi_circle.cpp; path = Engine/Platform/RPi_Circle/filestream_rpi_circle.cpp; sourceTree = "<group>"; };
+		25901A431F5FB750004F5621 /* filestream_rpi_circle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = filestream_rpi_circle.h; path = Engine/Platform/RPi_Circle/filestream_rpi_circle.h; sourceTree = "<group>"; };
+		25901A441F5FB782004F5621 /* FileStream.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FileStream.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXGroup section */
@@ -642,6 +645,7 @@
 				2590189B1F5FB2EE004F5621 /* Data.h */,
 				2590189C1F5FB2EE004F5621 /* File.cpp */,
 				2590189D1F5FB2EE004F5621 /* File.h */,
+				25901A441F5FB782004F5621 /* FileStream.h */,
 				2590189E1F5FB2EE004F5621 /* FileCache.cpp */,
 				2590189F1F5FB2EE004F5621 /* FileCache.h */,
 				259018A01F5FB2EE004F5621 /* IO.h */,
@@ -700,6 +704,8 @@
 				259018B91F5FB316004F5621 /* joypad_rpi_circle.cpp */,
 				259018BA1F5FB316004F5621 /* main.cpp */,
 				259018BB1F5FB316004F5621 /* main.h */,
+				25901A421F5FB750004F5621 /* filestream_rpi_circle.cpp */,
+				25901A431F5FB750004F5621 /* filestream_rpi_circle.h */,
 			);
 			name = Platform/RPi_Circle;
 			sourceTree = "<group>";

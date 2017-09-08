@@ -4,10 +4,12 @@
 #include <circle/startup.h>
 #include <circle/string.h>
 
+#include "Engine/Core/Debug.h"
 #include "Engine/Platform/RPi_Circle/main.h"
 #include "Engine/Graphics/Screen.h"
 #include "Engine/Graphics/Splash.h"
 #include "Engine/IO/Joypad.h"
+#include "Engine/IO/FileStream.h"
 
 static const char FromKernel[] = "kernel";
 #define PARTITION	"emmc1-1"
@@ -58,7 +60,7 @@ CApp::CApp( void )
 :	m_Screen( m_Options.GetWidth(), m_Options.GetHeight()),
 	m_Timer( &m_Interrupt ),
 	m_Logger( LogDebug, &m_Timer ),
-	m_LoggerKernel( LogPanic, &m_Timer ),
+	//m_LoggerKernel( LogPanic, &m_Timer ),
 
 	m_audio( &m_Interrupt ),
 	m_EMMC( &m_Interrupt, &m_Timer, &m_ActLED ),
@@ -86,9 +88,11 @@ CApp::~CApp()
 {
 }
 
+uint8 streambuffertest[ 4096 ];
+
 void CApp::Init()
 {
-	m_isLoggingActive = false;
+	m_isLoggingActive = true;
 	bool bOK = TRUE;
 
 	if( bOK )
@@ -195,6 +199,40 @@ void CApp::Init()
 		m_Logger.Write (FromKernel, LogPanic, "Cannot close file");
 	}
 	*/
+	
+	fileStreamInit();
+
+	/*
+	debugLog("Refular file loading!");
+	unsigned hFile = m_FileSystem.FileOpen( "stream.txt" );
+	//debugLog("hFile: %i", hFile );
+	
+	unsigned rf0 = CTimer::GetClockTicks();
+	unsigned nResult = m_FileSystem.FileRead( hFile, streambuffertest, 512 );
+	unsigned rf1 = CTimer::GetClockTicks();
+
+	//debugLog("Result: %i", nResult);
+	m_FileSystem.FileClose( hFile );
+	streambuffertest[ 10 ] = 0;
+	debugLog( "Loaded regularly: %s", streambuffertest );
+	 */
+
+	int i;
+	for( i=0; i<512; i++ )
+		streambuffertest[ i ] = i;
+	
+	debugLog("-------->FileStreamOpen");
+	int sh = fileStreamOpen( "stream.txt" );
+	//debugLog("-------->FileStreamReadNextChunk");
+	
+	unsigned st0 = CTimer::GetClockTicks();
+	fileStreamReadNextChunk( sh, streambuffertest );
+	unsigned st1 = CTimer::GetClockTicks();
+
+	streambuffertest[ 10 ] = 0;
+	debugLog( "Streamed: %s", streambuffertest );
+	
+	//debugLog("Read via FAT: %i, read via stream: %i", (rf1-rf0), (st1-st0));
 }
 
 void CApp::Exit()
@@ -322,7 +360,7 @@ void CApp::Update()
 	padUpdate();
 	game_loop();
 
-	BlitScreen();
+	//BlitScreen();
 }
 
 void CApp::BlitScreen()
