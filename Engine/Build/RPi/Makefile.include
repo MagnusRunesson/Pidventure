@@ -14,6 +14,7 @@ SRCS+=\
 	Engine/Core/BitHelpers.cpp \
 	Engine/Core/Debug.cpp \
 	Engine/Core/Timer.cpp \
+	Engine/Core/Math.cpp \
 	Engine/Core/Memory.cpp \
 	Engine/Util/String.cpp \
 	Engine/Util/Memory.cpp \
