@@ -101,6 +101,8 @@ void fileInit()
 		fileTranslatorTableNumEntries++;
 	}
 	
+	fileUnload( pFileListData );
+	
 	debugLog("File init done");
 }
 
