@@ -19,18 +19,18 @@ ALL_CONVERTED_FILES=$(CONVERTED_MAP_FILES) $(CONVERTED_BANK_FILES) $(CONVERTED_S
 # $1: original name
 define crunch_name
 	@$(eval counter=$(shell echo $$(($(counter)+1))))
-	@mv ../data/$1 ../data/$(basename $(shell printf '%08d' $(counter))).dat
-	@$(shell echo $1:$(basename $(shell printf '%08d' $(counter))).dat >> filelist.txt)
+	@mv ../data/$1 ../data/$(basename $(shell printf '$(GAME_IDENTIFIER)%05d' $(counter))).dat
+	@$(shell echo $1:$(basename $(shell printf '$(GAME_IDENTIFIER)%05d' $(counter))).dat >> $(GAME_IDENTIFIER)files.txt)
 endef
 
 build: clean_file_list $(ALL_CONVERTED_FILES) move_file_list
 
 clean_file_list:
-	$(shell rm filelist.txt)
+	$(shell rm $(GAME_IDENTIFIER)files.txt)
 
 move_file_list:
 	@echo Moving file list
-	$(shell mv filelist.txt ../data/filelist.txt)
+	$(shell mv $(GAME_IDENTIFIER)files.txt ../data/$(GAME_IDENTIFIER)files.txt)
 
 %.petm: %.tmx
 	@echo Converting scene $^
