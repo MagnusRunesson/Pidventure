@@ -112,17 +112,26 @@ void fileStreamRewind( int _fileStreamHandle )
 //
 int fileStreamReadNextChunk( int _fileStreamHandle, void* _pReadDestination )
 {
+	g_pApp->m_FileSystem.m_FileTableLock.Acquire ();
+
 	CFileStream* pStream = &g_fileStreams[ _fileStreamHandle ];
 	if( pStream->nextSector > pStream->lastSector )
+	{
+		g_pApp->m_FileSystem.m_FileTableLock.Release();
 		return 0;	// We have already read past the end
+	}
 
 	// Seek to the right sector on the SD card
 	uint64 seekOffset = pStream->nextSector;
 	seekOffset *= STREAM_CHUNK_SIZE;
+	g_pApp->m_FileSystem.m_Cache.m_DiskLock.Acquire();
 	g_pApp->m_FileSystem.m_Cache.m_pPartition->Seek( seekOffset );
 	
 	// Read one sector from the SD card
 	int readJanne = g_pApp->m_FileSystem.m_Cache.m_pPartition->Read( _pReadDestination, 512 );
+	
+	//
+	g_pApp->m_FileSystem.m_Cache.m_DiskLock.Release();
 	//debugLog("readJanne=%i\n", readJanne );
 	
 	int readBytes = STREAM_CHUNK_SIZE;
@@ -131,6 +140,9 @@ int fileStreamReadNextChunk( int _fileStreamHandle, void* _pReadDestination )
 		// We just read from the last sector. That means we might not return a full 512 bytes.
 		readBytes = (pStream->fileSizeBytes & 511);
 	}
+
+	//
+	g_pApp->m_FileSystem.m_FileTableLock.Release();
 	
 	//
 	pStream->nextSector++;
