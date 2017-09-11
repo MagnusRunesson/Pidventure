@@ -60,7 +60,7 @@ CApp::CApp( void )
 :	m_Screen( m_Options.GetWidth(), m_Options.GetHeight()),
 	m_Timer( &m_Interrupt ),
 	m_Logger( LogDebug, &m_Timer ),
-	//m_LoggerKernel( LogPanic, &m_Timer ),
+	m_LoggerKernel( LogPanic, &m_Timer ),
 
 	m_audio( &m_Interrupt ),
 	m_EMMC( &m_Interrupt, &m_Timer, &m_ActLED ),
@@ -92,7 +92,7 @@ uint8 streambuffertest[ 4096 ];
 
 void CApp::Init()
 {
-	m_isLoggingActive = true;
+	m_isLoggingActive = false;
 	bool bOK = TRUE;
 
 	if( bOK )
@@ -215,7 +215,6 @@ void CApp::Init()
 	m_FileSystem.FileClose( hFile );
 	streambuffertest[ 10 ] = 0;
 	debugLog( "Loaded regularly: %s", streambuffertest );
-	 */
 
 	int i;
 	for( i=0; i<512; i++ )
@@ -232,7 +231,8 @@ void CApp::Init()
 	streambuffertest[ 10 ] = 0;
 	debugLog( "Streamed: %s", streambuffertest );
 	
-	//debugLog("Read via FAT: %i, read via stream: %i", (rf1-rf0), (st1-st0));
+	debugLog("Read via FAT: %i, read via stream: %i", (rf1-rf0), (st1-st0));
+	 */
 }
 
 void CApp::Exit()
@@ -360,7 +360,7 @@ void CApp::Update()
 	padUpdate();
 	game_loop();
 
-	//BlitScreen();
+	BlitScreen();
 }
 
 void CApp::BlitScreen()
