@@ -38,7 +38,7 @@ Image* pImageOverlay;
 
 void game_setup()
 {
-	fileInit();
+	fileInit( "pdv" );
 	
 	debugLog("Gamesetup start - banankontakt\n");	// This was printed
 	char* papa = (char*)malloc(10);
