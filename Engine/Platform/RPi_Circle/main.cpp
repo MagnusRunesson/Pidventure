@@ -532,7 +532,7 @@ bool CApp::FileLoad( const char* _pszFileName, void** _ppReadData, int* _pReadBy
 
 	if( nResult == FS_ERROR )
 	{
-		m_Logger.Write( FromKernel, LogError, "Read error" );
+		m_Logger.Write( FromKernel, LogError, "Read error of file '%s'", _pszFileName );
 		return false;
 	}
 
