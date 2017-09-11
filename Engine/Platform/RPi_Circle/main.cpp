@@ -292,10 +292,19 @@ void CApp::KeyStatusHandlerRaw( unsigned char ucModifiers, const unsigned char R
 
 				// Program buttons
 				case 0x2c:	m_keyboardJoypadEmulationRaise |= PAD_KEYMASK_PGM_L;		break;
-				case 0x28:
-					m_isLoggingActive = !m_isLoggingActive;
-					m_keyboardJoypadEmulationRaise |= PAD_KEYMASK_PGM_R;
-					break;
+				case 0x28:	m_keyboardJoypadEmulationRaise |= PAD_KEYMASK_PGM_R;		break;
+
+				// Debug triggers
+				case 0x1e: game_debugTrigger( 1 ); break;
+				case 0x1f: game_debugTrigger( 2 ); break;
+				case 0x20: game_debugTrigger( 3 ); break;
+				case 0x21: game_debugTrigger( 4 ); break;
+				case 0x22: game_debugTrigger( 5 ); break;
+				case 0x23: game_debugTrigger( 6 ); break;
+				case 0x24: game_debugTrigger( 7 ); break;
+				case 0x25: game_debugTrigger( 8 ); break;
+				case 0x26: game_debugTrigger( 9 ); m_isLoggingActive = !m_isLoggingActive; break;
+				case 0x27: game_debugTrigger( 0 ); reboot(); break;
 			}
 		}
 	}
