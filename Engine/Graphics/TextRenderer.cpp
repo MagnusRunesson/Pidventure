@@ -214,7 +214,8 @@ void TextRenderer::Render()
 	int i;
 	for( i=0; i<MAX_TEXTS; i++ )
 	{
-		if( m_text[ i ].m_pFont != NULL )
-			m_text[ i ].Render();
+		Text* pText = &m_text[ i ];
+		if((pText->m_pFont != NULL) && (pText->flags & TEXT_FLAG_ENABLED))
+			pText->Render();
 	}
 }
