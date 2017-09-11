@@ -46,16 +46,30 @@ char* itoa( int _value )
 	return itoabuffer;
 }
 
-void fileInit()
+void fileInit( const char* _pszGameIdentifier )
 {
 	debugLog( "FILE INIT!!!\n" );
 	
 	fileTranslatorTableNumEntries = 0;
 	
+	char pszFileName[ 13 ];
+	pszFileName[ 0 ] = _pszGameIdentifier[ 0 ];
+	pszFileName[ 1 ] = _pszGameIdentifier[ 1 ];
+	pszFileName[ 2 ] = _pszGameIdentifier[ 2 ];
+	pszFileName[ 3 ] = 'f';
+	pszFileName[ 4 ] = 'i';
+	pszFileName[ 5 ] = 'l';
+	pszFileName[ 6 ] = 'e';
+	pszFileName[ 7 ] = 's';
+	pszFileName[ 8 ] = '.';
+	pszFileName[ 9 ] = 't';
+	pszFileName[ 10 ] = 'x';
+	pszFileName[ 11 ] = 't';
+	pszFileName[ 12 ] = 0;
 	
 	void* pFileListData;
 	int numBytesRead;
-	fileLoad( "filelist.txt", &pFileListData, &numBytesRead );
+	fileLoad( pszFileName, &pFileListData, &numBytesRead );
 	
 	unsigned char* pData = (unsigned char*)pFileListData;
 	
