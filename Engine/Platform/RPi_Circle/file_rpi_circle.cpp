@@ -13,7 +13,8 @@
 #include "Engine/Core/Debug.h"
 #include "Engine/Core/Memory.h"
 
-extern bool circleFileLoad(const char* _pszFileName, void** _ppReadData, int* _pReadBytes);
+extern bool circleFileLoad( const char* _pszFileName, void** _ppReadData, int* _pReadBytes );
+extern void circleFileSave( const char* _pszFileName, void* _pContent, int _contentSize );
 
 const char* pszBasePath = "";
 char g_pszFileName[ 1024 ];
@@ -72,4 +73,9 @@ bool fileLoad(const char* _pszFileName, void** _ppReadData, int* _pReadBytes)
 void fileUnload( void* _ptr )
 {
 	fileCacheUnreferenceFile( _ptr );
+}
+
+void fileSave( const char* _pszFileName, void* _pContent, int _contentSize )
+{
+	circleFileSave( _pszFileName, _pContent, _contentSize );
 }

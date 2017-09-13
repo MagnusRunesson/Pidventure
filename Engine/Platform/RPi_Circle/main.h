@@ -40,6 +40,7 @@ public:
 	void Log( const char* _pszMessage );
 	void Log( char* _pszMessage );
 	bool FileLoad( const char* _pszFileName, void** _ppReadData, int* _pReadBytes );
+	void FileSave( const char* _pszFileName, void* _pContent, int _contentSize );
 	void PadHardwareUpdate();
 	void KeyStatusHandlerRaw( unsigned char ucModifiers, const unsigned char RawKeys[ 6 ]);
 

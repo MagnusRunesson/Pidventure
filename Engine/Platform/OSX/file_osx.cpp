@@ -55,12 +55,19 @@ void fileTrackClose(void* _ptr)
 #endif
 
 
-const char* pszBasePath = "./data/";
+const char* pszBasePathLoad = "./data/";
+const char* pszBasePathSave = "./persistent/";
 char g_pszFileName[ 1024 ];
 
-char* fileGetFullName(const char* _pszFileName)
+char* fileGetFullNameLoad(const char* _pszFileName)
 {
-	snprintf(g_pszFileName, 1024, "%s%s", pszBasePath, fileTranslatorGetCrunchedName( _pszFileName ));
+	snprintf(g_pszFileName, 1024, "%s%s", pszBasePathLoad, fileTranslatorGetCrunchedName( _pszFileName ));
+	return g_pszFileName;
+}
+
+char* fileGetFullNameSave(const char* _pszFileName)
+{
+	snprintf(g_pszFileName, 1024, "%s%s", pszBasePathSave, _pszFileName );
 	return g_pszFileName;
 }
 
@@ -73,7 +80,7 @@ bool fileLoad(const char* _pszFileName, void** _ppReadData, int* _pReadBytes)
 	// File didn't exist in log
 	//
 	debugLog( "Loading file '%s'\n", _pszFileName );
-	const char* pszFullFileName = fileGetFullName( _pszFileName );
+	const char* pszFullFileName = fileGetFullNameLoad( _pszFileName );
 	FILE* f = fopen(pszFullFileName, "rb");
 	//debugLog( "Opened file: 0x%08x by name '%s'\n", f, pszFullFileName );
 	if(f == NULL)
@@ -103,4 +110,15 @@ void fileUnload( void* _ptr )
 {
 	fileTrackClose( _ptr );
 	fileCacheUnreferenceFile( _ptr );
+}
+
+void fileSave( const char* _pszFileName, void* _pContent, int _contentLength )
+{
+	const char* pszFullFileName = fileGetFullNameSave( _pszFileName );
+	FILE* f = fopen( pszFullFileName, "w" );
+	if(f == NULL)
+		return;
+	
+	fwrite( _pContent, 1, _contentLength, f );
+	fclose( f );
 }

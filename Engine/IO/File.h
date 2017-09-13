@@ -12,6 +12,7 @@
 void fileInit( const char* _pszGameIdentifier );
 bool fileLoad( const char* _pszFileName, void** _ppReadData, int* _pReadBytes );
 bool fileLoad( const char* _pszFileName, void* _pReadDestination, int _bufferSize, int* _pReadBytes );
+void fileSave( const char* _pszFileName, void* _pContent, int _contentSize );
 void fileUnload( void* _ptr );
 const char* fileTranslatorGetCrunchedName( const char* _pszHumanReadable );
 

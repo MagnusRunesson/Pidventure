@@ -547,6 +547,25 @@ bool CApp::FileLoad( const char* _pszFileName, void** _ppReadData, int* _pReadBy
 	return true;
 }
 
+void CApp::FileSave( const char* _pszFileName, void* _pContent, int _contentSize )
+{
+	unsigned hFile = m_FileSystem.FileCreate( _pszFileName );
+	if (hFile == 0)
+	{
+		m_Logger.Write( FromKernel, LogPanic, "Cannot create file: %s", _pszFileName );
+	}
+
+	if( m_FileSystem.FileWrite( hFile, _pContent, _contentSize ))
+	{
+		m_Logger.Write( FromKernel, LogError, "Write error" );
+	}
+	
+	if (!m_FileSystem.FileClose (hFile))
+	{
+		m_Logger.Write( FromKernel, LogPanic, "Cannot close file" );
+	}
+}
+
 #define CHECK_BUTTON( _buttonName ) \
 	if( !(pins & RPI_GPIO_MASK_##_buttonName) ) \
 	{ \
@@ -610,6 +629,11 @@ void circleLog( const char* _pszMessage, ... )
 bool circleFileLoad(const char* _pszFileName, void** _ppReadData, int* _pReadBytes)
 {
 	return g_pApp->FileLoad( _pszFileName, _ppReadData, _pReadBytes );
+}
+
+void circleFileSave(const char* _pszFileName, void* _pContent, int _contentSize )
+{
+	g_pApp->FileSave( _pszFileName, _pContent, _contentSize );
 }
 
 void circlePadHardwareInit()
