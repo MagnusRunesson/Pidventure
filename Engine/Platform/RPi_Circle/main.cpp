@@ -557,7 +557,7 @@ void CApp::FileSave( const char* _pszFileName, void* _pContent, int _contentSize
 		m_Logger.Write( FromKernel, LogPanic, "Cannot create file: %s", _pszFileName );
 	}
 
-	if( m_FileSystem.FileWrite( hFile, _pContent, _contentSize ))
+	if( m_FileSystem.FileWrite( hFile, _pContent, _contentSize ) != _contentSize )
 	{
 		m_Logger.Write( FromKernel, LogError, "Write error" );
 	}
