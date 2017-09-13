@@ -478,6 +478,7 @@
 		25901A421F5FB750004F5621 /* filestream_rpi_circle.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = filestream_rpi_circle.cpp; path = Engine/Platform/RPi_Circle/filestream_rpi_circle.cpp; sourceTree = "<group>"; };
 		25901A431F5FB750004F5621 /* filestream_rpi_circle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = filestream_rpi_circle.h; path = Engine/Platform/RPi_Circle/filestream_rpi_circle.h; sourceTree = "<group>"; };
 		25901A441F5FB782004F5621 /* FileStream.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FileStream.h; sourceTree = "<group>"; };
+		25E9C1531F6903BC00B640E3 /* pgmswitcher_rpi_circle.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = pgmswitcher_rpi_circle.cpp; path = Engine/Platform/RPi_Circle/pgmswitcher_rpi_circle.cpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXGroup section */
@@ -706,6 +707,7 @@
 				259018BB1F5FB316004F5621 /* main.h */,
 				25901A421F5FB750004F5621 /* filestream_rpi_circle.cpp */,
 				25901A431F5FB750004F5621 /* filestream_rpi_circle.h */,
+				25E9C1531F6903BC00B640E3 /* pgmswitcher_rpi_circle.cpp */,
 			);
 			name = Platform/RPi_Circle;
 			sourceTree = "<group>";

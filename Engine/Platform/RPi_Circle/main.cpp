@@ -10,6 +10,7 @@
 #include "Engine/Graphics/Splash.h"
 #include "Engine/IO/Joypad.h"
 #include "Engine/IO/FileStream.h"
+#include "Engine/Util/PgmSwitcher.h"
 
 static const char FromKernel[] = "kernel";
 #define PARTITION	"emmc1-1"
@@ -171,6 +172,7 @@ void CApp::Init()
 		m_Logger.Write (FromKernel, LogPanic, "Cannot mount partition: %s", PARTITION);
 	}
 
+	pgmSwitcherReset();
 	game_setup();
 
 

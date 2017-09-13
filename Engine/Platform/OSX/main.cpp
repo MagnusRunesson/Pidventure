@@ -15,7 +15,7 @@
 #include "Engine/Core/BitHelpers.h"
 #include "Engine/Core/Timer.h"
 #include "Engine/Core/Memory.h"
-
+#include "Engine/Util/PgmSwitcher.h"
 #include "Engine/Audio/AudioHandler.h"
 
 //
@@ -107,6 +107,8 @@ bool init()
 	dev = NULL;
 	audioInit( 44100 );
 	
+	pgmSwitcherReset();
+
 	return true;
 }
 

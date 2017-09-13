@@ -47,6 +47,7 @@
 		258A2F111DCC5C4D005915CD /* FileCache.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 258A2F0F1DCC5C4D005915CD /* FileCache.cpp */; settings = {ASSET_TAGS = (); }; };
 		25A44AE71DAFD8E900C6CE0C /* Door.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 25A44AE51DAFD8E900C6CE0C /* Door.cpp */; settings = {ASSET_TAGS = (); }; };
 		25E9C14F1F62671600B640E3 /* Math.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 25E9C14D1F62671600B640E3 /* Math.cpp */; settings = {ASSET_TAGS = (); }; };
+		25E9C1521F69031200B640E3 /* pgmswitcher_osx.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 25E9C1511F69031200B640E3 /* pgmswitcher_osx.cpp */; settings = {ASSET_TAGS = (); }; };
 		25F9308E1D7E83640026DA4C /* file_osx.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 25F9308C1D7E83640026DA4C /* file_osx.cpp */; settings = {ASSET_TAGS = (); }; };
 		25F930971D7E8A560026DA4C /* Image.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 25F930961D7E8A560026DA4C /* Image.cpp */; settings = {ASSET_TAGS = (); }; };
 		25F9309A1D81BBD70026DA4C /* background.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 25F930981D81BBD70026DA4C /* background.cpp */; settings = {ASSET_TAGS = (); }; };
@@ -147,6 +148,8 @@
 		25A44AE61DAFD8E900C6CE0C /* Door.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Door.h; path = Pidventure/Gameplay/Door.h; sourceTree = "<group>"; };
 		25E9C14D1F62671600B640E3 /* Math.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Math.cpp; path = Engine/Core/Math.cpp; sourceTree = "<group>"; };
 		25E9C14E1F62671600B640E3 /* Math.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Math.h; path = Engine/Core/Math.h; sourceTree = "<group>"; };
+		25E9C1501F6902B900B640E3 /* PgmSwitcher.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = PgmSwitcher.h; path = Engine/Util/PgmSwitcher.h; sourceTree = "<group>"; };
+		25E9C1511F69031200B640E3 /* pgmswitcher_osx.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = pgmswitcher_osx.cpp; path = Engine/Platform/OSX/pgmswitcher_osx.cpp; sourceTree = "<group>"; };
 		25F9308C1D7E83640026DA4C /* file_osx.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = file_osx.cpp; path = Engine/Platform/OSX/file_osx.cpp; sourceTree = "<group>"; };
 		25F9308F1D7E87D80026DA4C /* File.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = File.h; path = Engine/IO/File.h; sourceTree = "<group>"; };
 		25F930901D7E88250026DA4C /* Engine.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Engine.h; path = Engine/Engine.h; sourceTree = "<group>"; };
@@ -202,6 +205,7 @@
 				254D83351F4ACD4A00B1A2FC /* String.h */,
 				254D83371F4AF28700B1A2FC /* Memory.cpp */,
 				254D83381F4AF28700B1A2FC /* Memory.h */,
+				25E9C1501F6902B900B640E3 /* PgmSwitcher.h */,
 			);
 			name = Util;
 			sourceTree = "<group>";
@@ -302,6 +306,7 @@
 				257AE6C61D77FF4900CACB74 /* main.cpp */,
 				25F9308C1D7E83640026DA4C /* file_osx.cpp */,
 				254D83431F4EB66100B1A2FC /* joypad_osx.cpp */,
+				25E9C1511F69031200B640E3 /* pgmswitcher_osx.cpp */,
 			);
 			name = Platform/OSX;
 			sourceTree = "<group>";
@@ -482,6 +487,7 @@
 				250427551F1BE1C100409835 /* Data.cpp in Sources */,
 				250427521F168FEC00409835 /* Scene.cpp in Sources */,
 				257D925A1D794A63006B6512 /* PlayerInventory.cpp in Sources */,
+				25E9C1521F69031200B640E3 /* pgmswitcher_osx.cpp in Sources */,
 				257AE6DB1D7800E300CACB74 /* AudioStream.cpp in Sources */,
 				251E41871F57CF6A00D083DB /* Splash.cpp in Sources */,
 				2504273B1EE54BE500409835 /* Font.cpp in Sources */,
