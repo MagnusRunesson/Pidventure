@@ -6,6 +6,8 @@
 //  Copyright © 2017 Magnus Runesson. All rights reserved.
 //
 
+#include <circle/startup.h>
+
 #include "Engine/IO/File.h"
 
 #define TEMPLATE_FILENAME "config.tpl"
@@ -52,4 +54,7 @@ void pgmSwitcherSwitch( const char* _pszNewProgramIdentifier )
 	pNewConfigData[ i++ ] = '\n';
 	
 	fileSave( CONFIG_FILENAME, pNewConfigData, newConfigDataLength );
+	
+	//
+	reboot();
 }

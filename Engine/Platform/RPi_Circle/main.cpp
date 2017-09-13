@@ -306,7 +306,7 @@ void CApp::KeyStatusHandlerRaw( unsigned char ucModifiers, const unsigned char R
 				case 0x24: game_debugTrigger( 7 ); break;
 				case 0x25: game_debugTrigger( 8 ); break;
 				case 0x26: game_debugTrigger( 9 ); m_isLoggingActive = !m_isLoggingActive; break;
-				case 0x27: game_debugTrigger( 0 ); reboot(); break;
+				case 0x27: game_debugTrigger( 0 ); break;
 			}
 		}
 	}
