@@ -3,6 +3,8 @@
 
 #ifdef ENGINE_TARGET_RPI_CIRCLE
 
+#define NULL 0
+
 //
 //
 #include <circle/alloc.h>
@@ -14,6 +16,7 @@ typedef unsigned int size_t;
 #else
 
 #include <stdlib.h>
+
 
 #endif
 

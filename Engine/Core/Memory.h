@@ -9,7 +9,7 @@
 #ifndef Memory_h
 #define Memory_h
 
-#include "Engine/stdc/stdlib.h"
+#include "Engine/stdc/stdc.h"
 
 void memInit();
 void memExit();
