@@ -6,7 +6,6 @@
 //  Copyright © 2015 Magnus Runesson. All rights reserved.
 //
 
-#include <iostream>
 #include "SDL2/SDL.h"
 #include "Engine/Graphics/Image.h"
 #include "Engine/IO/Joypad.h"
