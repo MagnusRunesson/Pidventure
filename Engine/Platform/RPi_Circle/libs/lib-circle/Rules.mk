@@ -60,7 +60,12 @@ CPPFLAGS+= $(CFLAGS) -fno-exceptions -fno-rtti -std=c++14
 ifeq ($(strip $(OBJS)),)
 OBJS	= $(addprefix $(OUTPUT_DIR),$(SRCS:.cpp=.o))
 endif
+
+ifeq ($(OUTPUT_BASE_NAME),)
 TARGET 	= $(addprefix $(OUTPUT_DIR),$(TARGET_IMG))
+else
+TARGET  = $(addprefix $(OUTPUT_DIR),$(OUTPUT_BASE_NAME))
+endif
 
 %.o: %.S
 	@mkdir -p $(dir $@ )

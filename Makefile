@@ -14,4 +14,8 @@ SRCS=\
 	Pidventure/Player/PlayerInventory.cpp \
 	Pidventure/DataManual/Animations.cpp
 
+include makefile_gameidentifier.include
+
+OUTPUT_BASE_NAME=$(GAME_IDENTIFIER)
+
 include Engine/Build/RPi/Makefile.Include
