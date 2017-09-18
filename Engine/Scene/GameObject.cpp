@@ -119,6 +119,12 @@ void GameObject::SetWorldPosition( float _x, float _y )
 	m_worldPositionY = _y;
 }
 
+void GameObject::GetWorldPosition( float* _pOutX, float* _pOutY )
+{
+	*_pOutX = m_worldPositionX;
+	*_pOutY = m_worldPositionY;
+}
+
 float GameObject::GetWorldPositionX()
 {
 	return m_worldPositionX;

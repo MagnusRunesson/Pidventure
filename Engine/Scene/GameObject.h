@@ -10,6 +10,7 @@
 #define GameObject_hpp
 
 #include "Engine/Graphics/Animation.h"
+#include "Engine/Scene/IWorldPosition.h"
 
 #define GO_SYSTEMFLAG_ENABLED		(1<<0)
 
@@ -18,7 +19,7 @@ class Image;
 class Animation;
 class AnimationSequenceDefinition;
 
-class GameObject
+class GameObject : public IWorldPosition
 {
 	//
 	//
@@ -40,9 +41,10 @@ public:
 
 	void SetHotspot( float _x, float _y );
 	
-	void SetWorldPosition( float _x, float _y );
-	float GetWorldPositionX();
-	float GetWorldPositionY();
+	virtual void SetWorldPosition( float _x, float _y );
+	virtual void GetWorldPosition( float* _pOutX, float* _pOutY );
+	virtual float GetWorldPositionX();
+	virtual float GetWorldPositionY();
 	
 	bool IsUsed();
 	Sprite* GetSprite();
