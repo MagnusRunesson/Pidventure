@@ -3,6 +3,8 @@
 //
 #include <circle/startup.h>
 #include <circle/string.h>
+#include <circle/memio.h>
+#include <circle/spinlock.h>
 
 #include "Engine/Core/Debug.h"
 #include "Engine/Platform/RPi_Circle/main.h"
@@ -85,6 +87,41 @@ CApp::CApp( void )
 {
 }
 
+//CSpinLock m_waitVBLSpinLock;
+
+volatile uint32 currentFrameCount;
+volatile uint32 previousFrameCount;
+
+void IRQParty( void* _pData )
+{
+	//m_waitVBLSpinLock.Acquire();
+	currentFrameCount++;
+	//m_waitVBLSpinLock.Release();
+	
+	write32( 0x3f600000, 0 );
+}
+
+void waitVBL()
+{
+	/*
+	bool sameFrame = true;
+	uint32 newFrameCount;
+	
+	while( previousFrameCount <= currentFrameCount ) {
+		m_waitVBLSpinLock.Acquire();
+		newFrameCount = currentFrameCount;
+		m_waitVBLSpinLock.Release();
+		sameFrame = previousFrameCount == newFrameCount;
+	}
+	
+	previousFrameCount = currentFrameCount;
+	return currentFrameCount;
+	*/
+
+	while( previousFrameCount >= currentFrameCount );
+	previousFrameCount = currentFrameCount;
+}
+
 CApp::~CApp()
 {
 }
@@ -93,6 +130,9 @@ uint8 streambuffertest[ 4096 ];
 
 void CApp::Init()
 {
+	currentFrameCount = 0;
+	previousFrameCount = 0;
+	
 	m_isLoggingActive = false;
 	bool bOK = TRUE;
 
@@ -133,6 +173,8 @@ void CApp::Init()
 		bOK = m_Interrupt.Initialize();
 	}
 
+	m_Interrupt.ConnectIRQ( ARM_IRQ_SMI, IRQParty, (void*)0 );
+	
 	if( bOK )
 	{
 		bOK = m_Timer.Initialize();
@@ -371,6 +413,7 @@ void CApp::Update()
 	padUpdate();
 	game_loop();
 
+	waitVBL();
 	BlitScreen();
 }
 
