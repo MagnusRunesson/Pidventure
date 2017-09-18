@@ -112,10 +112,10 @@ void cameraUpdate()
 
 float cameraWorldX()
 {
-	return camera.GetWorldX();
+	return camera.GetWorldPositionX();
 }
 
 float cameraWorldY()
 {
-	return camera.GetWorldY();
+	return camera.GetWorldPositionY();
 }

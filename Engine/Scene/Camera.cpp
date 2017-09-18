@@ -27,3 +27,9 @@ void Camera::SetWorldPosition( float _x, float _y )
 	m_worldPositionX = _x;
 	m_worldPositionY = _y;
 }
+
+void Camera::GetWorldPosition( float* _pOutX, float* _pOutY )
+{
+	*_pOutX = m_worldPositionX;
+	*_pOutY = m_worldPositionY;
+}

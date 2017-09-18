@@ -99,8 +99,8 @@ void GameObject::Render()
 	if( m_customPreRender != NULL )
 		m_customPreRender( m_customObject );
 	
-	m_sprite->x = m_worldPositionX - Camera::main->GetWorldX() - m_imageHotspotX;
-	m_sprite->y = m_worldPositionY - Camera::main->GetWorldY() - m_imageHotspotY;
+	m_sprite->x = m_worldPositionX - Camera::main->GetWorldPositionX() - m_imageHotspotX;
+	m_sprite->y = m_worldPositionY - Camera::main->GetWorldPositionY() - m_imageHotspotY;
 
 	if( m_customPostRender != NULL )
 		m_customPostRender( m_customObject );

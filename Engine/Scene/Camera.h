@@ -9,14 +9,17 @@
 #ifndef Camera_h
 #define Camera_h
 
+#include "Engine/Scene/IWorldPosition.h"
+
 class Camera
 {
 public:
 	Camera();
 	
-	void SetWorldPosition( float _x, float _y );
-	inline float GetWorldX(){ return m_worldPositionX; }
-	inline float GetWorldY(){ return m_worldPositionY; }
+	virtual void SetWorldPosition( float _x, float _y );
+	virtual void GetWorldPosition( float* _pOutX, float* _pOutY );
+	virtual float GetWorldPositionX(){ return m_worldPositionX; }
+	virtual float GetWorldPositionY(){ return m_worldPositionY; }
 
 	static Camera* main;
 
