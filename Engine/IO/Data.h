@@ -9,6 +9,8 @@
 #ifndef Data_h
 #define Data_h
 
+class AnimationSequenceDefinition;
+
 void dataInit();
 void dataExit();
 void dataAddAnimationSequenceDefinition( AnimationSequenceDefinition* _pDefinition );
