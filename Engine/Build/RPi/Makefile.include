@@ -43,6 +43,7 @@ SRCS+=\
 	Engine/Scene/GameObject.cpp \
 	Engine/Scene/GameObjectManager.cpp \
 	Engine/Scene/GameObjectTemplate.cpp \
+	Engine/Scene/WorldPosition.cpp \
 	Engine/Scene/Scene.cpp
 
 INCLUDE = -I .
