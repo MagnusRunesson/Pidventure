@@ -18,18 +18,4 @@ Camera* Camera::main = (Camera*)0;
 //
 Camera::Camera()
 {
-	m_worldPositionX = 0.0f;
-	m_worldPositionY = 0.0f;
-}
-
-void Camera::SetWorldPosition( float _x, float _y )
-{
-	m_worldPositionX = _x;
-	m_worldPositionY = _y;
-}
-
-void Camera::GetWorldPosition( float* _pOutX, float* _pOutY )
-{
-	*_pOutX = m_worldPositionX;
-	*_pOutY = m_worldPositionY;
 }

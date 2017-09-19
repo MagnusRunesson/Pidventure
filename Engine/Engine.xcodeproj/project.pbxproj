@@ -84,7 +84,8 @@
 		2559DED41F6AC73200339F64 /* joypad_osx.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2559DED01F6AC73200339F64 /* joypad_osx.cpp */; settings = {ASSET_TAGS = (); }; };
 		2559DED51F6AC73200339F64 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2559DED11F6AC73200339F64 /* main.cpp */; settings = {ASSET_TAGS = (); }; };
 		2559DED61F6AC73200339F64 /* pgmswitcher_osx.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2559DED21F6AC73200339F64 /* pgmswitcher_osx.cpp */; settings = {ASSET_TAGS = (); }; };
-		25D9498C1F700F5C00BC6AE5 /* IWorldPosition.h in Headers */ = {isa = PBXBuildFile; fileRef = 25D9498B1F700F5C00BC6AE5 /* IWorldPosition.h */; settings = {ASSET_TAGS = (); }; };
+		25D949931F704C6800BC6AE5 /* WorldPosition.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 25D949911F704C6800BC6AE5 /* WorldPosition.cpp */; settings = {ASSET_TAGS = (); }; };
+		25D949941F704C6800BC6AE5 /* WorldPosition.h in Headers */ = {isa = PBXBuildFile; fileRef = 25D949921F704C6800BC6AE5 /* WorldPosition.h */; settings = {ASSET_TAGS = (); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -177,7 +178,8 @@
 		2559DED01F6AC73200339F64 /* joypad_osx.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = joypad_osx.cpp; path = Platform/OSX/joypad_osx.cpp; sourceTree = SOURCE_ROOT; };
 		2559DED11F6AC73200339F64 /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = main.cpp; path = Platform/OSX/main.cpp; sourceTree = SOURCE_ROOT; };
 		2559DED21F6AC73200339F64 /* pgmswitcher_osx.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = pgmswitcher_osx.cpp; path = Platform/OSX/pgmswitcher_osx.cpp; sourceTree = SOURCE_ROOT; };
-		25D9498B1F700F5C00BC6AE5 /* IWorldPosition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IWorldPosition.h; sourceTree = "<group>"; };
+		25D949911F704C6800BC6AE5 /* WorldPosition.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = WorldPosition.cpp; sourceTree = "<group>"; };
+		25D949921F704C6800BC6AE5 /* WorldPosition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WorldPosition.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -321,7 +323,8 @@
 				2559DE731F6AC71D00339F64 /* GameObjectTemplate.h */,
 				2559DE741F6AC71D00339F64 /* Scene.cpp */,
 				2559DE751F6AC71D00339F64 /* Scene.h */,
-				25D9498B1F700F5C00BC6AE5 /* IWorldPosition.h */,
+				25D949911F704C6800BC6AE5 /* WorldPosition.cpp */,
+				25D949921F704C6800BC6AE5 /* WorldPosition.h */,
 			);
 			path = Scene;
 			sourceTree = SOURCE_ROOT;
@@ -398,9 +401,9 @@
 				2559DE8E1F6AC71D00339F64 /* BitHelpers.h in Headers */,
 				2559DEAC1F6AC71D00339F64 /* TileBank.h in Headers */,
 				2559DE9B1F6AC71D00339F64 /* Animation.h in Headers */,
+				25D949941F704C6800BC6AE5 /* WorldPosition.h in Headers */,
 				2559DE911F6AC71D00339F64 /* Debug.h in Headers */,
 				2559DE881F6AC71D00339F64 /* AudioMixer.h in Headers */,
-				25D9498C1F700F5C00BC6AE5 /* IWorldPosition.h in Headers */,
 				2559DEAA1F6AC71D00339F64 /* TextRenderer.h in Headers */,
 				2559DEB41F6AC71D00339F64 /* File.h in Headers */,
 				2559DE971F6AC71D00339F64 /* Timer.h in Headers */,
@@ -511,6 +514,7 @@
 				2559DEBD1F6AC71D00339F64 /* GameObject.cpp in Sources */,
 				2559DE901F6AC71D00339F64 /* Debug.cpp in Sources */,
 				2559DE961F6AC71D00339F64 /* Timer.cpp in Sources */,
+				25D949931F704C6800BC6AE5 /* WorldPosition.cpp in Sources */,
 				2559DEB31F6AC71D00339F64 /* File.cpp in Sources */,
 				2559DEA91F6AC71D00339F64 /* TextRenderer.cpp in Sources */,
 				2559DEAD1F6AC71D00339F64 /* TileMap.cpp in Sources */,

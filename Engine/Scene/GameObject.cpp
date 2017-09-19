@@ -28,6 +28,9 @@ void GameObject::Reboot()
 	m_customPostRender = NULL;
 	m_customObject = NULL;
 	m_animation.pSequence = NULL;
+	
+	SetParent( NULL );
+	SetLocalPosition( 0.0f, 0.0f );
 }
 
 void GameObject::Create( const Image* _image )
@@ -99,8 +102,20 @@ void GameObject::Render()
 	if( m_customPreRender != NULL )
 		m_customPreRender( m_customObject );
 	
-	m_sprite->x = m_worldPositionX - Camera::main->GetWorldPositionX() - m_imageHotspotX;
-	m_sprite->y = m_worldPositionY - Camera::main->GetWorldPositionY() - m_imageHotspotY;
+	/*
+	float parentWorldX = 0.0f;
+	float parentWorldY = 0.0f;
+	if( m_pParent )
+	{
+		m_pParent->GetWorldPosition( &parentWorldX, &parentWorldY );
+	}
+	 */
+	
+	float mx, my, cx, cy;
+	GetWorldPosition( &mx, &my );
+	Camera::main->GetWorldPosition( &cx ,&cy );
+	m_sprite->x = mx - cx - m_imageHotspotX;
+	m_sprite->y = my - cy - m_imageHotspotY;
 
 	if( m_customPostRender != NULL )
 		m_customPostRender( m_customObject );
@@ -112,7 +127,7 @@ void GameObject::SetHotspot( float _x, float _y )
 	m_imageHotspotY = _y;
 }
 
-
+/*
 void GameObject::SetWorldPosition( float _x, float _y )
 {
 	m_worldPositionX = _x;
@@ -121,8 +136,14 @@ void GameObject::SetWorldPosition( float _x, float _y )
 
 void GameObject::GetWorldPosition( float* _pOutX, float* _pOutY )
 {
-	*_pOutX = m_worldPositionX;
-	*_pOutY = m_worldPositionY;
+	*_pOutX = 0.0f;
+	*_pOutY = 0.0f;
+	
+	if( m_pParent )
+		m_pParent->GetWorldPosition( _pOutX, _pOutY );
+	
+	*_pOutX += m_worldPositionX;
+	*_pOutY += m_worldPositionY;
 }
 
 float GameObject::GetWorldPositionX()
@@ -134,6 +155,29 @@ float GameObject::GetWorldPositionY()
 {
 	return m_worldPositionY;
 }
+
+void GameObject::SetLocalPosition( float _x, float _y )
+{
+	m_worldPositionX = _x;
+	m_worldPositionY = _y;
+}
+
+void GameObject::GetLocalPosition( float* _pOutX, float* _pOutY )
+{
+	*_pOutX = m_worldPositionX;
+	*_pOutY = m_worldPositionY;
+}
+
+void GameObject::SetParent( IWorldPosition* _pParent )
+{
+	m_pParent = _pParent;
+}
+
+IWorldPosition* GameObject::GetParent()
+{
+	return m_pParent;
+}
+*/
 
 bool GameObject::IsUsed()
 {
