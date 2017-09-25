@@ -88,6 +88,8 @@ public:
 	CGPIOPin m_GPIO_PadBtn5;
 	CGPIOPin m_GPIO_PadBtn6;
 	CGPIOPin m_GPIO_PadBtn7;
+	CGPIOPin m_GPIO_PowerBlock_Status;
+	CGPIOPin m_GPIO_PowerBlock_Shutdown;
 };
 
 #endif // __main_h

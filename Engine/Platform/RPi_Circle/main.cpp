@@ -83,7 +83,9 @@ CApp::CApp( void )
 	m_GPIO_PadBtn4( RPI_GPIO_ACTION_LM, GPIOModeInputPullUp ),
 	m_GPIO_PadBtn5( RPI_GPIO_ACTION_LR, GPIOModeInputPullUp ),
 	m_GPIO_PadBtn6( RPI_GPIO_PGM_L, GPIOModeInputPullUp ),
-	m_GPIO_PadBtn7( RPI_GPIO_PGM_R, GPIOModeInputPullUp )
+	m_GPIO_PadBtn7( RPI_GPIO_PGM_R, GPIOModeInputPullUp ),
+	m_GPIO_PowerBlock_Status( 17, GPIOModeOutput ),
+	m_GPIO_PowerBlock_Shutdown( 18, GPIOModeInputPullDown )
 {
 }
 
@@ -130,6 +132,8 @@ uint8 streambuffertest[ 4096 ];
 
 void CApp::Init()
 {
+	m_GPIO_PowerBlock_Status.Write( 1 );
+
 	currentFrameCount = 0;
 	previousFrameCount = 0;
 	
@@ -410,11 +414,18 @@ void CApp::Update()
 {
 	//circleLog( "Test button: %i, all buttons: 0x%08x", m_testButton.Read(), CGPIOPin::ReadAll());
 
-	padUpdate();
-	game_loop();
-
-	waitVBL();
-	BlitScreen();
+	if( m_GPIO_PowerBlock_Shutdown.Read())
+	{
+		// We should shut down. It is always ok to shut down here because the only thing I know we need to wait for is file writing and that is always synchronous
+		m_GPIO_PowerBlock_Status.Write( 0 );
+	} else
+	{
+		padUpdate();
+		game_loop();
+		
+		waitVBL();
+		BlitScreen();
+	}
 }
 
 void CApp::BlitScreen()
