@@ -22,6 +22,7 @@ void Sprite::Reboot()
 {
 	x = 127.0f;
 	y = 127.0f;
+	r = g = b = a = 1.0f;
 	sort = 0.0f;
 	flags = 0;
 	image = NULL;

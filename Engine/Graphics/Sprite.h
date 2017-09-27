@@ -63,7 +63,7 @@ public:
 	inline void SetFlags( int _flags ) { flags |= _flags; };
 	inline void ClrFlags( int _flags ) { flags &= ~_flags; };
 
-
+	float r, g, b, a;
 
 	uint16 readY;
 	const float* pPixelData;

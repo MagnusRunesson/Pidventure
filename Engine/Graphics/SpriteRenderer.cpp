@@ -512,6 +512,11 @@ void SpriteRenderer::RenderScanline( float* _targetBuffer, uint8* _collisionBits
 				g = 1.0f;
 				b = 1.0f;
 			}
+
+			r *= sprite->r;
+			g *= sprite->g;
+			b *= sprite->b;
+			a *= sprite->a;
 			
 			// Read depth
 			float d = 0.0f;
