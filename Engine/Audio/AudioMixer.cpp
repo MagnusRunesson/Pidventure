@@ -16,7 +16,7 @@
 // might want to set up 1 channel for the player SFX, 2 channels for explosions, 2 channels
 // for various enemy SFX etc, but as long as they are not all playing at the same time you
 // should be just fine performance wise.
-const int NUM_CHANNELS = 4;
+const int NUM_CHANNELS = 32;
 const int NUM_STREAMS = 1;
 AudioSource audioChannels[ NUM_CHANNELS ];
 AudioStream audioStreams[ NUM_STREAMS ];
