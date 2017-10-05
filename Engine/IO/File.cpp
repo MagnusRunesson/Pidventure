@@ -48,7 +48,7 @@ char* itoa( int _value )
 
 void fileInit( const char* _pszGameIdentifier )
 {
-	debugLog( "FILE INIT!!!\n" );
+	//debugLog( "FILE INIT!!!\n" );
 	
 	fileTranslatorTableNumEntries = 0;
 	
@@ -107,7 +107,7 @@ void fileInit( const char* _pszGameIdentifier )
 		dstName[ readChar ] = 0;
 		i++; // Skip new line
 		
-		debugLog("Line %i: %s = %s", fileTranslatorTableNumEntries, sourceName, dstName );
+		//debugLog("Line %i: %s = %s", fileTranslatorTableNumEntries, sourceName, dstName );
 		
 		fileTranslatorTable[ fileTranslatorTableNumEntries ].pszHumanReadableName = stringDuplicate( (const char*)sourceName );
 		fileTranslatorTable[ fileTranslatorTableNumEntries ].pszCrunchedName = stringDuplicate( (const char*)dstName );
@@ -117,7 +117,7 @@ void fileInit( const char* _pszGameIdentifier )
 	
 	fileUnload( pFileListData );
 	
-	debugLog("File init done");
+	//debugLog("File init done");
 }
 
 const char* fileTranslatorGetCrunchedName( const char* _pszHumanReadable )
