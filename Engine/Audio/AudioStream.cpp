@@ -6,22 +6,10 @@
 //  Copyright © 2016 Magnus Runesson. All rights reserved.
 //
 
+#include "Engine/Core/Debug.h"
+#include "Engine/Util/String.h"
+#include "Engine/IO/FileStream.h"
 #include "Engine/Audio/AudioStream.h"
-
-#ifdef ENGINE_TARGET_TINYARCADE
-
-#include <SdFat.h>
-
-//
-// Arduino
-//
-
-SdFat sd;
-SdFile file;
-
-#endif
-
-
 
 #define SWAP_PAGE( _a ){ _a=(_a==0)?1:0; }
 
@@ -34,70 +22,36 @@ AudioStream::AudioStream()
 
 void AudioStream::Reset()
 {
-	m_lastStreamBufferPage = 1;						// The page we streamed from last time we read file data
-	m_currentStreamBufferPage = 0;					// The page we are currently streaming from
-	m_currentStreamBufferIndex = 0;					// The byte offset in a page we are currently streaming from
-	m_currentStreamBuffer = m_streamBufferA;		// Shortcut to the current page to stream from
-	m_streamBuffers[ 0 ] = m_streamBufferA;
-	m_streamBuffers[ 1 ] = m_streamBufferB;
-	m_isPlaying = false;
+	ResetInternals();
 	CloseStream();
 }
 
 void AudioStream::OpenStream( const char *_pszFileName )
 {
 	Reset();
-	
-#ifdef ENGINE_TARGET_MACOSX
 
-#elif ENGINE_TARGET_RPI
+	char buffe[ 1024 ];
+	stringCombine( buffe, 1024, _pszFileName, ".raw" );
 	
-#elif ENGINE_TARGET_RPI_CIRCLE
-	
-#else
-	// Initialize SD lib
-	sd.begin( 10, SPI_FULL_SPEED );
-	
-	char buffe[ 100 ];
-
-	// Try path with space in it first
-	snprintf( buffe, 99, "/Tiny Shooter/%s", _pszFileName );
-	file.open( buffe, O_READ );
-	
-	if( !file.isOpen())
+	m_fileStreamHandle = fileStreamOpen( buffe );
+	if( m_fileStreamHandle != FILESTREAM_INVALID_HANDLE )
 	{
-		// Failed. Try path without space in it.
-		snprintf( buffe, 99, "/TinyShooter/%s", _pszFileName );
-		file.open( buffe, O_READ );
-		
-		// If this fail too it would be possible to scan the SD card
-		// to find the folder of the game. If only there was time to
-		// implement that functionality too. :)
+		StreamIntoBuffer( m_streamBufferA );
+		StreamIntoBuffer( m_streamBufferB );
 	}
-
-	// First verify that a file was opened
-	if( file.isOpen())
-	{
-		// Read first two audio buffers
-		file.read( m_streamBufferA, STREAM_BUFFER_SIZE );
-		file.read( m_streamBufferB, STREAM_BUFFER_SIZE );
-	}
-	
-#endif
 }
 
 void AudioStream::CloseStream()
 {
 	Pause();
-#ifdef ENGINE_TARGET_MACOSX
-	
-#elif ENGINE_TARGET_RPI
-	
-#elif ENGINE_TARGET_RPI_CIRCLE
-	
-#else
-	file.close();
-#endif
+	fileStreamClose( m_fileStreamHandle );
+	m_fileStreamHandle = FILESTREAM_INVALID_HANDLE;
+}
+
+void AudioStream::Rewind()
+{
+	ResetInternals();
+	fileStreamRewind( m_fileStreamHandle );
 }
 
 void AudioStream::Play()
@@ -112,39 +66,26 @@ void AudioStream::Pause()
 
 void AudioStream::Update()
 {
-#ifdef ENGINE_TARGET_MACOSX
-	
-#elif ENGINE_TARGET_RPI
-	
-#elif ENGINE_TARGET_RPI_CIRCLE
-	
-#else
 	// Wait until we started streaming from the last page we read
 	if( m_lastStreamBufferPage != m_currentStreamBufferPage )
 		return;
 	
-	// At this point the audio playback have started streaming from the last read page, so we need to quickly load another page
+	// At this point the audio playback have started streaming from
+	// the last read page, so we need to quickly load another page
 	SWAP_PAGE( m_lastStreamBufferPage );
-	
-	// Figure out if we can read a whole page or need to read some data, rewind the file, and read the rest
-	if( file.available() < STREAM_BUFFER_SIZE )
+	//m_readAheads = 0;
+
+	//debugLog("Filling buffer %i\n", m_lastStreamBufferPage );
+	uint32 readBytes = StreamIntoBuffer( m_streamBuffers[ m_lastStreamBufferPage ]);
+	if( readBytes != STREAM_BUFFER_SIZE )
 	{
-		// Read the end part of the file
-		int readAmount = file.available();
-		file.read( m_streamBuffers[ m_lastStreamBufferPage ], readAmount );
-		
-		// Rewind to the beginning of the file
-		file.rewind();
-		
-		// Fill the rest of the buffer from the beginning of the file
-		int readLeft = STREAM_BUFFER_SIZE - readAmount;
-		file.read( m_streamBuffers[ m_lastStreamBufferPage ], readLeft );
-	} else
-	{
-		// There is enough data left in the file, just read the whole page
-		file.read( m_streamBuffers[ m_lastStreamBufferPage ], STREAM_BUFFER_SIZE );
+		// We've read past the end of file. But we may still have read
+		// samples that should be played so we can't just pause right
+		// now. However, if we've read 0 bytes there are no more samples
+		// left to play, yay!
+		if( readBytes == 0 )
+			Pause();
 	}
-#endif
 }
 
 sint8 AudioStream::GetNextSample()
@@ -157,14 +98,37 @@ sint8 AudioStream::GetNextSample()
 	{
 		// Reset from the beginning
 		m_currentStreamBufferIndex = 0;
-		
+
+		//debugLog("Played end of buffer %i!\n", m_currentStreamBufferPage );
+
 		// Swap which buffer to play from
 		SWAP_PAGE( m_currentStreamBufferPage );
 		m_currentStreamBuffer = m_streamBuffers[ m_currentStreamBufferPage  ];
-		
+
 		// Load more data yo!
 		Update();
 	}
 	
 	return ret;
+}
+
+uint32 AudioStream::StreamIntoBuffer( sint8* _pBuffer )
+{
+	uint32 readBytes = 0;
+	int i;
+	for( i=0; i<STREAM_CHUNKS_PER_BUFFER; i++ )
+		readBytes += fileStreamReadNextChunk( m_fileStreamHandle, _pBuffer + (i*STREAM_CHUNK_SIZE));
+	
+	return readBytes;
+}
+
+void AudioStream::ResetInternals()
+{
+	m_lastStreamBufferPage = 1;						// The page we streamed from last time we read file data
+	m_currentStreamBufferPage = 0;					// The page we are currently streaming from
+	m_currentStreamBufferIndex = 0;					// The byte offset in a page we are currently streaming from
+	m_currentStreamBuffer = m_streamBufferA;		// Shortcut to the current page to stream from
+	m_streamBuffers[ 0 ] = m_streamBufferA;
+	m_streamBuffers[ 1 ] = m_streamBufferB;
+	m_isPlaying = false;
 }

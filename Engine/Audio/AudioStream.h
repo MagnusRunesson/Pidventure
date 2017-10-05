@@ -10,8 +10,10 @@
 #define AudioStream_h
 
 #include "Engine/Core/Types.h"
+#include "Engine/IO/FileStream.h"
 
-#define STREAM_BUFFER_SIZE (2048)
+#define STREAM_CHUNKS_PER_BUFFER (1)
+#define STREAM_BUFFER_SIZE (STREAM_CHUNKS_PER_BUFFER * STREAM_CHUNK_SIZE)
 
 class AudioStream
 {
@@ -37,9 +39,16 @@ public:
 	void Reset();
 	void OpenStream( const char* _pszFileName );
 	void CloseStream();
+	void Rewind();
 	void Play();
 	void Pause();
 	sint8 GetNextSample();
+	
+	int m_fileStreamHandle;
+	
+private:
+	uint32 StreamIntoBuffer( sint8* _pBuffer );
+	void ResetInternals();
 };
 
 #endif /* AudioStream_h */
