@@ -19,7 +19,7 @@ void AnimationSequenceDefinition::LoadImages()
 	for( i=0; i<NumFrames; i++ )
 	{
 		AnimationFrameDefinition* pFrame = &Frames[ i ];
-		debugLog("Loading image %s\n", pFrame->pszFileName );
+		//debugLog("Loading image %s\n", pFrame->pszFileName );
 		pFrame->sourceImage = imageLoad( pFrame->pszFileName );
 	}
 }
