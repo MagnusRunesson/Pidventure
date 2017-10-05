@@ -9,8 +9,9 @@
 #ifndef __FileStream_h
 #define __FileStream_h
 
-#define MAX_STREAMS			(10)
-#define STREAM_CHUNK_SIZE	(512)	// Should match the size of the minimum readable unit from the SD card on the Raspberry Pi, for performance reasons
+#define MAX_STREAMS					(10)
+#define STREAM_CHUNK_SIZE			(512)	// Should match the size of the minimum readable unit from the SD card on the Raspberry Pi, for performance reasons
+#define FILESTREAM_INVALID_HANDLE	(-1)
 
 
 void fileStreamInit();

@@ -37,7 +37,7 @@ static CCachedFile fileCache[ FILE_CACHE_SIZE ];
 
 CCachedFile* fileCacheGetCachedFileData( const char* _pszFileName )
 {
-	debugLog("FILE CACHE: Requested file '%s'\n", _pszFileName);
+	//debugLog("FILE CACHE: Requested file '%s'\n", _pszFileName);
 	
 	int i;
 	for( i=0; i<FILE_CACHE_SIZE; i++ )
@@ -48,7 +48,7 @@ CCachedFile* fileCacheGetCachedFileData( const char* _pszFileName )
 		
 		if( stringCompare( pFile->pszFileName, _pszFileName ) == 0 )
 		{
-			debugLog("FILE CACHE: Found file '%s'\n", pFile->pszFileName );
+			//debugLog("FILE CACHE: Found file '%s'\n", pFile->pszFileName );
 			return pFile;
 		}
 	}
