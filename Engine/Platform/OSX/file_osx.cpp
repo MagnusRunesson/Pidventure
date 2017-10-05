@@ -79,7 +79,6 @@ bool fileLoad(const char* _pszFileName, void** _ppReadData, int* _pReadBytes)
 	//
 	// File didn't exist in log
 	//
-	debugLog( "Loading file '%s'\n", _pszFileName );
 	const char* pszFullFileName = fileGetFullNameLoad( _pszFileName );
 	FILE* f = fopen(pszFullFileName, "rb");
 	//debugLog( "Opened file: 0x%08x by name '%s'\n", f, pszFullFileName );
