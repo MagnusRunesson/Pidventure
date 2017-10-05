@@ -15,5 +15,6 @@ bool fileLoad( const char* _pszFileName, void* _pReadDestination, int _bufferSiz
 void fileSave( const char* _pszFileName, void* _pContent, int _contentSize );
 void fileUnload( void* _ptr );
 const char* fileTranslatorGetCrunchedName( const char* _pszHumanReadable );
+char* fileGetFullNameLoad( const char* _pszHumanReadable );
 
 #endif /* File_h */

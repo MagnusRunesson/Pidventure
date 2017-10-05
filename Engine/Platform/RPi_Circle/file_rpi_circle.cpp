@@ -19,7 +19,7 @@ extern void circleFileSave( const char* _pszFileName, void* _pContent, int _cont
 const char* pszBasePath = "";
 char g_pszFileName[ 1024 ];
 
-char* fileGetFullName( const char* _pszFileName )
+char* fileGetFullNameLoad( const char* _pszFileName )
 {
 	stringCombine( g_pszFileName, 1024, pszBasePath, fileTranslatorGetCrunchedName( _pszFileName ));
 	return g_pszFileName;
@@ -34,7 +34,7 @@ bool fileLoad(const char* _pszFileName, void** _ppReadData, int* _pReadBytes)
 	// File didn't exist in cache
 	//
 //	debugLog( "Loading file '%s'\n", _pszFileName );
-	const char* pszFullFileName = fileGetFullName( _pszFileName );
+	const char* pszFullFileName = fileGetFullNameLoad( _pszFileName );
 //	debugLog( "Complete crunched name '%s'\n", pszFullFileName );
 	bool bSuccess = circleFileLoad( pszFullFileName, _ppReadData, _pReadBytes );
 
