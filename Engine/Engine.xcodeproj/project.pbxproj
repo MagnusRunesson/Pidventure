@@ -86,6 +86,7 @@
 		2559DED61F6AC73200339F64 /* pgmswitcher_osx.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2559DED21F6AC73200339F64 /* pgmswitcher_osx.cpp */; settings = {ASSET_TAGS = (); }; };
 		25D949931F704C6800BC6AE5 /* WorldPosition.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 25D949911F704C6800BC6AE5 /* WorldPosition.cpp */; settings = {ASSET_TAGS = (); }; };
 		25D949941F704C6800BC6AE5 /* WorldPosition.h in Headers */ = {isa = PBXBuildFile; fileRef = 25D949921F704C6800BC6AE5 /* WorldPosition.h */; settings = {ASSET_TAGS = (); }; };
+		25D949A31F849CD800BC6AE5 /* filestream_osx.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 25D949A21F849CD800BC6AE5 /* filestream_osx.cpp */; settings = {ASSET_TAGS = (); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -180,6 +181,7 @@
 		2559DED21F6AC73200339F64 /* pgmswitcher_osx.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = pgmswitcher_osx.cpp; path = Platform/OSX/pgmswitcher_osx.cpp; sourceTree = SOURCE_ROOT; };
 		25D949911F704C6800BC6AE5 /* WorldPosition.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = WorldPosition.cpp; sourceTree = "<group>"; };
 		25D949921F704C6800BC6AE5 /* WorldPosition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WorldPosition.h; sourceTree = "<group>"; };
+		25D949A21F849CD800BC6AE5 /* filestream_osx.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = filestream_osx.cpp; path = Platform/OSX/filestream_osx.cpp; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -372,6 +374,7 @@
 				2559DED01F6AC73200339F64 /* joypad_osx.cpp */,
 				2559DED11F6AC73200339F64 /* main.cpp */,
 				2559DED21F6AC73200339F64 /* pgmswitcher_osx.cpp */,
+				25D949A21F849CD800BC6AE5 /* filestream_osx.cpp */,
 			);
 			name = Platform/OSX;
 			sourceTree = "<group>";
@@ -516,6 +519,7 @@
 				2559DE961F6AC71D00339F64 /* Timer.cpp in Sources */,
 				25D949931F704C6800BC6AE5 /* WorldPosition.cpp in Sources */,
 				2559DEB31F6AC71D00339F64 /* File.cpp in Sources */,
+				25D949A31F849CD800BC6AE5 /* filestream_osx.cpp in Sources */,
 				2559DEA91F6AC71D00339F64 /* TextRenderer.cpp in Sources */,
 				2559DEAD1F6AC71D00339F64 /* TileMap.cpp in Sources */,
 				2559DE941F6AC71D00339F64 /* Memory.cpp in Sources */,
