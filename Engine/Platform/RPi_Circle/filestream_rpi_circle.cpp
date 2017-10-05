@@ -56,7 +56,7 @@ int fileStreamOpen( const char* _pszFileName )
 		g_pApp->m_FileSystem.m_FileTableLock.Release ();
 
 		debugLog( "fileStreamOpen, out of streams\n" );
-		return -1;
+		return FILESTREAM_INVALID_HANDLE;
 	}
 	
 	//debugLog( "fso 3" );
@@ -69,7 +69,7 @@ int fileStreamOpen( const char* _pszFileName )
 
 		debugLog( "fileStreamOpen, failed to open file '%s'\n", _pszFileName );
 
-		return -1;
+		return FILESTREAM_INVALID_HANDLE;
 	}
 
 	//debugLog( "fso 4" );
