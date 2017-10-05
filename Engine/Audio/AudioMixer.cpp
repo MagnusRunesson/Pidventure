@@ -25,7 +25,7 @@ AudioStream audioStreams[ NUM_STREAMS ];
 // per channel, 1 channel we are specifying how many samples we should have in the buffer. We
 // output at 11025Hz, so that means 11025 bytes per second. At 60 fps that means 11025/60≈184
 // bytes per frame.
-const int OUTPUT_BUFFER_SIZE = 1200;
+const int OUTPUT_BUFFER_SIZE = 4800;
 sint8 audioMixOutputBuffer[ OUTPUT_BUFFER_SIZE ];
 
 // Create the instance of the audio mixer
