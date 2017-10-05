@@ -8,6 +8,7 @@
 
 #include "Engine/stdc/stdc.h"
 #include "Engine/Core/Debug.h"
+#include "Engine/IO/File.h"
 #include "Engine/IO/FileStream.h"
 #include "Engine/Platform/RPi_Circle/filestream_rpi_circle.h"
 #include "Engine/Platform/RPi_Circle/main.h"
@@ -62,12 +63,15 @@ int fileStreamOpen( const char* _pszFileName )
 	//debugLog( "fso 3" );
 
 	assert( _pszFileName != 0 );
-	TFATDirectoryEntry* pEntry = g_pApp->m_FileSystem.m_Root.GetEntry( _pszFileName );
+	
+	const char* pszCrunchedName = fileGetFullNameLoad( _pszFileName );
+
+	TFATDirectoryEntry* pEntry = g_pApp->m_FileSystem.m_Root.GetEntry( pszCrunchedName );
 	if( pEntry == NULL )
 	{
 		g_pApp->m_FileSystem.m_FileTableLock.Release ();
 
-		debugLog( "fileStreamOpen, failed to open file '%s'\n", _pszFileName );
+		debugLog( "fileStreamOpen, failed to open file '%s'\n", pszCrunchedName );
 
 		return FILESTREAM_INVALID_HANDLE;
 	}
