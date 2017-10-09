@@ -58,6 +58,7 @@ int fileStreamOpen( const char* _pszFileName )
 	fseek( f, 0, SEEK_END );
 	pStream->fileSizeBytes = (uint32)ftell( f );
 	pStream->hFile = f;
+	pStream->isUsed = true;
 	
 	fseek( f, 0, SEEK_SET );
 	
