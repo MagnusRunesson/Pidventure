@@ -17,7 +17,7 @@
 // for various enemy SFX etc, but as long as they are not all playing at the same time you
 // should be just fine performance wise.
 const int NUM_CHANNELS = 32;
-const int NUM_STREAMS = 1;
+const int NUM_STREAMS = 4;
 AudioSource audioChannels[ NUM_CHANNELS ];
 AudioStream audioStreams[ NUM_STREAMS ];
 
@@ -102,10 +102,14 @@ void AudioMixer::Update()
 			}
 		}
 
-		// Mix in the stream if it is playing
-		AudioStream* pStream = &audioStreams[ 0 ];
-		if( pStream->m_isPlaying )
-			apa += pStream->GetNextSample();
+		int iStream;
+		for( iStream=0; iStream<NUM_STREAMS; iStream++ )
+		{
+			// Mix in the stream if it is playing
+			AudioStream* pStream = &audioStreams[ iStream ];
+			if( pStream->m_isPlaying )
+				apa += pStream->GetNextSample();
+		}
 
 		// Clip if needed
 		if( apa > 127 ) apa = 127;
