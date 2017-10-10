@@ -16,7 +16,8 @@ void debugInit();
 extern void circleLog( char* _pszFormat, ... );
 extern void circleLog( const char* _pszFormat, ... );
 
-#define debugLog circleLog
+//#define debugLog {}
+#define debugLog(...) circleLog(__VA_ARGS__)
 
 #else
 
