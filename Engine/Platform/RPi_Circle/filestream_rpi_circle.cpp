@@ -19,10 +19,14 @@ class CFileStream
 {
 public:
 	bool isUsed;
+	unsigned hFile;
+	uint32 fileSizeBytes;
+	/*
 	uint32 firstSector;		// First sector on disk where this stream lives
 	uint32 lastSector;		// So we know when we've reached the end
 	uint32 nextSector;		// Next sector to be read
 	uint32 fileSizeBytes;	// Because file sizes probably is a multiple of 512 (sector size) ver rarely
+	 */
 };
 
 CFileStream g_fileStreams[ MAX_STREAMS ];
@@ -38,9 +42,6 @@ void fileStreamInit()
 
 int fileStreamOpen( const char* _pszFileName )
 {
-	//debugLog( "fso 1" );
-	g_pApp->m_FileSystem.m_FileTableLock.Acquire ();
-	
 	int streamHandle;
 	for( streamHandle=0; streamHandle<=MAX_STREAMS; streamHandle++ )
 	{
@@ -50,63 +51,41 @@ int fileStreamOpen( const char* _pszFileName )
 		}
 	}
 	
-	//debugLog( "fso 2" );
-	
 	if( streamHandle > MAX_STREAMS )
 	{
-		g_pApp->m_FileSystem.m_FileTableLock.Release ();
-
 		debugLog( "fileStreamOpen, out of streams\n" );
 		return FILESTREAM_INVALID_HANDLE;
 	}
 	
-	//debugLog( "fso 3" );
-
-	assert( _pszFileName != 0 );
-	
 	const char* pszCrunchedName = fileGetFullNameLoad( _pszFileName );
 
-	TFATDirectoryEntry* pEntry = g_pApp->m_FileSystem.m_Root.GetEntry( pszCrunchedName );
-	if( pEntry == NULL )
-	{
-		g_pApp->m_FileSystem.m_FileTableLock.Release ();
-
-		debugLog( "fileStreamOpen, failed to open file '%s'\n", pszCrunchedName );
-
-		return FILESTREAM_INVALID_HANDLE;
-	}
-
-	//debugLog( "fso 4" );
-
-	uint32 cluster = (uint32)( pEntry->nFirstClusterHigh << 16 | pEntry->nFirstClusterLow );
-	
-	// Find a free stream to use
+	//
 	CFileStream* pStream = &g_fileStreams[ streamHandle ];
-	
-	// Setup stream entry
+	pStream->hFile = g_pApp->m_FileSystem.FileOpen( pszCrunchedName );
+	pStream->fileSizeBytes = g_pApp->m_FileSystem.FileSize( pStream->hFile );
 	pStream->isUsed = true;
-	pStream->fileSizeBytes = pEntry->nFileSize;
-	pStream->firstSector = g_pApp->m_FileSystem.m_FATInfo.GetFirstSector( cluster );
-	pStream->lastSector = pStream->firstSector + ((pStream->fileSizeBytes + 511) / 512);
-	pStream->nextSector = pStream->firstSector;
-	
-	//debugLog("fsopen. sb=%i, fs=%i, ls=%i\n", pStream->fileSizeBytes, pStream->firstSector, pStream->lastSector );
 
-	g_pApp->m_FileSystem.m_Root.FreeEntry( false );
-
-	g_pApp->m_FileSystem.m_FileTableLock.Release();
-
+	//
 	return streamHandle;
 }
 
 void fileStreamClose( int _fileStreamHandle )
 {
-	g_fileStreams[ _fileStreamHandle ].isUsed = false;
+	CFileStream* pStream = &g_fileStreams[ _fileStreamHandle ];
+	if( pStream->isUsed )
+	{
+		if( !g_pApp->m_FileSystem.FileClose( pStream->hFile ))
+		{
+			debugLog("Cannot close file");
+		}
+	}
+	
+	pStream->isUsed = false;
 }
 
 void fileStreamRewind( int _fileStreamHandle )
 {
-	g_fileStreams[ _fileStreamHandle ].nextSector = g_fileStreams[ _fileStreamHandle ].firstSector;
+	//g_fileStreams[ _fileStreamHandle ].nextSector = g_fileStreams[ _fileStreamHandle ].firstSector;
 }
 
 //
@@ -116,41 +95,15 @@ void fileStreamRewind( int _fileStreamHandle )
 //
 int fileStreamReadNextChunk( int _fileStreamHandle, void* _pReadDestination )
 {
-	g_pApp->m_FileSystem.m_FileTableLock.Acquire ();
-
 	CFileStream* pStream = &g_fileStreams[ _fileStreamHandle ];
-	if( pStream->nextSector > pStream->lastSector )
+	
+	unsigned nResult = g_pApp->m_FileSystem.FileRead( pStream->hFile, _pReadDestination, STREAM_CHUNK_SIZE );
+	
+	if( nResult == FS_ERROR )
 	{
-		g_pApp->m_FileSystem.m_FileTableLock.Release();
-		return 0;	// We have already read past the end
+		debugLog("Read error on stream\n");
+		return 0;
 	}
 
-	// Seek to the right sector on the SD card
-	uint64 seekOffset = pStream->nextSector;
-	seekOffset *= STREAM_CHUNK_SIZE;
-	g_pApp->m_FileSystem.m_Cache.m_DiskLock.Acquire();
-	g_pApp->m_FileSystem.m_Cache.m_pPartition->Seek( seekOffset );
-	
-	// Read one sector from the SD card
-	int readJanne = g_pApp->m_FileSystem.m_Cache.m_pPartition->Read( _pReadDestination, 512 );
-	
-	//
-	g_pApp->m_FileSystem.m_Cache.m_DiskLock.Release();
-	//debugLog("readJanne=%i\n", readJanne );
-	
-	int readBytes = STREAM_CHUNK_SIZE;
-	if( pStream->nextSector == pStream->lastSector )
-	{
-		// We just read from the last sector. That means we might not return a full 512 bytes.
-		readBytes = (pStream->fileSizeBytes & 511);
-	}
-
-	//
-	g_pApp->m_FileSystem.m_FileTableLock.Release();
-	
-	//
-	pStream->nextSector++;
-	
-	//
-	return readBytes;
+	return nResult;
 }
