@@ -85,7 +85,8 @@ void fileStreamClose( int _fileStreamHandle )
 
 void fileStreamRewind( int _fileStreamHandle )
 {
-	//g_fileStreams[ _fileStreamHandle ].nextSector = g_fileStreams[ _fileStreamHandle ].firstSector;
+	CFileStream* pStream = &g_fileStreams[ _fileStreamHandle ];
+	g_pApp->m_FileSystem.FileRewind( pStream->hFile );
 }
 
 //
