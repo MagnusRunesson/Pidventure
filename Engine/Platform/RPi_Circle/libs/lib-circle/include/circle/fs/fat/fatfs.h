@@ -38,6 +38,7 @@ struct TFile
 	unsigned	 nOffset;		/* current position */
 	unsigned	 nCluster;		/* current cluster */
 	unsigned	 nFirstCluster;		/* first cluster in chain, for write only */
+	unsigned	 nOriginalCluster;	/* What nCluster was set to when file was opened */
 	TFATBuffer	*pBuffer;		/* current buffer if available */
 	boolean		 bWrite;		/* open for write */
 };
@@ -161,6 +162,8 @@ public:
 	*
 	*/
 	unsigned FileSize (unsigned hFile);
+	
+	void FileSeek(unsigned hFile, unsigned offset);
 
 // I want access to the member variables.  / Magnus
 //private:

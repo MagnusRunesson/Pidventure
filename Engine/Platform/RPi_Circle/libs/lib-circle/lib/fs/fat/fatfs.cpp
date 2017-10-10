@@ -112,6 +112,7 @@ unsigned CFATFileSystem::FileOpen (const char *pTitle)
 	pFile->nSize = pEntry->nFileSize;
 	pFile->nOffset = 0;
 	pFile->nCluster = (unsigned) pEntry->nFirstClusterHigh << 16 | pEntry->nFirstClusterLow;
+	pFile->nOriginalCluster = pFile->nCluster;
 	pFile->nFirstCluster = 0;
 	pFile->pBuffer = 0;
 	pFile->bWrite = FALSE;
@@ -486,8 +487,8 @@ unsigned CFATFileSystem::FileSize (unsigned hFile)
 {
 	TFile *pFile;
 
-	if (!(   1 <= hFile
-	      && hFile <= FAT_FILES))
+	if( !(1 <= hFile )
+	&&( hFile <= FAT_FILES ))
 	{
 		return FS_ERROR;
 	}
@@ -501,4 +502,28 @@ unsigned CFATFileSystem::FileSize (unsigned hFile)
 	m_FileTableLock.Release ();
 
 	return ret;
+}
+
+void CFATFileSystem::FileSeek(unsigned hFile, unsigned offset)
+{
+	TFile *pFile;
+	
+	if( !(1 <= hFile )
+	&&( hFile <= FAT_FILES ))
+	{
+		return;
+	}
+	
+	m_FileTableLock.Acquire ();
+	
+	pFile = &FILE (hFile);
+	pFile->nOffset = offset;
+	if (pFile->pBuffer != 0)
+	{
+		m_Cache.FreeSector (pFile->pBuffer, 0);
+		pFile->pBuffer = 0;
+	}
+	pFile->nCluster = pFile->nOriginalCluster;
+	
+	m_FileTableLock.Release ();
 }
