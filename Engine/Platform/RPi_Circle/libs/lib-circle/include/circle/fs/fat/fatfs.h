@@ -162,7 +162,21 @@ public:
 	*
 	*/
 	unsigned FileSize (unsigned hFile);
-	
+
+	/*
+	* Added by Magnus
+	*
+	* Return the current position in the file
+	*
+	*/
+	unsigned FilePosition (unsigned hFile);
+
+	/*
+	* Added by Magnus
+	*
+	* Go back to the beginning of the file for more reading awesomeness
+	*
+	*/
 	void FileRewind(unsigned hFile);
 
 // I want access to the member variables.  / Magnus

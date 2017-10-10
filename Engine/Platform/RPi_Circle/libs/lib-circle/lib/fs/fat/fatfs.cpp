@@ -504,6 +504,27 @@ unsigned CFATFileSystem::FileSize (unsigned hFile)
 	return ret;
 }
 
+unsigned CFATFileSystem::FilePosition (unsigned hFile)
+{
+	TFile *pFile;
+	
+	if( !(1 <= hFile )
+	   &&( hFile <= FAT_FILES ))
+	{
+		return FS_ERROR;
+	}
+	
+	m_FileTableLock.Acquire ();
+	
+	pFile = &FILE (hFile);
+	
+	unsigned ret = pFile->nOffset;
+	
+	m_FileTableLock.Release ();
+	
+	return ret;
+}
+
 void CFATFileSystem::FileRewind(unsigned hFile)
 {
 	TFile *pFile;
