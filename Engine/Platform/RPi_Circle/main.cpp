@@ -87,6 +87,7 @@ CApp::CApp( void )
 	m_GPIO_PowerBlock_Status( 17, GPIOModeOutput ),
 	m_GPIO_PowerBlock_Shutdown( 18, GPIOModeInputPullDown )
 {
+	m_isLoggingActive = false;
 }
 
 //CSpinLock m_waitVBLSpinLock;
@@ -133,11 +134,11 @@ uint8 streambuffertest[ 4096 ];
 void CApp::Init()
 {
 	m_GPIO_PowerBlock_Status.Write( 1 );
+	m_ActLED.On();
 
 	currentFrameCount = 0;
 	previousFrameCount = 0;
 	
-	m_isLoggingActive = false;
 	bool bOK = TRUE;
 
 	if( bOK )
@@ -184,8 +185,6 @@ void CApp::Init()
 		bOK = m_Timer.Initialize();
 	}
 
-	m_audio.Start();
-
 	if (bOK)
 	{
 		bOK = m_EMMC.Initialize ();
@@ -196,6 +195,10 @@ void CApp::Init()
 		bOK = m_DWHCI.Initialize ();
 	}
 
+	m_isLoggingActive = false;
+	
+	m_audio.Start();
+	
 	// Initialize keyboard
 	m_pKeyboard = (CUSBKeyboardDevice *) m_DeviceNameService.GetDevice ("ukbd1", FALSE);
 	if( m_pKeyboard == 0 )
