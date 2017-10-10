@@ -163,7 +163,7 @@ public:
 	*/
 	unsigned FileSize (unsigned hFile);
 	
-	void FileSeek(unsigned hFile, unsigned offset);
+	void FileRewind(unsigned hFile);
 
 // I want access to the member variables.  / Magnus
 //private:

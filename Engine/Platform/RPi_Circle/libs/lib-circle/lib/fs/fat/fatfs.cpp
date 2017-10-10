@@ -504,7 +504,7 @@ unsigned CFATFileSystem::FileSize (unsigned hFile)
 	return ret;
 }
 
-void CFATFileSystem::FileSeek(unsigned hFile, unsigned offset)
+void CFATFileSystem::FileRewind(unsigned hFile)
 {
 	TFile *pFile;
 	
@@ -517,7 +517,7 @@ void CFATFileSystem::FileSeek(unsigned hFile, unsigned offset)
 	m_FileTableLock.Acquire ();
 	
 	pFile = &FILE (hFile);
-	pFile->nOffset = offset;
+	pFile->nOffset = 0;
 	if (pFile->pBuffer != 0)
 	{
 		m_Cache.FreeSector (pFile->pBuffer, 0);
