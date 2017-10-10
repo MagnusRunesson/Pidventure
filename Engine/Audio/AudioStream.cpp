@@ -17,7 +17,7 @@
 
 AudioStream::AudioStream()
 {
-	Reset();
+	ResetInternals();
 }
 
 void AudioStream::Reset()
