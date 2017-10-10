@@ -48,7 +48,8 @@ public:
 	
 private:
 	uint32 StreamIntoBuffer( sint8* _pBuffer );
-	void ResetInternals();
+	void ResetPlayback();
+	void ResetStream();
 };
 
 #endif /* AudioStream_h */

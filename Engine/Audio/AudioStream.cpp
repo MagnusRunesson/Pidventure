@@ -17,13 +17,14 @@
 
 AudioStream::AudioStream()
 {
-	ResetInternals();
+	ResetPlayback();
+	ResetStream();
 }
 
 void AudioStream::Reset()
 {
-	ResetInternals();
 	CloseStream();
+	ResetPlayback();
 }
 
 void AudioStream::OpenStream( const char *_pszFileName )
@@ -43,14 +44,19 @@ void AudioStream::OpenStream( const char *_pszFileName )
 
 void AudioStream::CloseStream()
 {
-	Pause();
-	fileStreamClose( m_fileStreamHandle );
-	m_fileStreamHandle = FILESTREAM_INVALID_HANDLE;
+	if( m_isPlaying )
+		Pause();
+	
+	if( m_fileStreamHandle != FILESTREAM_INVALID_HANDLE )
+	{
+		fileStreamClose( m_fileStreamHandle );
+		m_fileStreamHandle = FILESTREAM_INVALID_HANDLE;
+	}
 }
 
 void AudioStream::Rewind()
 {
-	ResetInternals();
+	ResetPlayback();
 	fileStreamRewind( m_fileStreamHandle );
 }
 
@@ -122,7 +128,7 @@ uint32 AudioStream::StreamIntoBuffer( sint8* _pBuffer )
 	return readBytes;
 }
 
-void AudioStream::ResetInternals()
+void AudioStream::ResetPlayback()
 {
 	m_lastStreamBufferPage = 1;						// The page we streamed from last time we read file data
 	m_currentStreamBufferPage = 0;					// The page we are currently streaming from
@@ -131,4 +137,9 @@ void AudioStream::ResetInternals()
 	m_streamBuffers[ 0 ] = m_streamBufferA;
 	m_streamBuffers[ 1 ] = m_streamBufferB;
 	m_isPlaying = false;
+}
+
+void AudioStream::ResetStream()
+{
+	m_fileStreamHandle = FILESTREAM_INVALID_HANDLE;
 }
