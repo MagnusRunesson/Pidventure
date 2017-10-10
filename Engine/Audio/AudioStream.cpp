@@ -106,7 +106,13 @@ sint8 AudioStream::GetNextSample()
 		Update();
 	}
 	
-	return ret;
+	float a = ((float)ret) * m_volume;
+	return a * 255.0f;
+}
+
+void AudioStream::SetVolume( float _volume )
+{
+	m_volume = _volume;
 }
 
 void AudioStream::StreamIntoBuffer( sint8* _pBuffer )
@@ -123,6 +129,7 @@ void AudioStream::ResetPlayback()
 	m_streamBuffers[ 0 ] = m_streamBufferA;
 	m_streamBuffers[ 1 ] = m_streamBufferB;
 	m_isPlaying = false;
+	m_volume = 1.0f;
 }
 
 void AudioStream::ResetStream()

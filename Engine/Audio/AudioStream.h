@@ -42,6 +42,7 @@ public:
 	void Play();
 	void Pause();
 	sint8 GetNextSample();
+	void SetVolume( float _volume );
 	
 	int m_fileStreamHandle;
 	
@@ -49,6 +50,8 @@ private:
 	void StreamIntoBuffer( sint8* _pBuffer );
 	void ResetPlayback();
 	void ResetStream();
+	
+	float m_volume;
 };
 
 #endif /* AudioStream_h */
