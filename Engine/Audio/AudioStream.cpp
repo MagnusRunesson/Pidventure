@@ -82,16 +82,7 @@ void AudioStream::Update()
 	//m_readAheads = 0;
 
 	//debugLog("Filling buffer %i\n", m_lastStreamBufferPage );
-	uint32 readBytes = StreamIntoBuffer( m_streamBuffers[ m_lastStreamBufferPage ]);
-	if( readBytes != STREAM_BUFFER_SIZE )
-	{
-		// We've read past the end of file. But we may still have read
-		// samples that should be played so we can't just pause right
-		// now. However, if we've read 0 bytes there are no more samples
-		// left to play, yay!
-		if( readBytes == 0 )
-			Pause();
-	}
+	StreamIntoBuffer( m_streamBuffers[ m_lastStreamBufferPage ]);
 }
 
 sint8 AudioStream::GetNextSample()
@@ -118,14 +109,9 @@ sint8 AudioStream::GetNextSample()
 	return ret;
 }
 
-uint32 AudioStream::StreamIntoBuffer( sint8* _pBuffer )
+void AudioStream::StreamIntoBuffer( sint8* _pBuffer )
 {
-	uint32 readBytes = 0;
-	int i;
-	for( i=0; i<STREAM_CHUNKS_PER_BUFFER; i++ )
-		readBytes += fileStreamReadNextChunk( m_fileStreamHandle, _pBuffer + (i*STREAM_CHUNK_SIZE));
-	
-	return readBytes;
+	fileStreamReadNextChunk( m_fileStreamHandle, _pBuffer );
 }
 
 void AudioStream::ResetPlayback()

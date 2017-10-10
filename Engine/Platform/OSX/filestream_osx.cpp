@@ -80,12 +80,30 @@ void fileStreamRewind( int _fileStreamHandle )
 }
 
 //
-// Reads a chunk, or less if it is the last chunk and the file size
-// isn't a multiple of STREAM_CHUNK_SIZE. Return the number of BYTES
-// read, so most of the time STREAM_CHUNK_SIZE will be returned.
+// Reads a chunk. Always return STREAM_CHUNK_SIZE bytes, so
+// the stream will rewind and start over when EOF is reached.
 //
-int fileStreamReadNextChunk( int _fileStreamHandle, void* _pReadDestination )
+void fileStreamReadNextChunk( int _fileStreamHandle, void* _pReadDestination )
 {
 	CFileStream* pStream = &g_fileStreams[ _fileStreamHandle ];
-	return (int)fread( _pReadDestination, 1, STREAM_CHUNK_SIZE, pStream->hFile );
+	int filePosition = (int)ftell( pStream->hFile );
+	int bytesLeft = pStream->fileSizeBytes - filePosition;
+	if( bytesLeft == 0 ) {
+		fseek( pStream->hFile, 0, SEEK_SET );
+		fread( _pReadDestination, 1, STREAM_CHUNK_SIZE, pStream->hFile );
+	} else if( bytesLeft < STREAM_CHUNK_SIZE )
+	{
+		int a = (int)fread( _pReadDestination, 1, bytesLeft, pStream->hFile );
+		fseek( pStream->hFile, 0, SEEK_SET );
+		int wb = STREAM_CHUNK_SIZE - bytesLeft;
+		int b = (int)fread( (void*)(((unsigned char*)_pReadDestination) + bytesLeft), 1, wb, pStream->hFile );
+		/*
+		debugLog("Bytes left: %i. Read from end: %i, read from start: %i, wanted read from start: %i, is this on: %i\n", bytesLeft, a, b, wb, 25 );
+		FILE* fo = fopen( "teststreamloop.bin", "wb" );
+		fwrite( _pReadDestination, 1, STREAM_CHUNK_SIZE, fo );
+		fclose( fo );
+		 */
+	} else {
+		fread( _pReadDestination, 1, STREAM_CHUNK_SIZE, pStream->hFile );
+	}
 }

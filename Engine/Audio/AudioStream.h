@@ -12,8 +12,7 @@
 #include "Engine/Core/Types.h"
 #include "Engine/IO/FileStream.h"
 
-#define STREAM_CHUNKS_PER_BUFFER (1)
-#define STREAM_BUFFER_SIZE (STREAM_CHUNKS_PER_BUFFER * STREAM_CHUNK_SIZE)
+#define STREAM_BUFFER_SIZE (STREAM_CHUNK_SIZE)
 
 class AudioStream
 {
@@ -47,7 +46,7 @@ public:
 	int m_fileStreamHandle;
 	
 private:
-	uint32 StreamIntoBuffer( sint8* _pBuffer );
+	void StreamIntoBuffer( sint8* _pBuffer );
 	void ResetPlayback();
 	void ResetStream();
 };

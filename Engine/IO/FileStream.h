@@ -20,10 +20,9 @@ void fileStreamClose( int _fileStreamHandle );
 void fileStreamRewind( int _fileStreamHandle );
 
 //
-// Reads a chunk, or less if it is the last chunk and the file size
-// isn't a multiple of STREAM_CHUNK_SIZE. Return the number of BYTES
-// read, so most of the time STREAM_CHUNK_SIZE will be returned.
+// Reads a chunk. Always return STREAM_CHUNK_SIZE bytes, so
+// the stream will rewind and start over when EOF is reached.
 //
-int fileStreamReadNextChunk( int _fileStreamHandle, void* _pReadDestination );
+void fileStreamReadNextChunk( int _fileStreamHandle, void* _pReadDestination );
 
 #endif // __FileStream_h

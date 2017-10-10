@@ -89,11 +89,20 @@ void fileStreamRewind( int _fileStreamHandle )
 	g_pApp->m_FileSystem.FileRewind( pStream->hFile );
 }
 
+int fileStreamBytesLeft( int _fileStreamHandle )
+{
+	CFileStream* pStream = &g_fileStreams[ _fileStreamHandle ];
+	uint32 size = g_pApp->m_FileSystem.FilePosition( pStream->hFile );
+	uint32 pos = g_pApp->m_FileSystem.FilePosition( pStream->hFile );
+	return size - pos;
+}
+
 //
 // Reads a chunk, or less if it is the last chunk and the file size
 // isn't a multiple of STREAM_CHUNK_SIZE. Return the number of BYTES
 // read, so most of the time STREAM_CHUNK_SIZE will be returned.
 //
+/*
 int fileStreamReadNextChunk( int _fileStreamHandle, void* _pReadDestination )
 {
 	CFileStream* pStream = &g_fileStreams[ _fileStreamHandle ];
@@ -107,4 +116,21 @@ int fileStreamReadNextChunk( int _fileStreamHandle, void* _pReadDestination )
 	}
 
 	return nResult;
+}
+*/
+
+void fileStreamReadNextChunk( int _fileStreamHandle, void* _pReadDestination )
+{
+	CFileStream* pStream = &g_fileStreams[ _fileStreamHandle ];
+	
+	int filePosition = g_pApp->m_FileSystem.FilePosition( pStream->hFile );
+	int bytesLeft = pStream->fileSizeBytes - filePosition;
+	if( bytesLeft < STREAM_CHUNK_SIZE )
+	{
+		g_pApp->m_FileSystem.FileRead( pStream->hFile, _pReadDestination, bytesLeft );
+		g_pApp->m_FileSystem.FileRewind( pStream->hFile );
+		g_pApp->m_FileSystem.FileRead( pStream->hFile, (void*)(((unsigned char*)_pReadDestination) + bytesLeft), STREAM_CHUNK_SIZE - bytesLeft );
+	} else {
+		g_pApp->m_FileSystem.FileRead( pStream->hFile, _pReadDestination, STREAM_CHUNK_SIZE );
+	}
 }
