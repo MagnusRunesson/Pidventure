@@ -107,7 +107,7 @@ sint8 AudioStream::GetNextSample()
 	}
 	
 	float a = ((float)ret) * m_volume;
-	return a * 255.0f;
+	return (int)a;
 }
 
 void AudioStream::SetVolume( float _volume )
