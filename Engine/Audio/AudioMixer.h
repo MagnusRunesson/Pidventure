@@ -46,9 +46,13 @@ public:
 	void Reboot();
 	void Update();
 	void SetFrequency( int _frequency );
+	void SetMasterVolume( float _volume );
 	
 	AudioSource* GetChannel( int _channel );
 	AudioStream* GetStream( int _stream );
+	
+private:
+	float m_masterVolume;
 };
 
 extern AudioMixer audioMixer;

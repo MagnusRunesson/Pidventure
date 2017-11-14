@@ -57,6 +57,9 @@ AudioMixer::AudioMixer( int _numChannels, AudioSource* _pChannels, uint32 _outpu
 
 void AudioMixer::Reboot()
 {
+	// Reset master volume
+	m_masterVolume = 1.0f;
+	
 	// Clear the input channels
 	int i;
 	for( i=0; i<numChannels; i++ )
@@ -116,7 +119,8 @@ void AudioMixer::Update()
 		if( apa < -127 ) apa = -127;
 
 		// And done
-		pOutputBuffer[ outputWritePosition ] = apa;
+		float a = apa * m_masterVolume;
+		pOutputBuffer[ outputWritePosition ] = (int)a;
 		
 		//
 		outputWritePosition++;
@@ -126,6 +130,11 @@ void AudioMixer::Update()
 		//
 		i++;
 	}
+}
+
+void AudioMixer::SetMasterVolume( float _volume )
+{
+	m_masterVolume = _volume;
 }
 
 #ifdef ENGINE_TARGET_TINYARCADE
