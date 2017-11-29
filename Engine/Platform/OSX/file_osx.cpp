@@ -91,6 +91,13 @@ bool fileLoad(const char* _pszFileName, void** _ppReadData, int* _pReadBytes)
 	fseek( f, 0, SEEK_SET );
 	//debugLog( "File size: %i\n", fileSize );
 	
+	if(fileSize == 0)
+	{
+		// The RPi implementation of fileLoad fail if filesize is 0 so we do that on OSX aswell
+		fclose(f);
+		return false;
+	}
+	
 	*_ppReadData = new char[ fileSize ];
 	//debugLog( "Allocated data: 0x%08x\n", *_ppReadData );
 	*_pReadBytes = (int)fread( *_ppReadData, 1, fileSize, f );
