@@ -88,55 +88,60 @@ bool CScene::Load( const char* _pszSceneName, const char* _pszTileBankName, cons
 	stringCombine( objectFileName, 1024, _pszSceneName, ".peso" );
 	
 	debugLog("Loading scene '%s'\n", _pszSceneName );
-	if( !fileLoad( objectFileName, (void**)&pSceneObjects, &readBytes ))
-	{
-		debugLog("Failed to load scene '%s'\n", objectFileName );
-		return false;
-	}
-	
+
 	CSceneDefinition sceneDefinition;
 	CSceneDefinition* pScene = &sceneDefinition;
-	pScene->NumObjects = readBytes / sizeof( CSceneObject );
-	pScene->aObjects = pSceneObjects;
 
-	debugLog( "num objects: %i\n", pScene->NumObjects );
-	unsigned int i;
-	
-	for( i=0; i<pScene->NumObjects; i++ )
+	if( fileLoad( objectFileName, (void**)&pSceneObjects, &readBytes ))
 	{
-		CSceneObject* pObj = &pScene->aObjects[ i ];
-		debugLog( "Object %i: %s at %i,%i sort %.2f, collision index %i\n", i, pObj->pszDefinitionName, pObj->x, pObj->y, pObj->sort, pObj->collisionIndex );
-	}
-	
-	for( i=0; i<SCENE_MAX_SPRITES; i++ )
-		sceneObjects[ i ] = NULL;
-
-	for( i=0; i<pScene->NumObjects; i++ )
-	{
-		CSceneObject* pObj = &pScene->aObjects[ i ];
-		GameObject* pGO = NULL;
-		if( pObj->flags & SO_FLAG_ANIMATED )
+		pScene->NumObjects = readBytes / sizeof( CSceneObject );
+		pScene->aObjects = pSceneObjects;
+		
+		debugLog( "num objects: %i\n", pScene->NumObjects );
+		unsigned int i;
+		
+		for( i=0; i<pScene->NumObjects; i++ )
 		{
-			debugLog("Game object is animated, yay\n");
-			AnimationSequenceDefinition* pAnimation = dataGetAnimationSequenceDefinition( pObj->pszDefinitionName );
-			pGO = gameObjectManager.CreateGameObject( pAnimation );
-			pGO->GetAnimation()->Play();
-		} else {
-			Image* pImage = imageLoad( pObj->pszDefinitionName );
-			pGO = gameObjectManager.CreateGameObject( pImage );
+			CSceneObject* pObj = &pScene->aObjects[ i ];
+			debugLog( "Object %i: %s at %i,%i sort %.2f, collision index %i\n", i, pObj->pszDefinitionName, pObj->x, pObj->y, pObj->sort, pObj->collisionIndex );
 		}
 		
-		sceneObjects[ i ] = pGO;
+		for( i=0; i<SCENE_MAX_SPRITES; i++ )
+			sceneObjects[ i ] = NULL;
 		
-		Sprite* pSprite = pGO->GetSprite();
-		pGO->SetWorldPosition( pObj->x, pObj->y );
-		pSprite->SetSort( pObj->sort );
-		pSprite->collisionIndex = pObj->collisionIndex;
+		for( i=0; i<pScene->NumObjects; i++ )
+		{
+			CSceneObject* pObj = &pScene->aObjects[ i ];
+			GameObject* pGO = NULL;
+			if( pObj->flags & SO_FLAG_ANIMATED )
+			{
+				debugLog("Game object is animated, yay\n");
+				AnimationSequenceDefinition* pAnimation = dataGetAnimationSequenceDefinition( pObj->pszDefinitionName );
+				pGO = gameObjectManager.CreateGameObject( pAnimation );
+				pGO->GetAnimation()->Play();
+			} else {
+				Image* pImage = imageLoad( pObj->pszDefinitionName );
+				pGO = gameObjectManager.CreateGameObject( pImage );
+			}
+			
+			sceneObjects[ i ] = pGO;
+			
+			Sprite* pSprite = pGO->GetSprite();
+			pGO->SetWorldPosition( pObj->x, pObj->y );
+			pSprite->SetSort( pObj->sort );
+			pSprite->collisionIndex = pObj->collisionIndex;
+			
+			pGO->GetSprite()->SetFlippedX( pObj->flags & SO_FLAG_FLIP_X );
+			pGO->GetSprite()->SetFlippedY( pObj->flags & SO_FLAG_FLIP_Y );
+		}
 
-		pGO->GetSprite()->SetFlippedX( pObj->flags & SO_FLAG_FLIP_X );
-		pGO->GetSprite()->SetFlippedY( pObj->flags & SO_FLAG_FLIP_Y );
+		fileUnload( pSceneObjects );
+	} else {
+		pScene->NumObjects = 0;
+		pScene->aObjects = NULL;
+		debugLog("Failed to load scene '%s'\n", objectFileName );
 	}
-	
+
 	pTileBank = tilebankLoad( _pszTileBankName );
 	debugLog("Gamesetup start 7a\n");
 	pTileBankCollision = NULL;
@@ -151,8 +156,6 @@ bool CScene::Load( const char* _pszSceneName, const char* _pszTileBankName, cons
 	TileRenderer.m_pTileMap = pTileMap;
 	debugLog("Gamesetup start 9\n");
 	TileRenderer.SetDepth( -1.0f );
-
-	fileUnload( pSceneObjects );
 
 	return true;
 }
