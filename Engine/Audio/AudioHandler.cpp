@@ -13,10 +13,11 @@
 
 void Audio_Handler_SDL( void *udata, uint8 *stream, int len )
 {
-	signed char* data = (signed char*)stream;
+	float* data = (float*)stream;
 	
 	int i;
-	for( i=0; i<len; i++ )
+	int numSamples = len / sizeof(float);
+	for( i=0; i<numSamples; i++ )
 	{
 		audioMixer.outputReadPosition++;
 		if( audioMixer.outputReadPosition >= audioMixer.outputBufferSize )

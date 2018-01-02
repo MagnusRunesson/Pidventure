@@ -26,13 +26,13 @@ AudioStream audioStreams[ NUM_STREAMS ];
 // output at 11025Hz, so that means 11025 bytes per second. At 60 fps that means 11025/60≈184
 // bytes per frame.
 const int OUTPUT_BUFFER_SIZE = 4800;
-sint8 audioMixOutputBuffer[ OUTPUT_BUFFER_SIZE ];
+float audioMixOutputBuffer[ OUTPUT_BUFFER_SIZE ];
 
 // Create the instance of the audio mixer
 AudioMixer audioMixer( NUM_CHANNELS, audioChannels, OUTPUT_BUFFER_SIZE, audioMixOutputBuffer );
 
 //
-AudioMixer::AudioMixer( int _numChannels, AudioSource* _pChannels, uint32 _outputBufferSize, sint8* _pOutputBuffer )
+AudioMixer::AudioMixer( int _numChannels, AudioSource* _pChannels, uint32 _outputBufferSize, float* _pOutputBuffer )
 {
 	// Set up output buffer
 	outputBufferSize = _outputBufferSize;
@@ -45,7 +45,7 @@ AudioMixer::AudioMixer( int _numChannels, AudioSource* _pChannels, uint32 _outpu
 	// Clear the output buffer
 	int i;
 	for( i=0; i<outputBufferSize; i++ )
-		pOutputBuffer[ i ] = 0;
+		pOutputBuffer[ i ] = 0.0f;
 
 	//
 	outputReadPosition = 0;
@@ -69,17 +69,17 @@ void AudioMixer::Reboot()
 
 void AudioMixer::Update()
 {
-	int bytesToFill = outputReadPosition-outputWritePosition;
-	if( bytesToFill < 0 )
+	int samplesToFill = outputReadPosition-outputWritePosition;
+	if( samplesToFill < 0 )
 	{
 		// Audio buffer have looped
-		bytesToFill += outputBufferSize;
+		samplesToFill += outputBufferSize;
 	}
 	
 	int i=0;
-	while( i<bytesToFill )
+	while( i<samplesToFill )
 	{
-		int apa = 0;
+		float apa = 0;
 		
 		int iChannel;
 		for( iChannel=0; iChannel<NUM_CHANNELS; iChannel++ )
@@ -89,7 +89,14 @@ void AudioMixer::Update()
 			
 			if( chan->isPlaying )
 			{
-				apa += data->samples[ chan->playbackPosition ];
+				float sample = data->samples[ chan->playbackPosition ];
+				if( sample < 0.0f )
+				{
+					sample /= 128.0f;
+				} else {
+					sample /= 127.0f;
+				}
+				apa += sample;
 				
 				chan->playbackPosition++;
 				if( chan->playbackPosition >= data->length )
@@ -111,16 +118,25 @@ void AudioMixer::Update()
 			// Mix in the stream if it is playing
 			AudioStream* pStream = &audioStreams[ iStream ];
 			if( pStream->m_isPlaying )
-				apa += pStream->GetNextSample();
+			{
+				float sample = pStream->GetNextSample();
+				if( sample < 0.0f )
+				{
+					sample /= 128.0f;
+				} else {
+					sample /= 127.0f;
+				}
+				apa += sample;
+			}
 		}
 
 		// Clip if needed
-		if( apa > 127 ) apa = 127;
-		if( apa < -127 ) apa = -127;
+		if( apa > 1.0f ) apa = 1.0f;
+		if( apa < -1.0f ) apa = -1.0f;
 
 		// And done
 		float a = apa * m_masterVolume;
-		pOutputBuffer[ outputWritePosition ] = (int)a;
+		pOutputBuffer[ outputWritePosition ] = a;
 		
 		//
 		outputWritePosition++;

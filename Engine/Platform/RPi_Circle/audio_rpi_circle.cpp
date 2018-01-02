@@ -17,6 +17,8 @@ CAudioRPiCircle::~CAudioRPiCircle( void )
 
 unsigned CAudioRPiCircle::GetChunk( u32 *pBuffer, unsigned nChunkSize )
 {
+   float range = 2047.0f;
+	
    uint32 sample = 0;
    while( sample < nChunkSize )
    {
@@ -24,9 +26,12 @@ unsigned CAudioRPiCircle::GetChunk( u32 *pBuffer, unsigned nChunkSize )
       if( audioMixer.outputReadPosition >= audioMixer.outputBufferSize )
          audioMixer.outputReadPosition = 0;
 
-      u32 data = (127 + audioMixer.pOutputBuffer[ audioMixer.outputReadPosition ]) << 3;
-      pBuffer[ sample++ ] = data;   // Left
-      pBuffer[ sample++ ] = data;   // Right
+      float data = audioMixer.pOutputBuffer[ audioMixer.outputReadPosition ];
+      data += 1.0f;
+      data *= range;
+      u32 intdata = (u32)data;
+      pBuffer[ sample++ ] = intdata;   // Left
+      pBuffer[ sample++ ] = intdata;   // Right
    }
 
    // The entire buffer was filled, yay!

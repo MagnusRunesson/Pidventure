@@ -18,7 +18,7 @@ class AudioMixer
 {
 public:
 	sint32 outputBufferSize;
-	sint8* pOutputBuffer;
+	float* pOutputBuffer;
 
 	uint8 numChannels;
 	AudioSource* channel;
@@ -42,7 +42,7 @@ public:
 	 When that is done the write position will have caught up with the read position (Except not really, because when we've been filling up the audio buffer more samples will have been read from the output buffer. But the mixer will only read the length for filling up once, to avoid strange race conditions)
 	
 	 */
-	AudioMixer( int _numChannels, AudioSource* _pChannels, uint32 _outputBufferSize, sint8* _pOutputBuffer );
+	AudioMixer( int _numChannels, AudioSource* _pChannels, uint32 _outputBufferSize, float* _pOutputBuffer );
 	void Reboot();
 	void Update();
 	void SetFrequency( int _frequency );
