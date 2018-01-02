@@ -7,8 +7,6 @@ CAudioRPiCircle::CAudioRPiCircle( CInterruptSystem *pInterrupt )
 :  CPWMSoundBaseDevice (pInterrupt, SAMPLE_RATE )
 {
    assert ((1 << 12) <= GetRange () && GetRange () < (1 << 13));  // 12 bit range
-
-   m_sawTooth = 0;
 }
 
 CAudioRPiCircle::~CAudioRPiCircle( void )

@@ -14,9 +14,6 @@ public:
    ~CAudioRPiCircle( void );
 
    virtual unsigned GetChunk( u32 *pBuffer, unsigned nChunkSize );
-
-private:
-	sint16 m_sawTooth;
 };
 
 #endif // _audio_rpi_circle_h
